@@ -441,6 +441,82 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-mtr-bj-business",
+      "name": "京港地铁 · 招商信息（广告与站内商业）",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtr-bj",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.mtr.bj.cn/business/mall/business-op",
+        "itemSelector": "ul.business-articles-list-widget > li",
+        "linkSelector": ".title a",
+        "titleSelector": ".title a",
+        "publishedAtSelector": ".date",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "地铁广告",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-gemas-metro",
+      "name": "广州产权交易所 · 地铁车站商铺招商",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://newsys.gemas.com.cn/api/admin/app/listingProject?current=1&businessType=all&subjectType=all&proCode=all&subjectStatus=all&gpf=1&title=%E5%9C%B0%E9%93%81&size=20",
+        "itemsPath": "data.dataList",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://new.gemas.com.cn/project/details?noticeId={noticeId}&subjectId={subjectId}&businessType={businessType}",
+        "publishedAtPath": "noticeAuditTime",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "TOD开发"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-gemas-rail",
+      "name": "广州产权交易所 · 轨道交通物业出租",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://newsys.gemas.com.cn/api/admin/app/listingProject?current=1&businessType=all&subjectType=all&proCode=all&subjectStatus=all&gpf=1&title=%E8%BD%A8%E9%81%93%E4%BA%A4%E9%80%9A&size=20",
+        "itemsPath": "data.dataList",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://new.gemas.com.cn/project/details?noticeId={noticeId}&subjectId={subjectId}&businessType={businessType}",
+        "publishedAtPath": "noticeAuditTime",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "TOD开发",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-szmc-cg-bids",
       "name": "深铁采购平台 · 招标公告",
       "kind": "web_list",
