@@ -46,7 +46,7 @@ description: >
 ```bash
 # 1. 本地打包
 tar -czf /tmp/metrohot-deploy.tar.gz \
-  --exclude='.git' --exclude='node_modules' --exclude='.data' \
+  --exclude='.git' --exclude='.env' --exclude='node_modules' --exclude='.data' \
   --exclude='apps/web/build' --exclude='.spec-workflow' .
 
 # 2. 上传代码

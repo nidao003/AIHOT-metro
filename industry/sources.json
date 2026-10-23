@@ -71,6 +71,80 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-rail-transit-bids",
+      "name": "中国城市轨道交通网 · 招标采购",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "http://www.rail-transit.com/zhaobiao/",
+        "itemSelector": "li.main2_tender_contents_li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": ".main2_tender_contents_time",
+        "detail": {
+          "maxFetches": 20,
+          "summarySelector": "#content"
+        }
+      },
+      "tags": [
+        "招标采购",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-rail-transit-awards",
+      "name": "中国城市轨道交通网 · 中标公示",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "http://www.rail-transit.com/zhongbiao/",
+        "itemSelector": "li.main2_tender_contents_li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": ".main2_tender_contents_time",
+        "detail": {
+          "maxFetches": 20,
+          "summarySelector": "#content"
+        }
+      },
+      "tags": [
+        "中标公示",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-bids",
+      "name": "深圳地铁 · 商业招商与广告租售",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.szmc.net/szmc_m/zhaobiaozhaoshang/zhaoshanggonggao/zhaoshangxinxi1/",
+        "itemSelector": "ul.news_center_ul > li",
+        "linkSelector": "a",
+        "titleSelector": "a p:nth-child(2)",
+        "publishedAtSelector": "a p:nth-child(1)",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "车站商业",
+        "TOD开发",
+        "地铁广告"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "mp-camet",
       "name": "中国城市轨道交通协会",
       "kind": "mp_account",

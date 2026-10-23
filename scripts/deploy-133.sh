@@ -15,6 +15,7 @@ echo "==> [1/5] 打包本地源码产物..."
 cd "$(dirname "$0")/.."
 tar -czf "$TAR_FILE" \
   --exclude='.git' \
+  --exclude='.env' \
   --exclude='node_modules' \
   --exclude='.data' \
   --exclude='package' \

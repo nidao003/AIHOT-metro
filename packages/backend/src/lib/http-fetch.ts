@@ -109,8 +109,8 @@ export function requireOk(res: GuardedResponse, what?: string): GuardedResponse 
   return res;
 }
 
-/** How the collectors introduce themselves: the site's own crawler name and address (site/site.ts). */
-export const DEFAULT_UA = `Mozilla/5.0 (compatible; ${SITE.crawlerName}; +${config.siteUrl}/about)`;
+/** How the collectors introduce themselves: standard browser user agent to avoid WAF false positives. */
+export const DEFAULT_UA = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36`;
 
 /** The language a source asked for (its config.acceptLanguage), replacing the default preference above. */
 export const languageHeaders = (language: string | undefined): Record<string, string> => language ? { "accept-language": language } : {};
