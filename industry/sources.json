@@ -438,7 +438,11 @@
         "linkSelector": "a.w-list-titlelink",
         "titleSelector": "a.w-list-titlelink",
         "publishedAtSelector": "span.w-list-date",
-        "publishedAtUtcOffset": "+08:00"
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".w-detail"
+        }
       },
       "tags": [
         "官方",
@@ -462,7 +466,11 @@
         "linkSelector": "a.w-list-titlelink",
         "titleSelector": "a.w-list-titlelink",
         "publishedAtSelector": "span.w-list-date",
-        "publishedAtUtcOffset": "+08:00"
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".w-detail"
+        }
       },
       "tags": [
         "官方",
@@ -887,7 +895,11 @@
         "linkSelector": "a",
         "titleSelector": "p.fl a",
         "publishedAtSelector": "p.fr",
-        "publishedAtUtcOffset": "+08:00"
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".news-content"
+        }
       },
       "tags": [
         "官方",
@@ -911,7 +923,11 @@
         "linkSelector": "a",
         "titleSelector": "p.fl a",
         "publishedAtSelector": "p.fr",
-        "publishedAtUtcOffset": "+08:00"
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".news-content"
+        }
       },
       "tags": [
         "官方",
@@ -935,7 +951,11 @@
         "linkSelector": "a",
         "titleSelector": "p.fl a",
         "publishedAtSelector": "p.fr",
-        "publishedAtUtcOffset": "+08:00"
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".news-content"
+        }
       },
       "tags": [
         "官方",
