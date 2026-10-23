@@ -66,6 +66,12 @@
 | `web-chinaiut-awards` | 城市交通网 · 轨道交通中标 | 中标公示 | `web_list` | `http://www.chinaiut.com/zhongbiao` | ✅ 活跃 |
 | `web-lysubway-bids` | 洛阳轨道 · 采购公告 | 招标采购 / 设备维保 | `web_list` | `http://www.lysubway.com.cn/procurement.html` | ✅ 活跃 |
 | `web-lysubway-news` | 洛阳轨道 · 新闻中心 | 运营调度 / 经营动态 | `web_list` | `http://www.lysubway.com.cn/news_info.html` | ✅ 活跃 |
+| `web-urumqi-bids` | 乌鲁木齐轨道 · 采购信息 | 招标采购 / TOD开发 | `web_list` | `http://www.urumqimtr.com/cgxx` | ✅ 活跃 |
+| `web-urumqi-ops` | 乌鲁木齐轨道 · 运营公告 | 运营调度 / 安全应急 | `web_list` | `http://www.urumqimtr.com/yygg` | ✅ 活跃 |
+| `web-sjzmetro-news` | 石家庄轨道 · 集团动态 | 运营调度 / 经营动态 | `web_list` | `http://www.sjzmetro.cn` | ✅ 活跃 |
+| `web-ncmtr-news` | 南昌轨道 · 集团新闻 | 运营调度 / 客流运能 | `web_list` | `http://www.ncmtr.com` | ✅ 活跃 |
+| `web-xmgdjt-news` | 厦门轨道 · 公司新闻 | 运营调度 / 新线开通 | `web_list` | `https://www.xmgdjt.com.cn/list-48385ou5/gongsixingweng/1/10` | ✅ 活跃 |
+| `web-xmgdjt-leasing` | 厦门轨道 · 招商信息 | TOD开发 / 车站商业 | `web_list` | `https://www.xmgdjt.com.cn/list-77tl1l0i/zhaoshangxingxin/1/10` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

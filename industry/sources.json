@@ -425,6 +425,148 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-urumqi-bids",
+      "name": "乌鲁木齐轨道 · 采购信息",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "urumqi",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.urumqimtr.com/cgxx",
+        "itemSelector": "li.w-list-item",
+        "linkSelector": "a.w-list-titlelink",
+        "titleSelector": "a.w-list-titlelink",
+        "publishedAtSelector": "span.w-list-date",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "TOD开发"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-urumqi-ops",
+      "name": "乌鲁木齐轨道 · 运营公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "urumqi",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "http://www.urumqimtr.com/yygg",
+        "itemSelector": "li.w-list-item",
+        "linkSelector": "a.w-list-titlelink",
+        "titleSelector": "a.w-list-titlelink",
+        "publishedAtSelector": "span.w-list-date",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "安全应急"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-sjzmetro-news",
+      "name": "石家庄轨道 · 集团动态",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "sjzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.sjzmetro.cn",
+        "itemSelector": "div.item",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtRegex": "(20\\d{2}[-.]\\d{1,2}[-.]\\d{1,2})",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "经营动态"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-ncmtr-news",
+      "name": "南昌轨道 · 集团新闻",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "ncmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.ncmtr.com",
+        "itemSelector": "div.cbox-15",
+        "linkSelector": "a",
+        "titleSelector": "a"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "客流运能"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-xmgdjt-news",
+      "name": "厦门轨道 · 公司新闻",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "xmgdjt",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.xmgdjt.com.cn/list-48385ou5/gongsixingweng/1/10",
+        "itemSelector": "div.item-box:has(a.list-item-a)",
+        "linkSelector": "a.list-item-a",
+        "titleSelector": ".text",
+        "publishedAtSelector": ".time",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "新线开通"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-xmgdjt-leasing",
+      "name": "厦门轨道 · 招商信息（TOD商业招租）",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "xmgdjt",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.xmgdjt.com.cn/list-77tl1l0i/zhaoshangxingxin/1/10",
+        "itemSelector": "div.item-box:has(a.list-item-a)",
+        "linkSelector": "a.list-item-a",
+        "titleSelector": ".text",
+        "publishedAtSelector": ".time",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "TOD开发",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",
