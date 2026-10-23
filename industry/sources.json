@@ -330,6 +330,66 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-shggzy-metro-bids",
+      "name": "上海公共资源 · 地铁采购公告",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "shmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.shggzy.com/content/page?channelIds=301&title=%E5%9C%B0%E9%93%81&pageNo=1&pageSize=20",
+        "itemsPath": "data.content",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.shggzy.com{url}",
+        "publishedAtPath": "releaseTime",
+        "summaryPaths": [
+          "txtCleanHtml"
+        ],
+        "summaryIsBody": true,
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "地铁广告"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-shggzy-metro-awards",
+      "name": "上海公共资源 · 地铁成交结果公告",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "shmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.shggzy.com/content/page?channelIds=302&title=%E5%9C%B0%E9%93%81&pageNo=1&pageSize=20",
+        "itemsPath": "data.content",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.shggzy.com{url}",
+        "publishedAtPath": "releaseTime",
+        "summaryPaths": [
+          "txtCleanHtml"
+        ],
+        "summaryIsBody": true,
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-gzmtr-news",
       "name": "广州地铁 · 公司新闻",
       "kind": "web_list",
