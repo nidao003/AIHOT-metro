@@ -8,6 +8,10 @@ import { assertAccepted, paidRequest } from "./receipts.ts";
 /** A source address read through Jina: this prefix, then the page's own address. */
 export const JINA_PREFIX = "https://r.jina.ai/";
 
+export function jinaConfigured(): boolean {
+  return credential("collectors", "JINA_API_KEY") !== null;
+}
+
 /** Jina's answer starts with header lines (Title, URL Source, Published Time); the page follows this line. */
 const CONTENT = "\nMarkdown Content:\n";
 
