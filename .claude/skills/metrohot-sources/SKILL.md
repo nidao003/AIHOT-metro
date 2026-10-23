@@ -535,6 +535,26 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 1. 首页无列表 → 自动跟进「新闻/招标/公告」栏目链接（解决厦门、南昌、长春、石家庄、南宁）
 2. 栏目页无日期 → 退回到「重复的单链接容器」识别（解决洛阳）
 
+### 零数据城市清单（2026-10-24 实测）
+
+| 城市 | 名录域名 | 实测 |
+|---|---|---|
+| 呼和浩特 | `hhhtmetro.com` | 域名不存在（试过 hhhtmetro.cn 也不通） |
+| 哈尔滨 | `hrbdt.com`（非 .com.cn） | 首页 200 但仅 6.9KB，无列表；后续重试超时 |
+| 昆明 | `kmgdgs.com` / `yjrt.com.cn` | 503 / 内容仅 1 条 2020 介绍页 |
+| 温州 | `wzmtr.com` | **2600 字节空壳，0 个 `<a>` 标签** |
+| 绍兴 | `sxmtr.com` | 空响应 |
+| 芜湖 | `wuhurail.com` | 域名不存在 |
+| 金华 | `jhrail.com` | **Cloudflare 403「you have been blocked」** |
+| 南通 | `ntmetro.com.cn` | **域名正在出售**（DNSPod 停放页） |
+
+**重要教训**：`docs/sources-directory.md` 里的域名名录是早期整理的，**未经实测**。这 8 个城市里有 3 个域名根本不存在、1 个待售、1 个空壳、1 个 Cloudflare 拦截。
+
+**正确做法**：名录只作为线索，**任何域名在使用前必须先 `curl` 实测**。判断标准：
+- 字节数 < 5KB 且 `<a>` 标签 < 5 个 → 几乎一定是停泊页/空壳
+- 页面含 "DOMAIN IS FOR SALE" / "正在转让出售" → 域名已废弃
+- 含 "Cloudflare" + "blocked" → WAF
+
 ### 待攻克清单
 
 | 目标 | 卡在哪 | 下一步 |
