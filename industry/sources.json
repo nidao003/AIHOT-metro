@@ -184,7 +184,8 @@
         "publishedAtSelector": ".jh-gsxw-item-date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "summarySelector": ".jh-gsxw-item-sum"
+          "summarySelector": ".jh-gsxw-item-sum",
+          "maxFetches": 20
         }
       },
       "tags": [
@@ -211,7 +212,8 @@
         "publishedAtSelector": ".publish-date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "summarySelector": ".summary"
+          "summarySelector": ".summary",
+          "maxFetches": 20
         }
       },
       "tags": [
@@ -292,7 +294,7 @@
         "publishedAtSelector": ".to_time",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".line_content"
         }
       },
@@ -440,7 +442,7 @@
         "publishedAtSelector": "span.w-list-date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".w-detail"
         }
       },
@@ -468,7 +470,7 @@
         "publishedAtSelector": "span.w-list-date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".w-detail"
         }
       },
@@ -897,7 +899,7 @@
         "publishedAtSelector": "p.fr",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".news-content"
         }
       },
@@ -925,7 +927,7 @@
         "publishedAtSelector": "p.fr",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".news-content"
         }
       },
@@ -953,7 +955,7 @@
         "publishedAtSelector": "p.fr",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".news-content"
         }
       },
@@ -1027,7 +1029,7 @@
         "linkSelector": "a",
         "titleSelector": ".item-tit a",
         "detail": {
-          "maxFetches": 8,
+          "maxFetches": 20,
           "publishedAtSelector": ".source li",
           "summarySelector": ".newsboxs .content"
         }
@@ -1056,7 +1058,7 @@
         "publishedAtSelector": ".p0",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".detail-content"
         }
       },
@@ -1144,7 +1146,7 @@
         "publishedAtSelector": "span.fr",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".right_slide_bar_content"
         }
       },
@@ -1172,7 +1174,7 @@
         "publishedAtSelector": "span.pub_date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".arc_body"
         }
       },
@@ -1200,7 +1202,7 @@
         "publishedAtSelector": "span.pub_date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".arc_body"
         }
       },
@@ -1227,7 +1229,7 @@
         "publishedAtSelector": "span",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".newsdeteil .con"
         }
       },
@@ -1279,7 +1281,7 @@
         "publishedAtSelector": "span.pub_date",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 8,
+          "maxFetches": 20,
           "summarySelector": ".arc_body"
         }
       },
@@ -1359,7 +1361,7 @@
         "publishedAtSelector": "span.Gray",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 12,
+          "maxFetches": 20,
           "summarySelector": ".Content"
         }
       },
@@ -1387,7 +1389,7 @@
         "publishedAtSelector": "span.Gray",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 10,
+          "maxFetches": 20,
           "summarySelector": ".Content"
         }
       },
@@ -1415,7 +1417,7 @@
         "publishedAtSelector": "span.Gray",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 10,
+          "maxFetches": 20,
           "summarySelector": ".Content"
         }
       },
@@ -1443,7 +1445,7 @@
         "publishedAtSelector": "span.Gray",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 10,
+          "maxFetches": 20,
           "summarySelector": ".Content"
         }
       },
@@ -1471,7 +1473,7 @@
         "publishedAtSelector": "span.Gray",
         "publishedAtUtcOffset": "+08:00",
         "detail": {
-          "maxFetches": 10,
+          "maxFetches": 20,
           "summarySelector": ".Content"
         }
       },
