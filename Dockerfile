@@ -22,9 +22,10 @@ FROM base
 ENV NODE_ENV=production
 # The slim image ships no system CA store, so Node verifies against its bundled Mozilla list only.
 # Chinese sites chained to Certum (e.g. www.njmetro.com.cn: leaf → SHECA OV G5 → UCA Global G2 →
-# Certum Trusted Network CA) fail there with UNABLE_TO_VERIFY_LEAF_SIGNATURE. This adds that root;
+# Certum Trusted Network CA) fail there with UNABLE_TO_VERIFY_LEAF_SIGNATURE. The file carries
+# the root plus its two intermediates: supplying the root alone does not let Node build this chain.
 # NODE_EXTRA_CA_CERTS appends to the defaults rather than replacing them.
-ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-root.pem
+ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-chain.pem
 COPY --from=build --chown=node:node /app /app
 RUN mkdir -p /data && chown node:node /data
 USER node
