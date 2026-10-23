@@ -305,6 +305,54 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-njmetro-bids",
+      "name": "南京地铁 · 招标投标",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "njmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.njmetro.com.cn/njdtweb/home/go-tender-center.do?columnId1=8a808007651c972001651d88ebe20001&columnId2=4028dbe49d6b108a019d717b51c60000",
+        "itemSelector": "li.tender_tli",
+        "linkSelector": "a.font14",
+        "titleSelector": "a.font14",
+        "publishedAtSelector": ".tender_tli02",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "中标公示"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-njmetro-resource",
+      "name": "南京地铁 · 资源招商（车站商铺出租）",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "njmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.njmetro.com.cn/njdtweb/home/go-resource-center.do?columnId1=8a8080076512510d0165130fddb10014&columnId2=8a8080076512510d016513159a850018&columnId3=8a8080076512510d0165130f7c400013",
+        "itemSelector": "li.buil_mli1li",
+        "linkSelector": "a.font12",
+        "titleSelector": "a.font12",
+        "publishedAtRegex": "\\((\\d{4}-\\d{2}-\\d{2})\\)",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "TOD开发"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-zzmetro-bids",
       "name": "郑州地铁 · 采购公告",
       "kind": "web_list",
