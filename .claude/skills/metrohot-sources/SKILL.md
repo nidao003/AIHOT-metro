@@ -459,11 +459,43 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 青岛 | 青岛地铁 | `qd-metro.com` | DNS 不通 | ❌ 不可用 |
 | 东莞 | 东莞轨道 | `dggdjt.com` | 70KB 可访问，`node/112.htmx` 招标、`node/123.htmx` 招商；**TLS 握手超时**（curl 与 Node 均超时） | 🟡 待解决 TLS |
 | 宁波 | 宁波轨道 | `nbmetro.com` | ✅ `tender_report.php` 系列，招标/中标/非招标三栏结构一致 | ✅ 已接入 3 源 |
-| 合肥 | 合肥轨道 | `hfgdjt.com` | 1.2KB 壳只引一个 1.2MB 的 `app.js`，其中含 SockJS 路径（`/api/v1/sessions`、`/websocket`、`/xhr_streaming`）与浏览器指纹检测；**curl 与 headless 浏览器均被判为攻击拦截**（`attackBlocking.png`） | 🟡 需过指纹检测 |
+| 合肥 | 合肥轨道 | `hfgdjt.com` | **瑞数（Riverse）防护**，详见下方专节 | ⏸ 暂缓（需浏览器容器） |
 | 佛山 | 佛山铁投 | `fmtr.cn` | 4.3KB，正文 0 字，疑似 SPA | 🟡 需抓接口 |
 | 昆明 | 昆明轨道 | `kmgdjt.com` | DNS 不通 | ❌ 不可用 |
 
 **图例**：🟡 已探测未接入 / ✅ 已接入 / ❌ 不可用（DNS 或 TLS 层面）
+
+### 合肥（hfgdjt.com）：瑞数防护专节
+
+**识别特征**（2026-10 实测）：
+
+| 特征 | 值 |
+|---|---|
+| 返回体 | 1.2KB 壳，只引一个 1.2MB 的 `app.js` |
+| 拦截页 | `/1ywuKELSO2ahQuWZ/assets/attackBlocking.png`（"当前使用的浏览器存在安全隐患"） |
+| 随机路径 | `/1ywuKELSO2ahQuWZ/` 这类 16 位随机目录，每次部署会变 |
+| JS 特征 | `river` 出现 7 次、`waf` 101 次、`_ac` 5 次 |
+| 附属库 | 壳内含 SockJS 路径（`/api/v1/sessions`、`/websocket`、`/xhr_streaming`） |
+| 拦截范围 | curl 与 headless Playwright **都被拦**，不是 UA 层面的问题 |
+
+**社区方案与代价**：
+
+| 方案 | 代表项目 | 适用范围 | 代价 |
+|---|---|---|---|
+| 补环境（Node + jsdom 补 `window`/`document`/`navigator`） | `huaerxiela/rs-reverse`、`cxapython/rs-reverse` | **仅瑞数 4 代**，5/6 代已失效 | 无额外运行时 |
+| Playwright + 指纹伪造 + 自定义事件屏蔽 | `Big-fat-dog/js-spider` | 5/6 代 | 服务器常驻 Chromium（镜像 +300MB、内存 +500MB），每站单独维护指纹 |
+| 商业打码/代理服务 | 各数据服务商 | 通吃 | 按量付费 |
+
+**为什么暂缓**：
+1. 瑞数是对抗型产品，每次升级都要重做补环境，不是一次性投入
+2. 引入 Playwright 影响的是**全部 47 个源**的部署复杂度，不只合肥一个站
+3. 合肥地铁已在中城轨网（rail-transit）的全国招标源里间接覆盖
+
+**以后若要重启，路径**：
+1. 先确认瑞数版本（看 `app.js` 里 `_ac` 附近或拦截页的 JS 版本号）
+2. 4 代以内 → 试 `rs-reverse` 的补环境方案，不需要浏览器
+3. 5/6 代 → 单独起一个 Playwright 容器，只跑瑞数站，与主 worker 隔离
+4. 无论哪种，都要把 `attackBlocking` 作为健康检查信号，拦截时告警而不是静默失败
 
 ### 待攻克清单
 
