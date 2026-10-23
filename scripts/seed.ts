@@ -37,4 +37,23 @@ for (const s of sources) {
   added += inserted.length;
 }
 console.log(`sources: ${added} added, ${sources.length - added} already there`);
+
+// Seed default service pricing (e.g. DeepSeek official rates)
+await sql`
+  INSERT INTO service_prices (service, model, currency, input_per_mtok, cached_per_mtok, output_per_mtok, updated_at)
+  VALUES
+    ('deepseek', 'deepseek-flash', 'CNY', 2.000000, 0.040000, 8.000000, now()),
+    ('deepseek', 'deepseek-flash-think', 'CNY', 2.000000, 0.040000, 8.000000, now()),
+    ('deepseek', 'deepseek-chat', 'CNY', 2.000000, 0.500000, 8.000000, now()),
+    ('deepseek', 'deepseek-reasoner', 'CNY', 4.000000, 1.000000, 16.000000, now()),
+    ('deepseek', '', 'CNY', 2.000000, 0.040000, 8.000000, now()),
+    ('llm', 'deepseek-flash', 'CNY', 2.000000, 0.040000, 8.000000, now()),
+    ('llm', '', 'CNY', 2.000000, 0.040000, 8.000000, now())
+  ON CONFLICT (service, model) DO UPDATE
+  SET currency = EXCLUDED.currency,
+      input_per_mtok = EXCLUDED.input_per_mtok,
+      cached_per_mtok = EXCLUDED.cached_per_mtok,
+      output_per_mtok = EXCLUDED.output_per_mtok,
+      updated_at = now()`;
+console.log("service_prices: seeded default model pricing");
 await closeDb();

@@ -2,19 +2,20 @@
   "$comment": "示范信源：首次启动时导入（scripts/seed.ts），已存在的不会被覆盖。之后在后台“信源”里新建、修改和暂停。字段说明见 docs/customize.md。",
   "sources": [
     {
-      "id": "rss-mot-stats",
-      "name": "交通运输部 · 城市客运数据速报",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.mot.gov.cn/zhuzhan/jiaotongyaowen/rss.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
+      "id": "web-mot-stats",
+      "name": "交通运输部 · 运力分析与城轨速报",
+      "kind": "web_list",
       "tier": "T1",
       "owner_entity_id": "mot",
       "participation_mode": "editorial",
       "interval_minutes": 360,
+      "config": {
+        "url": "https://www.mot.gov.cn/shuju/fenxigongbao/yunlifenxi/index.html",
+        "itemSelector": "li.news-item",
+        "linkSelector": "a.news-link",
+        "titleSelector": ".news-title",
+        "publishedAtSelector": ".news-date"
+      },
       "tags": [
         "官方",
         "客流运能"
@@ -23,19 +24,65 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-camet-news",
-      "name": "中国城市轨道交通协会 (CAMET)",
-      "kind": "rss",
+      "id": "web-rail-transit-news",
+      "name": "中国城市轨道交通网 · 行业要闻",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 60,
       "config": {
-        "feedUrl": "https://www.camet.org.cn/rss.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
+        "url": "http://www.rail-transit.com/xinwen/",
+        "itemSelector": "li.news_show_cons_ul_li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": ".fr",
+        "detail": {
+          "maxFetches": 20,
+          "summarySelector": "#content"
         }
       },
+      "tags": [
+        "媒体",
+        "行业动态"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-ndrc-notices",
+      "name": "国家发改委 · 通知公告与建设规划",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "ndrc",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.ndrc.gov.cn/xwdt/tzgg/index.html",
+        "itemSelector": "ul.u-list li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span"
+      },
+      "tags": [
+        "官方",
+        "规划批复"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "mp-camet",
+      "name": "中国城市轨道交通协会",
+      "kind": "mp_account",
+      "enabled": false,
       "tier": "T1",
       "owner_entity_id": "camet",
       "participation_mode": "editorial",
       "interval_minutes": 180,
+      "config": {
+        "ghid": "gh_91fe691c0773",
+        "nickname": "中国城市轨道交通协会"
+      },
       "tags": [
         "官方",
         "技术规范",
@@ -45,19 +92,18 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-shmetro",
-      "name": "上海地铁 · 官方动态",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://service.shmetro.com/rss/news.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
+      "id": "mp-shmetro",
+      "name": "上海地铁shmetro",
+      "kind": "mp_account",
+      "enabled": false,
+      "tier": "T1_5",
       "owner_entity_id": "shmetro",
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 60,
+      "config": {
+        "ghid": "gh_df0517199e46",
+        "nickname": "上海地铁shmetro"
+      },
       "tags": [
         "官方",
         "运营调度"
@@ -66,19 +112,18 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-gzmtr",
-      "name": "广州地铁 · 官方动态",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.gzmtr.com/rss/news.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
+      "id": "mp-gzmtr",
+      "name": "广州地铁",
+      "kind": "mp_account",
+      "enabled": false,
+      "tier": "T1_5",
       "owner_entity_id": "gzmtr",
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 60,
+      "config": {
+        "ghid": "gh_a86e29353afa",
+        "nickname": "广州地铁"
+      },
       "tags": [
         "官方",
         "新线开通"
@@ -87,19 +132,18 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-szmc",
-      "name": "深圳地铁 · 官方动态",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.szmc.net/rss/news.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
+      "id": "mp-szmc",
+      "name": "深圳地铁",
+      "kind": "mp_account",
+      "enabled": false,
+      "tier": "T1_5",
       "owner_entity_id": "szmc",
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 60,
+      "config": {
+        "ghid": "gh_44017a8822b0",
+        "nickname": "深圳地铁"
+      },
       "tags": [
         "官方",
         "TOD开发"
@@ -108,19 +152,18 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-bjsubway",
-      "name": "北京地铁 · 官方动态",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://www.bjsubway.com/rss/news.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T1",
+      "id": "mp-bjsubway",
+      "name": "北京地铁",
+      "kind": "mp_account",
+      "enabled": false,
+      "tier": "T1_5",
       "owner_entity_id": "bjsubway",
       "participation_mode": "editorial",
-      "interval_minutes": 120,
+      "interval_minutes": 60,
+      "config": {
+        "ghid": "gh_cb33bb00aef3",
+        "nickname": "北京地铁"
+      },
       "tags": [
         "官方",
         "运营调度"
@@ -129,43 +172,21 @@
       "syndicate_fulltext": false
     },
     {
-      "id": "rss-metro-ridership-research",
-      "name": "城轨客运与线网研究",
-      "kind": "rss",
-      "config": {
-        "feedUrl": "https://example.com/feed/metro-ridership.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
-      },
-      "tier": "T2",
-      "owner_entity_id": null,
+      "id": "mp-cdmetro",
+      "name": "成都地铁",
+      "kind": "mp_account",
+      "enabled": false,
+      "tier": "T1_5",
+      "owner_entity_id": "cdmetro",
       "participation_mode": "editorial",
-      "interval_minutes": 180,
-      "tags": [
-        "媒体",
-        "客流运能"
-      ],
-      "site_fulltext": false,
-      "syndicate_fulltext": false
-    },
-    {
-      "id": "rss-rail-transit-review",
-      "name": "城市轨道交通研究智库",
-      "kind": "rss",
+      "interval_minutes": 60,
       "config": {
-        "feedUrl": "https://example.com/feed/rail-transit-review.xml",
-        "_aihot": {
-          "initialBackfillLimit": 8
-        }
+        "ghid": "gh_ad6d6e1f4cb3",
+        "nickname": "成都地铁"
       },
-      "tier": "T2",
-      "owner_entity_id": null,
-      "participation_mode": "editorial",
-      "interval_minutes": 240,
       "tags": [
-        "媒体",
-        "技术规范"
+        "官方",
+        "TOD开发"
       ],
       "site_fulltext": false,
       "syndicate_fulltext": false

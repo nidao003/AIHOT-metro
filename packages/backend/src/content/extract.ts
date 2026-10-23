@@ -7,7 +7,7 @@ import { guardedFetch, languageHeaders } from "../lib/http-fetch.ts";
 import { assertPageContent, contentDocument, UnavailablePageError } from "../lib/page-content.ts";
 import { stripTags } from "../lib/text.ts";
 import { isVideoPageUrl } from "../lib/video-url.ts";
-import { jinaRead } from "../providers/jina.ts";
+import { jinaConfigured, jinaRead } from "../providers/jina.ts";
 import { BudgetExceededError } from "../providers/receipts.ts";
 import { getArticle } from "../providers/socialdata.ts";
 import { articleUtcOffset, readPublicationDate, type PublicationDate } from "../sources/dates.ts";
@@ -431,7 +431,7 @@ export async function extractFromUrl(url: string, subject: string, rules: PageRu
   } catch {
     // fall through to Jina
   }
-  if (opts.paidFallback === false) return null;
+  if (opts.paidFallback === false || !jinaConfigured()) return null;
   try {
     const page = await jinaRead(url, { purpose: "body_fallback", subject });
     const html = markdownBody(page.markdown, url);
