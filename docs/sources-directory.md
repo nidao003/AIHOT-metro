@@ -22,6 +22,7 @@
 | 广州 | 广州地铁 | `web-gzmtr-news` | 运营调度 / 车站商业 | `https://www.gzmtr.com/ygwm/xwzx/gsxw/` | ✅ 活跃 |
 | 广州 | 广州地铁招标平台 | `web-gzmtr-bids` | 招标采购 / 设备维保 | `https://bid.gzmtr.com/bizzbgg/` | ✅ 活跃 |
 | 广州 | 广州地铁招标平台 | `web-gzmtr-awards` | 中标公示 / 工程建设 | `https://bid.gzmtr.com/bizzbgs/` | ✅ 活跃 |
+| 广州 | 广州地铁资源经营 | `web-gzmtr-resource` | 车站商业 / 地铁广告 | `https://bid.gzmtr.com/bizzbgg/bid_zbgg_yysy_9/` | ✅ 活跃 |
 | 广州 | 广州产权交易所 | `web-gemas-metro` | 车站商业 / TOD开发 | `newsys.gemas.com.cn/api/admin/app/listingProject?title=地铁` | ✅ 活跃 |
 | 广州 | 广州产权交易所 | `web-gemas-rail` | TOD开发 / 车站商业 | 同上（`title=轨道交通`） | ✅ 活跃 |
 | 深圳 | 深铁集团 | `web-szmc-bids` | 车站商业 / TOD / 广告 | `https://www.szmc.net/szmc_m/zhaobiaozhaoshang/zhaoshanggonggao/zhaoshangxinxi1/` | ✅ 活跃 |
