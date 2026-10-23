@@ -22,6 +22,10 @@
 | 深圳 | 深铁集团 | `web-szmc-bids` | 车站商业 / TOD / 广告 | `https://www.szmc.net/szmc_m/zhaobiaozhaoshang/zhaoshanggonggao/zhaoshangxinxi1/` | ✅ 活跃 |
 | 深圳 | 深铁集团 | `web-szmc-announce` | 规划批复 / 经营动态 | `https://www.szmc.net/home/xinwenzhongxin/gongsigonggao/` | ✅ 活跃 |
 | 深圳 | 深铁采购平台 | `web-szmc-cg-bids` | 招标采购 / 工程建设 | `https://cg.shenzhenmc.com/zzbgg/index.jhtml` | ✅ 活跃 |
+| 深圳 | 深铁采购平台 | `web-szmc-cg-awards` | 中标候选人公示 | `https://cg.shenzhenmc.com/zzbhxrgs/index.jhtml` | ✅ 活跃 |
+| 深圳 | 深铁采购平台 | `web-szmc-cg-results` | 中标结果公示 | `https://cg.shenzhenmc.com/zzbjggs/index.jhtml` | ✅ 活跃 |
+| 深圳 | 深铁采购平台 | `web-szmc-cg-nonbid` | 非招标采购（商业/服务） | `https://cg.shenzhenmc.com/fcggggs/index.jhtml` | ✅ 活跃 |
+| 深圳 | 深铁采购平台 | `web-szmc-cg-plan` | 采购计划 | `https://cg.shenzhenmc.com/zbxmjh/index.jhtml` | ✅ 活跃 |
 | 深圳 | 港铁深圳 | `web-mtrsz-news` | 运营调度 / 智慧城轨 | `https://www.mtrsz.com.cn`（`content/page` JSON 接口，栏目 7599） | ✅ 活跃 |
 | 深圳 | 港铁深圳 | `web-mtrsz-bids` | 招标采购 / 设备维保 | 同上（栏目 7620 采购公告） | ✅ 活跃 |
 | 深圳 | 港铁深圳 | `web-mtrsz-ads` | 车站商业 / 地铁广告 | 同上（栏目 8368 招商公告） | ✅ 活跃 |
@@ -145,20 +149,66 @@
 
 ---
 
-## 四、 招投标与采购公示平台清单
+## 四、 北上广深招标与采购公告渠道（实测）
 
-地铁行业是高投资、严监管行业，大量车辆采购、信号维保、商业租赁均必须走公开招投标程序：
+地铁行业的招标分两类：**依法招标**（工程、设备、车辆）走公共资源交易平台或自建采购平台；**非招标采购**（商业招商、广告、物业、服务）多走集团自建平台。以下是 2026-10 逐个实测的结果。
 
-| 平台名称 | 官方入口 | 覆盖重点信息 | 抓取策略 |
+### 4.1 北京
+
+| 渠道 | 地址 | 覆盖 | 实测结果 |
 |---|---|---|---|
-| **中国轨道交通网 · 招标采购** | `http://www.rail-transit.com/zhaobiao/` | 全国54城地铁机电设备、车辆、通信信号、工程施工招标公告 | `web_list`（已接入） |
-| **中国轨道交通网 · 中标公示** | `http://www.rail-transit.com/zhongbiao/` | 中标候选人公示、评标结果公告、合同签约金额公布 | `web_list`（已接入） |
-| **深圳地铁 · 招标招商公告** | `https://www.szmc.net/szmc_m/zhaobiaozhaoshang/` | 车站商业点位招商、商铺租赁竞价、广告媒体刊例经营权招商 | `web_list`（已接入） |
-| **上海地铁采购电子商务平台 (EPS)** | `https://eps.shmetro.com` | 申通地铁全网物资设备采购、工程施工、维保服务公开招标 | `web_list` |
-| **广州地铁招投标平台** | `http://zb.gzmtr.cn` | 广州地铁及大湾区城际线网设备采购与服务招投标 | `web_list` |
-| **北京公共资源交易服务平台** | `https://ggzyfw.beijing.gov.cn` | 北京地铁及京投公司基础设施工程与车辆装备招标 | `web_list` |
-| **机电产品招标投标电子交易平台** | `https://www.chinabidding.com` | 全国各城市地铁盾构机、列控CBTC、牵引供电系统国际招标 | `web_list` |
-| **中国招标投标公共服务平台** | `http://www.cebpubservice.com` | 国家级法定招投标公告发布媒介（带“轨道交通”专项过滤） | `web_list` |
+| 京港地铁采购与招标 | `mtr.bj.cn/category/business/...` | 4/14/16/17 号线设备维保、工程 | ✅ 已接入 `web-mtr-bj-bids` |
+| 北京地铁电子商务采购平台 | `zhaocai.bjsubway.com/zhaocai-portal/` | 采购项目公示、采购结果公示、社会化采购 | ⚠️ Nuxt SPA；列表接口 `POST /bjdt/manage-server/home/inform/notice/page` 在 nginx 层返回 403，未登录不可取 |
+| 京投公司官网 | `bii.com.cn` | 集团投融资、企业新闻 | ✅ 已接入 `web-bii-news`（无招标栏目） |
+| 京投轨道运营 | `bjmoa.cn` | 19 号线、燕房线、大兴机场线、22 号线运营 | ✅ 已接入 `web-bjmoa-news`（无招标栏目） |
+| 北京市公共资源交易服务平台 | `ggzyfw.beijing.gov.cn` | 全市工程招标 | ⚠️ 有静态 HTML 可抓，但「交通工程」是道路/水利/城市更新混合流，地铁无独立分类，噪声过大 |
+
+### 4.2 上海
+
+| 渠道 | 地址 | 覆盖 | 实测结果 |
+|---|---|---|---|
+| 上海地铁采购电子商务平台 | `eps.shmetro.com` | 申通全网物资、工程、维保 | ❌ **已下线为空壳**：页面只剩一张 banner 图和埋点，无任何列表 |
+| 上海交易集团综合采购 | `shexgrp.com/jyzx/001001/001001016/` | 全市综合采购 | ⚠️ 数据经 ES 检索接口 `inteligentsearch/rest/esinteligentsearch/getFullTextDataNew` 渲染；内容是镇政府、医院、学校为主，地铁项目混在其中，无独立分类 |
+| 上海市公共资源交易平台 | `shggzy.com` | 全市公共资源 | ⚠️ SPA，无静态列表 |
+
+**结论：上海地铁招标目前没有可直接抓取的公开渠道。** `eps.shmetro.com` 的停用是关键缺口，需要另行确认申通是否迁移到新平台。
+
+### 4.3 广州
+
+| 渠道 | 地址 | 覆盖 | 实测结果 |
+|---|---|---|---|
+| 广州地铁招标公告 | `bid.gzmtr.com/bizzbgg/` | 工程、设备、备件、服务 | ✅ 已接入 `web-gzmtr-bids` |
+| 广州地铁中标公示 | `bid.gzmtr.com/bizzbgs/` | 中标候选人、结果 | ✅ 已接入 `web-gzmtr-awards` |
+| 广州地铁招投标通知 | `bid.gzmtr.com/bizztbtz/` | 制度类通知 | ⏸ 只有 1 条制度文件，无招标信息，未接入 |
+| 资质复查 / 供应商评分 | `bid.gzmtr.com/bizztbqykzzqc/`、`gyspjgl/` | 企业库资质、供应商评分 | ⏸ 低频制度类，未接入 |
+
+### 4.4 深圳
+
+深铁的采购平台 `cg.shenzhenmc.com` 是四城里栏目最完整的，全站结构统一（`li` + `a` 标题 + `span.Gray` 发布时间）。
+
+| 渠道 | 地址 | 覆盖 | 实测结果 |
+|---|---|---|---|
+| 招标公告 | `cg.shenzhenmc.com/zzbgg/` | 工程、货物、服务招标 | ✅ 已接入 `web-szmc-cg-bids` |
+| 中标候选人公示 | `cg.shenzhenmc.com/zzbhxrgs/` | 中标候选人 | ✅ 已接入 `web-szmc-cg-awards` |
+| 中标结果公示 | `cg.shenzhenmc.com/zzbjggs/` | 最终中标结果 | ✅ 已接入 `web-szmc-cg-results` |
+| 非招标采购公告 | `cg.shenzhenmc.com/fcggggs/` | 商业、服务、酒店、物业 | ✅ 已接入 `web-szmc-cg-nonbid` |
+| 采购计划 | `cg.shenzhenmc.com/zbxmjh/` | 采购前瞻计划 | ✅ 已接入 `web-szmc-cg-plan` |
+| 商业招商与广告租售 | `szmc.net/szmc_m/...` | 站内商铺、广告位 | ✅ 已接入 `web-szmc-bids` |
+| 港铁深圳采购公告 | `mtrsz.com.cn`（栏目 7620） | 4/13 号线维保、物资 | ✅ 已接入 `web-mtrsz-bids` |
+| 港铁深圳招商公告 | `mtrsz.com.cn`（栏目 8368） | 广告资源、商铺招商 | ✅ 已接入 `web-mtrsz-ads` |
+| 资审结果 / 变更 / 终止公告 | `zzgys/`、`zgzgggs/`、`zzzgg/` | 过程性公告 | ⏸ 结构一致，可按需追加 |
+| 非招标成交结果 | `fcgjggg/` | 成交结果 | ⏸ 与中标结果重复度较高，暂未接入 |
+
+### 4.5 缺口汇总
+
+| 城市 | 建设招标 | 运营/维保 | 商业/车站 | 广告 |
+|---|---|---|---|---|
+| 北京 | ⚠️ 采购平台需登录 | ✅ 京港地铁 | ❌ 无独立渠道 | ❌ 无独立渠道 |
+| 上海 | ❌ 平台空壳 | ❌ 平台空壳 | ❌ | ❌ |
+| 广州 | ✅ 招标公告 | ✅ 招标公告 | ⚠️ 混在招标公告中 | ⚠️ 混在招标公告中 |
+| 深圳 | ✅ 采购平台 | ✅ 采购平台 | ✅ 招商公告 | ✅ 招商+广告招商 |
+
+下一步若要补上海和北京商业渠道，需要确认：上海申通是否已更换采购平台域名；北京地铁电子商务采购平台的登录/公开访问策略。
 
 ---
 

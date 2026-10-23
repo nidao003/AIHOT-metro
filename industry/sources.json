@@ -469,6 +469,118 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-szmc-cg-awards",
+      "name": "深铁采购平台 · 中标候选人公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://cg.shenzhenmc.com/zzbhxrgs/index.jhtml",
+        "itemSelector": "li:has(span.Gray)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Gray",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 10,
+          "summarySelector": ".Content"
+        }
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-cg-results",
+      "name": "深铁采购平台 · 中标结果公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://cg.shenzhenmc.com/zzbjggs/index.jhtml",
+        "itemSelector": "li:has(span.Gray)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Gray",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 10,
+          "summarySelector": ".Content"
+        }
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-cg-nonbid",
+      "name": "深铁采购平台 · 非招标采购公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://cg.shenzhenmc.com/fcggggs/index.jhtml",
+        "itemSelector": "li:has(span.Gray)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Gray",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 10,
+          "summarySelector": ".Content"
+        }
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "TOD开发"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-cg-plan",
+      "name": "深铁采购平台 · 采购计划",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://cg.shenzhenmc.com/zbxmjh/index.jhtml",
+        "itemSelector": "li:has(span.Gray)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Gray",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 10,
+          "summarySelector": ".Content"
+        }
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-mtrsz-news",
       "name": "港铁深圳 · 公司资讯",
       "kind": "json_list",
