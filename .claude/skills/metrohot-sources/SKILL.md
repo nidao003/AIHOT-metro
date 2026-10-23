@@ -495,7 +495,7 @@ UPDATE sources SET config = jsonb_set(config, '{detail}', '{"maxFetches": 20, "s
 
 | 城市 | 主体 | 官网 | 探测结论（2026-10） | 状态 |
 |---|---|---|---|---|
-| 成都 | 成都轨道集团 | `chengdurail.com` | 静态可解析，但日期拆成两个节点（`<span>08-26</span>2026`，textContent 变成 `08-262026`），现有解析器读不出 | 🟡 需扩展日期解析 |
+| 成都 | 成都轨道集团 | `chengdurail.com` | ✅ dates.ts 扩展支持 MM-DDYYYY 格式后彻底解决；`h4`+`time` 成功接入轨道动态（10 条）与公告公示（3 条），全带日期 | ✅ 已接入 2 源 |
 | 重庆 | 重庆轨道集团 | `cqmetro.cn`（卡片式 SPA） | ✅ 招标走公共资源交易平台 `cqggzy.com`：`/trade/014001?categoryNum=014001&keyword=轨道交通` 服务端渲染，12 条。首页卡片式仍不可用 | ✅ 已接入 1 源 |
 | 杭州 | 杭州地铁 | `hzmetro.com`（SPA） | ✅ 招采平台独立域名 `zhaocai.hzmetro.com`（服务端渲染），采购/澄清/结果公示/结果公告/流标五栏结构统一：`li:has(span.Right)` + `span.Right` 日期 | ✅ 已接入 3 源 |
 | 武汉 | 武汉地铁 | `whrt.com` | 302 跳到 `ww16.whrt.com/?sub1=…`（泛域名轮换） | 🟡 需跟跳转 |
@@ -504,7 +504,7 @@ UPDATE sources SET config = jsonb_set(config, '{detail}', '{"maxFetches": 20, "s
 | 天津 | 天津轨道 | `tjgdjt.com` | ✅ `channels/17.html`（运营动态）、`channels/28.html`（招商公告）；招采平台 `xmzc.tjgdjt.com:8084` 接口可用但详情路由未破 | ✅ 已接入 2 源 |
 | 长沙 | 长沙轨道 | `hncsmtr.com`（不是 hnsgzjt.com） | ✅ `905/918` 运营动态、`906/923` 建设进展；`908/944` 招标栏目停更在 2023 年 | ✅ 已接入 2 源 |
 | 郑州 | 郑州地铁 | `zzmetro.cn` | ✅ `nav/list/33/{34,35,36}` 采购计划/公告/单一来源 | ✅ 已接入 3 源 |
-| 青岛 | 青岛地铁 | `qd-metro.com` | DNS 不通 | ❌ 不可用 |
+| 青岛 | 青岛地铁 / 市公共资源中心 | `ggzy.qingdao.gov.cn` | ✅ 官网虽不可达，但公共资源平台提供完整 JSON 接口 `POST /ztbservice/web/web/getSearchList`（在架 3957 条），20 条全带日期 | ✅ 已接入 1 源 |
 | 东莞 | 东莞轨道 | `dggdjt.com` | 70KB 可访问，`node/112.htmx` 招标、`node/123.htmx` 招商；**TLS 握手超时**（curl 与 Node 均超时） | 🟡 待解决 TLS |
 | 宁波 | 宁波轨道 | `nbmetro.com` | ✅ `tender_report.php` 系列，招标/中标/非招标三栏结构一致 | ✅ 已接入 3 源 |
 | 合肥 | 合肥轨道 | `hfgdjt.com` | **瑞数（Riverse）防护**，详见下方专节 | ⏸ 暂缓（需浏览器容器） |

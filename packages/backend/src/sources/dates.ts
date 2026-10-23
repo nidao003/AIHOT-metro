@@ -42,6 +42,12 @@ export function parseLooseDate(value: string | null | undefined, utcOffset = "+0
   // year-month into sibling nodes, leaving only this part available to the date selector.
   const yearMonth = /^(\d{4})[-/.年](\d{1,2})月?$/.exec(v);
   if (yearMonth && calendarDay(yearMonth[1]!, yearMonth[2]!, 1)) return atOffset(yearMonth[1]!, yearMonth[2]!, 1, 0, 0, 0, utcOffset);
+  // Sites like Chengdu metro split date nodes into <time><span>08-26</span>2026</time>, whose text
+  // collapses into "08-262026" (MM-DDYYYY).
+  const monthDayYear = /^(\d{1,2})-(\d{1,2})(\d{4})$/.exec(v);
+  if (monthDayYear && calendarDay(monthDayYear[3]!, monthDayYear[1]!, monthDayYear[2]!)) {
+    return atOffset(monthDayYear[3]!, monthDayYear[1]!, monthDayYear[2]!, 0, 0, 0, utcOffset);
+  }
   const yearFirst = /(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?(?:(?:T|\s*)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const monthFirst = /\b(\d{1,2})\/(\d{1,2})\/(\d{4})(?:(?:T|\s+)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const numeric = yearFirst ?? monthFirst?.map((part, i, match) => i === 1 ? match[3]! : i === 2 ? match[1]! : i === 3 ? match[2]! : part);
