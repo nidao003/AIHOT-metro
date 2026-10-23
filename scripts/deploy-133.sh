@@ -124,8 +124,10 @@ fi
 
 echo ""
 echo "🎉 部署完成！访问地址："
-echo "   前台：http://${SITE_HOST}:6088"
-echo "   后台：http://${SITE_HOST}:6088/admin"
 if [[ "$REMOTE_CHANNEL" == "public" ]]; then
-  echo "   提示：公网 6088 需在路由/网关做端口映射后，才能在公网浏览器打开；服务器本地已验证 200。"
+  echo "   前台：http://${LAN_HOST}:6088   （公网 6088 未映射，需在局域网内访问）"
+  echo "   后台：http://${LAN_HOST}:6088/admin"
+else
+  echo "   前台：http://${SITE_HOST}:6088"
+  echo "   后台：http://${SITE_HOST}:6088/admin"
 fi
