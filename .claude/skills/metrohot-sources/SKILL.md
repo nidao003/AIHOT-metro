@@ -540,7 +540,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 城市 | 名录域名 | 实测 |
 |---|---|---|
 | 呼和浩特 | `hhhtmetro.com` | 域名不存在（试过 hhhtmetro.cn 也不通） |
-| 哈尔滨 | `hrbdt.com`（非 .com.cn） | 首页 200 但仅 6.9KB，无列表；后续重试超时 |
+| 哈尔滨 | `hrbdt.com` / `harbin-metro.ecrrc.com` | `hrbdt.com` 是**域名待售页**；`harbin-metro.ecrrc.com` 跳 404。可用：市级 `hrbggzy.harbin.gov.cn`（首页 24 条带日期、全行业混合；**子栏目 `/zbgg/` nginx 层 403**，Referer 无效）✅ 已接首页 |
 | 昆明 | `kmgdgs.com` / `yjrt.com.cn` | 503 / 内容仅 1 条 2020 介绍页 |
 | 温州 | `wzmtr.com` | SPA 壳（所有路径均返回同一 2600 字节 index）；XHR 里出现 `challenge_vcode` 与 `Ahxwd_bot…`，**有人机验证挑战** |
 | 绍兴 | `sxmtr.com` | 空响应 |
