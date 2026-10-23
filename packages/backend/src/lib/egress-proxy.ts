@@ -9,6 +9,14 @@ import { isBlockedAddress } from "./url.ts";
 // Apply the same protocol restriction to destinations, DNS-over-HTTPS and TLS proxy connections.
 export const OUTBOUND_HTTP_OPTIONS = { allowH2: false } as const;
 
+/**
+ * ECDHE curves to offer. Node's "auto" leads with X25519; some Chinese government TLS endpoints
+ * (TongWeb fronted hosts such as ggzyfw.beijing.gov.cn) reject that offer with
+ * ERR_SSL_BAD_ECPOINT. Naming the mainstream curves keeps those hosts reachable without
+ * weakening the handshake.
+ */
+export const OUTBOUND_ECDH_CURVE = "X25519:P-256:P-384:P-521";
+
 type Resolve = (hostname: string) => Promise<string[]>;
 type ConnectOptions<T> = Omit<Dispatcher.ConnectOptions<T>, "origin">;
 type ConnectCallback<T> = (error: Error | null, data: Dispatcher.ConnectData<T>) => void;

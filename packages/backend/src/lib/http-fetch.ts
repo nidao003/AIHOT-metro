@@ -4,7 +4,7 @@ import { addAbortListener } from "node:events";
 import { Agent, Pool, ProxyAgent, fetch as undiciFetch, type Dispatcher } from "undici";
 import { config } from "../config.ts";
 import { assertPublicUrl, guardedLookup } from "./url.ts";
-import { createEgressProxy, createEgressResolver, OUTBOUND_HTTP_OPTIONS } from "./egress-proxy.ts";
+import { createEgressProxy, createEgressResolver, OUTBOUND_ECDH_CURVE, OUTBOUND_HTTP_OPTIONS } from "./egress-proxy.ts";
 import { DEPLOYMENT, SITE } from "@aihot/site";
 
 /**
@@ -54,12 +54,13 @@ function dispatcherFor(viaProxy: boolean, privateHost: boolean): Dispatcher | un
   if (privateHost) {
     // The listed name may resolve to a private service; the address dialled is still checked.
     privateFeedAgent ??= new Agent({ ...OUTBOUND_HTTP_OPTIONS, factory: destinationPool, connect: {
+      ecdhCurve: OUTBOUND_ECDH_CURVE,
       lookup: ((hostname: string, options: never, callback: never) => guardedLookup(hostname, options, callback, config.privateFeedHosts)) as never,
     } });
     return privateFeedAgent;
   }
   // Direct connections resolve through the guarded lookup: the address actually dialled is checked.
-  directAgent ??= new Agent({ ...OUTBOUND_HTTP_OPTIONS, connect: { lookup: guardedLookup as never }, factory: destinationPool });
+  directAgent ??= new Agent({ ...OUTBOUND_HTTP_OPTIONS, connect: { ecdhCurve: OUTBOUND_ECDH_CURVE, lookup: guardedLookup as never }, factory: destinationPool });
   return directAgent;
 }
 
