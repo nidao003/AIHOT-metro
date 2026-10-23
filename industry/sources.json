@@ -275,6 +275,33 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-bjmoa-news",
+      "name": "京投轨道运营 · 公司新闻",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "bjmoa",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.bjmoa.cn/newsList_350_page1.html",
+        "itemSelector": "div.item-cell",
+        "linkSelector": "a",
+        "titleSelector": ".item-tit a",
+        "detail": {
+          "maxFetches": 8,
+          "publishedAtSelector": ".source li",
+          "summarySelector": ".newsboxs .content"
+        }
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "新线开通"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-shmetro-news",
       "name": "申通地铁 · 新闻中心",
       "kind": "web_list",

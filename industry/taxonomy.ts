@@ -136,7 +136,7 @@ export const ENTITY_TAGS = [
   "武汉地铁", "南京地铁", "重庆轨道交通", "杭州地铁", "青岛地铁",
   "苏州轨道交通", "西安地铁", "郑州地铁", "长沙轨道交通", "天津轨道交通",
   "沈阳地铁", "合肥轨道交通", "宁波轨道交通", "无锡地铁", "佛山地铁", "东莞轨道交通",
-  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳",
+  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营",
   "港铁公司", "中国中车", "京投公司"
 ] as const;
 
@@ -180,6 +180,7 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   mtr: { name: "港铁公司", displayTag: "港铁", aliases: ["港铁", "港铁公司", "香港铁路有限公司", "MTR"], orgNames: ["香港铁路有限公司", "港铁公司"] },
   crrc: { name: "中国中车", displayTag: "中国中车", aliases: ["中国中车", "中车", "CRRC"], orgNames: ["中国中车股份有限公司", "中车长客", "中车四方", "中车株机"] },
   bii: { name: "京投公司", displayTag: "京投公司", aliases: ["京投公司", "北京市基础设施投资有限公司"], orgNames: ["京投公司"] },
+  bjmoa: { name: "京投轨道运营", displayTag: "京投轨道运营", aliases: ["京投轨道运营", "京投轨道运营公司", "北京市轨道交通运营管理有限公司", "北京轨道运营"], orgNames: ["京投轨道运营公司", "北京市轨道交通运营管理有限公司"] },
   hzmetro: { name: "杭州地铁", displayTag: "杭州地铁", aliases: ["杭州地铁", "杭州市地铁集团"], orgNames: ["杭州市地铁集团"] },
   njmetro: { name: "南京地铁", displayTag: "南京地铁", aliases: ["南京地铁", "南京地铁集团"], orgNames: ["南京地铁集团"] },
   cqmetro: { name: "重庆轨道交通", displayTag: "重庆轨道", aliases: ["重庆轨道交通", "重庆地铁", "重庆轨道集团"], orgNames: ["重庆市轨道交通（集团）有限公司"] },
@@ -223,6 +224,7 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "mtr", name: "港铁公司", patterns: [/港铁|香港铁路|\bmtr\b/i] },
   { id: "crrc", name: "中国中车", patterns: [/中国中车|\bcrrc\b/i] },
   { id: "bii", name: "京投公司", patterns: [/京投公司|北京市基础设施投资/i] },
+  { id: "bjmoa", name: "京投轨道运营", patterns: [/京投轨道运营|北京市轨道交通运营管理|北京轨道运营/i] },
   { id: "hzmetro", name: "杭州地铁", patterns: [/杭州地铁/i] },
   { id: "njmetro", name: "南京地铁", patterns: [/南京地铁/i] },
   { id: "cqmetro", name: "重庆轨道交通", patterns: [/重庆轨道|重庆地铁/i] },
@@ -263,6 +265,7 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "mtr", domains: ["mtr.com.hk"] },
   { entityId: "crrc", domains: ["crrcgc.cc"] },
   { entityId: "bii", domains: ["bii.com.cn"] },
+  { entityId: "bjmoa", domains: ["bjmoa.cn"] },
   { entityId: "hzmetro", domains: ["hzmetro.com"] },
   { entityId: "njmetro", domains: ["njmetro.com.cn"] },
   { entityId: "cqmetro", domains: ["cqmetro.cn"] },

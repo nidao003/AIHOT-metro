@@ -11,6 +11,7 @@
 | 城市 | 主体 | 信源 ID | 覆盖板块 | 采集地址 | 状态 |
 |---|---|---|---|---|---|
 | 北京 | 京投公司 | `web-bii-news` | 集团财报 / 债券投融资 / 规划 | `https://www.bii.com.cn/newsList_29_page1.html` | ✅ 活跃 |
+| 北京 | 京投轨道运营 | `web-bjmoa-news` | 运营调度 / 新线开通 | `https://www.bjmoa.cn/newsList_350_page1.html` | ✅ 活跃 |
 | 北京 | 北京地铁 | `web-bjsubway-news` | 运营调度 / 安全应急 | `https://www.bjsubway.com/news/qyxw/yyzd/` | ✅ 活跃 |
 | 北京 | 京港地铁 | `web-mtr-bj-news` | 运营调度 / 智慧城轨 | `https://www.mtr.bj.cn/news/company-news` | ✅ 活跃 |
 | 北京 | 京港地铁 | `web-mtr-bj-bids` | 招标采购 / 设备维保 | `https://www.mtr.bj.cn/category/business/tender-and-supplier-guidelines/tender-invitations` | ✅ 活跃 |
@@ -55,8 +56,12 @@
 | 城市 | 集团 / 运营公司全称 | 官方网站 | 核心关注板块 |
 |---|---|---|---|
 | **北京** | 北京市基础设施投资有限公司 (京投公司) | `https://www.bii.com.cn` | 投融资、两区建设债、资产运营 |
+| **北京** | 京投轨道运营 (北京市轨道交通运营管理有限公司) | `https://www.bjmoa.cn` | 19号线、燕房线、大兴机场线、22号线（平谷线）运营 |
 | **北京** | 北京市地铁运营有限公司 (北京地铁) | `https://www.bjsubway.com` | 运营时刻表、行车调度、客流 |
 | **北京** | 北京京港地铁有限公司 (京港地铁) | `https://www.mtr.bj.cn` | 4/14/16/17号线PPP运营、港式服务 |
+| **北京** | 北京京城地铁有限公司 | 无独立官网 | 首都机场线运营（2017 年起） |
+| **北京** | 北京公交有轨电车有限公司 | 无独立官网 | 西郊线运营 |
+| **北京** | 城市铁建公司 | 无独立官网 | 大兴国际机场线建设 |
 | **上海** | 上海申通地铁集团有限公司 | `https://www.shmetro.com` | 集团动态、建设规划、企业年报 |
 | **上海** | 上海地铁运营服务网 (服务与实时客流) | `https://service.shmetro.com` | 线路实时动态、致歉信、客流预警 |
 | **广州** | 广州地铁集团有限公司 | `https://www.gzmtr.com` | 大湾区城际直联、线网运营、海外输出 |
