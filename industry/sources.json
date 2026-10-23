@@ -591,6 +591,30 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-lzgdjt-news",
+      "name": "兰州轨道 · 轨道动态",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "lzgdjt",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.lzgdjt.com/lzgd/new_list.jsp?cId=11070",
+        "itemSelector": "div.newsListContent li",
+        "linkSelector": "a",
+        "titleSelector": "h2",
+        "publishedAtSelector": "time",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "客流运能"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",

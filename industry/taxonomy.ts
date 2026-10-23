@@ -136,7 +136,7 @@ export const ENTITY_TAGS = [
   "武汉地铁", "南京地铁", "重庆轨道交通", "杭州地铁", "青岛地铁",
   "苏州轨道交通", "西安地铁", "郑州地铁", "长沙轨道交通", "天津轨道交通",
   "沈阳地铁", "合肥轨道交通", "宁波轨道交通", "无锡地铁", "佛山地铁", "东莞轨道交通",
-  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营", "洛阳轨道", "乌鲁木齐轨道", "石家庄轨道", "南昌轨道",
+  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营", "洛阳轨道", "乌鲁木齐轨道", "石家庄轨道", "南昌轨道", "兰州轨道",
   "港铁公司", "中国中车", "京投公司"
 ] as const;
 
@@ -205,6 +205,7 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   "mtr-bj": { name: "京港地铁", displayTag: "京港地铁", aliases: ["京港地铁", "北京京港地铁有限公司"], orgNames: ["京港地铁"] },
   "mtrsz": { name: "港铁深圳", displayTag: "港铁深圳", aliases: ["港铁深圳", "港铁轨道交通（深圳）有限公司", "港铁轨道交通(深圳)有限公司"], orgNames: ["港铁轨道交通（深圳）有限公司", "港铁深圳"] },
   "mtr-hz": { name: "杭港地铁", displayTag: "杭港地铁", aliases: ["杭港地铁", "杭州杭港地铁有限公司"], orgNames: ["杭港地铁"] },
+  lzgdjt: { name: "兰州轨道", displayTag: "兰州轨道", aliases: ["兰州市轨道交通", "兰州地铁"], orgNames: ["兰州市轨道交通有限公司"] },
   sjzmetro: { name: "石家庄轨道", displayTag: "石家庄", aliases: ["石家庄市轨道交通", "石家庄地铁"], orgNames: ["石家庄市轨道交通集团有限责任公司"] },
   ncmtr: { name: "南昌轨道", displayTag: "南昌轨道", aliases: ["南昌轨道交通", "南昌地铁"], orgNames: ["南昌轨道交通集团有限公司"] },
   urumqi: { name: "乌鲁木齐轨道", displayTag: "乌鲁木齐", aliases: ["乌鲁木齐轨道交通", "乌鲁木齐地铁", "乌鲁木齐城市轨道集团"], orgNames: ["乌鲁木齐城市轨道集团有限公司"] },
@@ -253,6 +254,7 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "mtr-bj", name: "京港地铁", patterns: [/京港地铁/i] },
   { id: "mtrsz", name: "港铁深圳", patterns: [/港铁深圳|港铁轨道交通（深圳）|港铁轨道交通\(深圳\)/i] },
   { id: "mtr-hz", name: "杭港地铁", patterns: [/杭港地铁/i] },
+  { id: "lzgdjt", name: "兰州轨道", patterns: [/兰州.{0,4}(轨道|地铁)/i] },
   { id: "sjzmetro", name: "石家庄轨道", patterns: [/石家庄.{0,4}(轨道|地铁)/i] },
   { id: "ncmtr", name: "南昌轨道", patterns: [/南昌.{0,4}(轨道|地铁)/i] },
   { id: "urumqi", name: "乌鲁木齐轨道", patterns: [/乌鲁木齐.{0,4}(轨道|地铁)/i] },
@@ -297,6 +299,7 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "lysubway", domains: ["lysubway.com.cn"] },
   { entityId: "urumqi", domains: ["urumqimtr.com"] },
   { entityId: "sjzmetro", domains: ["sjzmetro.cn"] },
+  { entityId: "lzgdjt", domains: ["lzgdjt.com"] },
   { entityId: "ncmtr", domains: ["ncmtr.com"] },
 ];
 
