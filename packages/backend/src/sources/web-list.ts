@@ -57,11 +57,17 @@ function navigationLink(url: string, listing: string): boolean {
 }
 
 /**
- * The address a link element carries: a list that navigates by script names its post in the handler
- * ("javascript:navigateTo('/p1/xwzx/20261016/37360.html')"), which is the href's only URL.
+ * The address a link element carries, in three shapes:
+ * - an absolute URL ("https://site/a.html") — used as is;
+ * - a relative path with no scheme ("./202610/x.html", "tender.php?info/1", "/p1/x.html", "#anchor") —
+ *   used as is, the resolver gives it the listing's base;
+ * - anything else naming a scheme ("javascript:navigateTo('/p1/xwzx/...')") — its only URL is the
+ *   quoted argument inside the handler, so that is extracted instead.
  */
 function hrefTarget(href: string | undefined): string | undefined {
-  if (!href || /^(?:https?:)?\/\//i.test(href) || /^[./?#]/.test(href)) return href;
+  if (!href) return undefined;
+  if (/^https?:\/\//i.test(href)) return href;
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(href)) return href;
   return /['"]((?:https?:\/\/|\/)[^'"]+)['"]/.exec(href)?.[1];
 }
 

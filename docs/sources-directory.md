@@ -46,6 +46,14 @@
 | **`web-rail-transit-bids`** | 中国城市轨道交通网 · 招标采购 | 招标采购 / 设备工程 | `web_list` | `http://www.rail-transit.com/zhaobiao/` | ✅ 活跃 |
 | **`web-rail-transit-awards`** | 中国城市轨道交通网 · 中标公示 | 中标结果 / 候选人公示 | `web_list` | `http://www.rail-transit.com/zhongbiao/` | ✅ 活跃 |
 | **`web-sz-mtr-news`** | 苏州轨道交通 · 头条新闻与动态 | 新线建设 / 运营 / 商业 | `web_list` | `https://www.sz-mtr.com/news/hot/` | ✅ 活跃 |
+| `web-zzmetro-bids` | 郑州地铁 · 采购公告 | 招标采购 / 设备维保 | `web_list` | `https://www.zzmetro.cn/nav/list/33/35` | ✅ 活跃 |
+| `web-zzmetro-plan` | 郑州地铁 · 采购计划 | 招标采购 / 工程建设 | `web_list` | `https://www.zzmetro.cn/nav/list/33/34` | ✅ 活跃 |
+| `web-zzmetro-single` | 郑州地铁 · 单一来源与直接采购公示 | 中标公示 / 招标采购 | `web_list` | `https://www.zzmetro.cn/nav/list/33/36` | ✅ 活跃 |
+| `web-nbmetro-bids` | 宁波轨道 · 招标公告 | 招标采购 / 工程建设 | `web_list` | `http://www.nbmetro.com/tender_report.php` | ✅ 活跃 |
+| `web-nbmetro-awards` | 宁波轨道 · 中标公示 | 中标公示 / 招标采购 | `web_list` | `http://www.nbmetro.com/tender_report.php?2` | ✅ 活跃 |
+| `web-nbmetro-nonbid` | 宁波轨道 · 非招标采购公告 | 招标采购 / 车站商业 | `web_list` | `http://www.nbmetro.com/tender_report.php?10` | ✅ 活跃 |
+| `web-tjgdjt-bids` | 天津轨道 · 招商公告 | 车站商业 / TOD开发 | `web_list` | `http://www.tjgdjt.com/channels/28.html` | ✅ 活跃 |
+| `web-tjgdjt-news` | 天津轨道 · 运营动态 | 运营调度 / 安全应急 | `web_list` | `http://www.tjgdjt.com/channels/17.html` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

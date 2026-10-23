@@ -305,6 +305,198 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-zzmetro-bids",
+      "name": "郑州地铁 · 采购公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "zzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.zzmetro.cn/nav/list/33/35",
+        "itemSelector": "li:has(span.c-gold)",
+        "linkSelector": "a",
+        "titleSelector": ".f1",
+        "publishedAtSelector": ".c-gold",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-zzmetro-plan",
+      "name": "郑州地铁 · 采购计划",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "zzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.zzmetro.cn/nav/list/33/34",
+        "itemSelector": "li:has(span.c-gold)",
+        "linkSelector": "a",
+        "titleSelector": ".f1",
+        "publishedAtSelector": ".c-gold",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-zzmetro-single",
+      "name": "郑州地铁 · 单一来源与直接采购公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "zzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.zzmetro.cn/nav/list/33/36",
+        "itemSelector": "li:has(span.c-gold)",
+        "linkSelector": "a",
+        "titleSelector": ".f1",
+        "publishedAtSelector": ".c-gold",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-nbmetro-bids",
+      "name": "宁波轨道 · 招标公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "nbmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "http://www.nbmetro.com/tender_report.php",
+        "itemSelector": "ul.about-list > li",
+        "linkSelector": "a",
+        "titleSelector": "p.fl a",
+        "publishedAtSelector": "p.fr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-nbmetro-awards",
+      "name": "宁波轨道 · 中标公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "nbmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "http://www.nbmetro.com/tender_report.php?2",
+        "itemSelector": "ul.about-list > li",
+        "linkSelector": "a",
+        "titleSelector": "p.fl a",
+        "publishedAtSelector": "p.fr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-nbmetro-nonbid",
+      "name": "宁波轨道 · 非招标采购公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "nbmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.nbmetro.com/tender_report.php?10",
+        "itemSelector": "ul.about-list > li",
+        "linkSelector": "a",
+        "titleSelector": "p.fl a",
+        "publishedAtSelector": "p.fr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-tjgdjt-bids",
+      "name": "天津轨道 · 招商公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "tjgdjt",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.tjgdjt.com/channels/28.html",
+        "itemSelector": "li.wow",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "TOD开发"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-tjgdjt-news",
+      "name": "天津轨道 · 运营动态",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "tjgdjt",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "http://www.tjgdjt.com/channels/17.html",
+        "itemSelector": "li.wow:has(span)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "安全应急"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-bjmoa-news",
       "name": "京投轨道运营 · 公司新闻",
       "kind": "web_list",
