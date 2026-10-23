@@ -377,6 +377,50 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-chinaiut-bids",
+      "name": "城市交通网 · 轨道交通招标",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "http://www.chinaiut.com/zhaobiao",
+        "itemSelector": "li:has(a[href*=\"/zhaobiao/\"])",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "div.fr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "媒体",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-chinaiut-awards",
+      "name": "城市交通网 · 轨道交通中标",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "http://www.chinaiut.com/zhongbiao",
+        "itemSelector": "li:has(a[href*=\"/zhongbiao/\"])",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "div.fr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "媒体",
+        "中标公示"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-cqggzy-metro",
       "name": "重庆公共资源交易 · 轨道交通招标",
       "kind": "web_list",
