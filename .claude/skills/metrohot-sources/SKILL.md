@@ -449,7 +449,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 |---|---|---|---|---|
 | 成都 | 成都轨道集团 | `chengdurail.com` | 静态可解析，但日期拆成两个节点（`<span>08-26</span>2026`，textContent 变成 `08-262026`），现有解析器读不出 | 🟡 需扩展日期解析 |
 | 重庆 | 重庆轨道集团 | `cqmetro.cn` | 首页是 `<article class="news-card" data-id>` 卡片，**无 `a[href]`**，靠 JS 跳转；日期只在图片路径里 | 🟡 需找列表页/接口 |
-| 杭州 | 杭州地铁 | `hzmetro.com` | 2.1KB SPA 壳 | 🟡 需抓接口 |
+| 杭州 | 杭州地铁 | `hzmetro.com`（SPA） | ✅ 招采平台独立域名 `zhaocai.hzmetro.com`（服务端渲染），采购/澄清/结果公示/结果公告/流标五栏结构统一：`li:has(span.Right)` + `span.Right` 日期 | ✅ 已接入 3 源 |
 | 武汉 | 武汉地铁 | `whrt.com` | 302 跳到 `ww16.whrt.com/?sub1=…`（泛域名轮换） | 🟡 需跟跳转 |
 | 西安 | 西安轨道 | `xianrail.com` | 1.1KB SPA 壳 | 🟡 需抓接口 |
 | 南京 | 南京地铁 | `njmetro.com.cn` | ✅ 仅 https 可用；`li.tender_tli` 招标 20 条、`li.buil_mli1li` 资源招商 15 条（日期嵌在标题里，用 `publishedAtRegex` 提） | ✅ 已接入 2 源 |

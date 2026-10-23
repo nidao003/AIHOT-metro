@@ -58,6 +58,9 @@
 | `web-njmetro-resource` | 南京地铁 · 资源招商 | 车站商业 / TOD开发 | `web_list` | `njmetro.com.cn/njdtweb/home/go-resource-center.do?...` | ✅ 活跃 |
 | `web-csmtr-ops` | 长沙轨道 · 运营动态 | 运营调度 / 客流运能 | `web_list` | `https://www.hncsmtr.com/905/918/` | ✅ 活跃 |
 | `web-csmtr-build` | 长沙轨道 · 建设进展 | 新线开通 / 工程建设 | `web_list` | `https://www.hncsmtr.com/906/923/` | ✅ 活跃 |
+| `web-hzmetro-bids` | 杭州地铁招采 · 采购公告 | 招标采购 / 设备维保 | `web_list` | `https://zhaocai.hzmetro.com/cmsfwcggg/index.html` | ✅ 活跃 |
+| `web-hzmetro-review` | 杭州地铁招采 · 结果公示 | 中标公示 / 招标采购 | `web_list` | `https://zhaocai.hzmetro.com/cmsfwjggs/index.html` | ✅ 活跃 |
+| `web-hzmetro-results` | 杭州地铁招采 · 结果公告 | 中标公示 / 招标采购 | `web_list` | `https://zhaocai.hzmetro.com/cmsfwjggg/index.html` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 
