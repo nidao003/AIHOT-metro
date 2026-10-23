@@ -62,6 +62,8 @@
 | `web-hzmetro-review` | 杭州地铁招采 · 结果公示 | 中标公示 / 招标采购 | `web_list` | `https://zhaocai.hzmetro.com/cmsfwjggs/index.html` | ✅ 活跃 |
 | `web-hzmetro-results` | 杭州地铁招采 · 结果公告 | 中标公示 / 招标采购 | `web_list` | `https://zhaocai.hzmetro.com/cmsfwjggg/index.html` | ✅ 活跃 |
 | `web-cqggzy-metro` | 重庆公共资源交易 · 轨道交通招标 | 招标采购 / 中标公示 | `web_list` | `https://www.cqggzy.com/trade/014001?categoryNum=014001&keyword=轨道交通` | ✅ 活跃 |
+| `web-chinaiut-bids` | 城市交通网 · 轨道交通招标 | 招标采购 | `web_list` | `http://www.chinaiut.com/zhaobiao` | ✅ 活跃 |
+| `web-chinaiut-awards` | 城市交通网 · 轨道交通中标 | 中标公示 | `web_list` | `http://www.chinaiut.com/zhongbiao` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 
