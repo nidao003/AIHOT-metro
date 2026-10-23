@@ -58,7 +58,7 @@ async function report(r: Report): Promise<string> {
   });
   await sql`UPDATE articles SET discovered_at = ${r.at}, timeline_at = ${r.at}, grouped_at = now() WHERE id = ${articleId}`;
   await sql`INSERT INTO analyses (article_id, input_revision, origin, relevance, category, title_zh, summary_zh, score, selected, subjects, tags)
-            VALUES (${articleId}, 1, 'rule', 'pass', ${r.category ?? "planning-construction"}, ${r.title}, ${`摘要 ${n}`}, ${r.score ?? 80}, ${r.selected ?? true}, ${r.subjects ?? []}, ${[r.category === "operations-safety" ? "运营调度" : r.category === "passenger-flow" ? "客流运能" : r.category === "tod-commerce" ? "TOD开发" : r.category === "industry" ? "经营动态" : r.category === "policy-standard" ? "行业政策" : "新线开通", ...(r.tags ?? [])]})`;
+            VALUES (${articleId}, 1, 'rule', 'pass', ${r.category ?? "planning-construction"}, ${r.title}, ${`摘要 ${n}`}, ${r.score ?? 80}, ${r.selected ?? true}, ${r.subjects ?? []}, ${[r.category === "operations-safety" ? "运营调度" : r.category === "passenger-flow" ? "客流运能" : r.category === "tod-development" ? "TOD开发" : r.category === "station-retail" ? "车站商业" : r.category === "metro-advertising" ? "地铁广告" : r.category === "industry" ? "经营动态" : r.category === "policy-standard" ? "行业政策" : "新线开通", ...(r.tags ?? [])]})`;
   if (r.fact) await sql`INSERT INTO fact_articles (fact_id, article_id, role) VALUES (${r.fact}, ${articleId}, 'report')`;
   await publishArticle(articleId, { releasedAt: new Date(r.at.getTime() + 60_000) });
   return articleId;

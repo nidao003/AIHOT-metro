@@ -8,19 +8,21 @@
 
 ## 内容类型
 
-`itemType` 必须七选一：
+`itemType` 必须九选一：
 
 - `line_milestone`：新线通车、延伸线初期运营、空载试运行等里程碑节点
 - `planning_approval`：国家/地方发改委建设规划批复、工可批复、初步设计批复
 - `operation_event`：运行图调整、行车调度优化、智慧城轨改造、安全应急演练与故障处置
 - `flow_capacity_data`：部委城市客运月报、重点城市/线网单日客流创新高、客运强度分析
-- `tod_commercial`：站城一体TOD综合体开发、地下商业街招商、站内广告媒体经营
+- `tod_development`：站城一体TOD物业开发、车辆段上盖综合体、土地出让与综合物业管理（参考港铁物业模式）
+- `station_commercial`：车站红线内商铺租赁、站内便利店餐饮招商、自动售卖机及车站便民商业空间运营
+- `metro_advertising`：列车车厢广告、站台灯箱与立柱媒体、车站LED大屏、报站语音与媒体特许经营招商
 - `corporate_finance`：城轨集团审计财报、票务与财政补贴收支、绿色债券融资、企业重组
 - `policy_standard`：交通部/铁路局规章指引、中城轨协技术规范、安全评估管理办法
 
-优先级：通车初期运营选 line_milestone；发改委批复选 planning_approval；数据公报或客流排名选 flow_capacity_data；商业招标或TOD土地开发选 tod_commercial；财报与经营人事选 corporate_finance；技术规范与规章选 policy_standard；日常行车调度延误与故障处置选 operation_event。
+优先级：通车初期运营选 line_milestone；发改委批复选 planning_approval；数据公报或客流排名选 flow_capacity_data；上盖TOD或附属商业地产出让选 tod_development；站内商铺或便民餐饮租赁选 station_commercial；车厢站台大屏广告选 metro_advertising；财报与经营人事选 corporate_finance；技术规范与规章选 policy_standard；日常行车调度延误与故障处置选 operation_event。
 
-输出前检查 `itemType` 与第一个分类标签是否自洽：`line_milestone` 对应“新线开通”，`planning_approval` 对应“规划批复”，`operation_event` 对应“运营调度”或“安全应急”，`flow_capacity_data` 对应“客流运能”，`tod_commercial` 对应“TOD开发”、“车站商业”或“广告传媒”，`corporate_finance` 对应“集团财报”或“经营动态”，`policy_standard` 对应“行业政策”或“技术规范”。如果二者冲突，按当前材料的核心事件修正后再输出。
+输出前检查 `itemType` 与第一个分类标签是否自洽：`line_milestone` 对应“新线开通”，`planning_approval` 对应“规划批复”，`operation_event` 对应“运营调度”或“安全应急”，`flow_capacity_data` 对应“客流运能”，`tod_development` 对应“TOD开发”，`station_commercial` 对应“车站商业”，`metro_advertising` 对应“地铁广告”，`corporate_finance` 对应“集团财报”或“经营动态”，`policy_standard` 对应“行业政策”或“技术规范”。如果二者冲突，按当前材料的核心事件修正后再输出。
 
 ## 作者角色
 
@@ -32,11 +34,11 @@
 
 ## 标签
 
-`tags` 输出 1–6 个字符串。第一个必须从以下分类标签中选一个：新线开通、规划批复、工程建设、运营调度、安全应急、客流运能、TOD开发、车站商业、广告传媒、集团财报、经营动态、行业政策、技术规范、其他。
+`tags` 输出 1–6 个字符串。第一个必须从以下分类标签中选一个：新线开通、规划批复、工程建设、运营调度、安全应急、客流运能、TOD开发、车站商业、地铁广告、集团财报、经营动态、行业政策、技术规范、其他。
 
 其后可选 0–5 个适用标签，并且只能来自以下两个白名单：
 
-- 主题：全自动运行、CBTC、智慧城轨、客运强度、早晚高峰、防汛应急、站城一体、物业上盖、市域铁路、有轨电车、低碳节能、票制票价、设备维保、资产盘活、既有线改造、客流纪录
+- 主题：全自动运行、CBTC、智慧城轨、客运强度、早晚高峰、防汛应急、站城一体、物业上盖、市域铁路、有轨电车、低碳节能、票制票价、设备维保、资产盘活、既有线改造、客流纪录、站内商铺、便民餐饮、车辆段上盖、车厢广告、站台灯箱、特许经营
 - 实体：交通运输部、中国城市轨道交通协会、国家发改委、申通地铁、北京地铁、广州地铁、深圳地铁、成都轨道集团、武汉地铁、南京地铁、重庆轨道交通、杭州地铁、青岛地铁、港铁公司、中国中车、京投公司
 
 正文中即使明确出现了其他实体，也不要把它们放进 `tags`。不要创造白名单之外的标签。没有适用的主题或实体时，只返回第一个分类标签。
