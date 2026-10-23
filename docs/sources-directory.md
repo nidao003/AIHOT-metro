@@ -168,6 +168,9 @@
 | 北京地铁电子商务采购平台 | `zhaocai.bjsubway.com/zhaocai-portal/` | 采购项目公示、采购结果公示、社会化采购 | ⚠️ Nuxt SPA；接口 `POST /bjdt/manage-server/home/{project,inform/notice/page}` 在 nginx 层 403，需登录，非公开渠道 |
 | 京投公司官网 | `bii.com.cn` | 集团投融资、企业新闻 | ✅ 已接入 `web-bii-news`（无招标栏目） |
 | 京投轨道运营 | `bjmoa.cn` | 19 号线、燕房线、大兴机场线、22 号线运营 | ✅ 已接入 `web-bjmoa-news`（无招标栏目） |
+| **北交所阳光采购平台** | `zc.cbexepp.com.cn` | 北京市属国企采购（按采购人筛选） | ✅ 已接入 `web-cbex-metro`（`purchaser=北京市地铁`，3 条历史，零噪声持续监控） |
+| 北京产权交易所主站 | `cbex.com.cn` | 产权转让、实物资产、租赁 | ❌ **加速乐（`__jsl_clearance`）双层 JS 挑战**，Node 沙箱可过第一层、过不了第二层（需完整浏览器环境） |
+| 中国招标投标公共服务平台 | `bulletin.cebpubservice.com` | 国家法定招标公告媒介 | ⚠️ 首页可访问，公告页有 WAF 挑战 |
 | 北京市公共资源交易服务平台 | `ggzyfw.beijing.gov.cn` | 全市工程招标 | ⚠️ 地铁项目分散在 `jyxxggjtbyqs`（交通工程）、`jyxxgcjszbjh`（工程建设-招标计划）、`jyxxgcjsgzgg` 等栏目，实测 5 页 50 条里仅 1 条地铁（约 2%），噪声过大未接入 |
 | 中国城市轨道交通网 · 招标/中标 | `rail-transit.com` | **全国城轨招标，含北京地铁与京投轨道运营** | ✅ 已接入 `web-rail-transit-bids` / `web-rail-transit-awards`（实测覆盖北京地铁巡检系统、联络线信号系统、京投轨道运营京雄快线维保等） |
 
@@ -178,6 +181,10 @@
 - 京投轨道运营招标 → 中城轨网、第三方平台
 - 京港地铁 → 官网直接发布（已接）
 - 商业招商 → 北京地铁资源开发经营有限公司，只发第三方
+
+> **北交所阳光采购平台的实测结论**（2026-10）：平台本身很活跃（全站 7751 条，2026-10-23 仍有更新），但**北京地铁只占 3 条**（均为 2024 年 6 月的「数字档案室建设（一期）」项目），京投 / 轨道交通 / 地铁资源三个采购人关键词均为 0 条。说明**北京地铁的主采购不走这个平台**，仍在其自建的 `zhaocai.bjsubway.com`（需登录）。该源接入价值在于零噪声持续监控后续新增公告，而非补历史存量。
+>
+> 数据接口：`GET /freecms/rest/v1/notice/selectInfoMoreChannel.do?siteId=…&channel=…&purchaser=<采购人名>&title=<标题关键词>`，返回结构化 JSON（含 `content` 完整正文、`budget` 预算、`agency` 代理机构、`purchaseManner` 采购方式）。
 
 > **TLS 兼容性记录**：`ggzyfw.beijing.gov.cn`（TongWeb 前置）拒绝 Node 默认的 `ecdhCurve: auto`（优先 X25519），报 `ERR_SSL_BAD_ECPOINT`。已在 `OUTBOUND_ECDH_CURVE` 显式指定 `X25519:P-256:P-384:P-521`，直连与容器内均恢复正常。
 

@@ -247,6 +247,36 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-cbex-metro",
+      "name": "北交所阳光采购 · 北京地铁",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "bjsubway",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://zc.cbexepp.com.cn/freecms/rest/v1/notice/selectInfoMoreChannel.do?siteId=40792f4f-8609-467b-95f2-e54aabae4a21&channel=f30bcfe0-4065-49dd-9678-e9d9b683640a&currPage=1&pageSize=20&noticeType=&regionCode=&purchaseManner=&purchaseNature=&operationStartTime=&operationEndTime=&selectTimeName=noticeTime&purchaser=%E5%8C%97%E4%BA%AC%E5%B8%82%E5%9C%B0%E9%93%81",
+        "itemsPath": "data",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://zc.cbexepp.com.cn{pageurl}",
+        "publishedAtPath": "noticeTime",
+        "summaryPaths": [
+          "content"
+        ],
+        "summaryIsBody": true,
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "经营动态"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-bjsubway-news",
       "name": "北京地铁 · 地铁新闻与运营信息",
       "kind": "web_list",
