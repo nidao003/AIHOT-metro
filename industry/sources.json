@@ -377,6 +377,54 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-lysubway-bids",
+      "name": "洛阳轨道 · 采购公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "lysubway",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "http://www.lysubway.com.cn/procurement.html",
+        "itemSelector": "li:has(a[href^=\"/purchasing_notice/detail/\"])",
+        "linkSelector": "a",
+        "titleSelector": "p[title]",
+        "publishedAtSelector": "a > span",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-lysubway-news",
+      "name": "洛阳轨道 · 新闻中心",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "lysubway",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "http://www.lysubway.com.cn/news_info.html",
+        "itemSelector": "li.fr_list_li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtRegex": "(20\\d{2}-\\d{2}-\\d{2})",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "经营动态"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",

@@ -64,6 +64,8 @@
 | `web-cqggzy-metro` | 重庆公共资源交易 · 轨道交通招标 | 招标采购 / 中标公示 | `web_list` | `https://www.cqggzy.com/trade/014001?categoryNum=014001&keyword=轨道交通` | ✅ 活跃 |
 | `web-chinaiut-bids` | 城市交通网 · 轨道交通招标 | 招标采购 | `web_list` | `http://www.chinaiut.com/zhaobiao` | ✅ 活跃 |
 | `web-chinaiut-awards` | 城市交通网 · 轨道交通中标 | 中标公示 | `web_list` | `http://www.chinaiut.com/zhongbiao` | ✅ 活跃 |
+| `web-lysubway-bids` | 洛阳轨道 · 采购公告 | 招标采购 / 设备维保 | `web_list` | `http://www.lysubway.com.cn/procurement.html` | ✅ 活跃 |
+| `web-lysubway-news` | 洛阳轨道 · 新闻中心 | 运营调度 / 经营动态 | `web_list` | `http://www.lysubway.com.cn/news_info.html` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 
