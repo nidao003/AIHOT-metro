@@ -85,16 +85,37 @@
       "definition": "全国及各城市轨道交通日客运量、客流强度排行、节假日运力保障与大客流应对。"
     },
     {
-      "slug": "tod-commerce",
-      "name": "车站商业与TOD开发",
+      "slug": "tod-development",
+      "name": "TOD与上盖综合开发",
       "group": "field",
       "tags": [
         "TOD开发",
-        "车站商业",
-        "广告传媒",
-        "站城一体"
+        "站城一体",
+        "车辆段上盖"
       ],
-      "definition": "车站地下商业、便利零售招商、站内广告媒体资源经营与车辆段/车站上盖综合开发。"
+      "definition": "地铁车辆段及车站上盖物业开发、站城一体化TOD综合体、土地出让与综合物业管理。"
+    },
+    {
+      "slug": "station-retail",
+      "name": "车站商业与便民零售",
+      "group": "field",
+      "tags": [
+        "车站商业",
+        "站内商铺",
+        "便民餐饮"
+      ],
+      "definition": "地铁站厅与站台红线内商铺租赁、站内便利店、便民餐饮、自动售货机与商业空间经营。"
+    },
+    {
+      "slug": "metro-advertising",
+      "name": "地铁广告与传媒运营",
+      "group": "field",
+      "tags": [
+        "地铁广告",
+        "车厢广告",
+        "站台灯箱"
+      ],
+      "definition": "地铁列车车厢广告、车站站台灯箱与立柱广告、LED数字大屏与媒体特许经营招商。"
     },
     {
       "slug": "operations-safety",
