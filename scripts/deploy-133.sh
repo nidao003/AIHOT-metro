@@ -101,11 +101,23 @@ remote "cd ${REMOTE_DIR} && docker compose ps"
 
 echo "==> [5/5] 执行冒烟检查..."
 sleep 3
-# 冒烟的目标必须是本机网络能到达的站点地址。局域网通道直接用 133；
-# 公网通道下 6088 若未对外映射，则改在服务器容器网络内验证。
-if [[ "$REMOTE_CHANNEL" == "public" ]] && ! port_open "$SITE_HOST" 6088; then
-  echo "    公网未开放 6088，改为服务器本地冒烟："
-  remote "curl -s -o /dev/null -w 'local 6088 => %{http_code}\n' -m 10 http://127.0.0.1:6088/ && curl -s -m 10 http://127.0.0.1:6088/api/site/pool | head -c 200"
+# 冒烟的目标必须是本机网络能到达的站点地址。公网通道下 6088 没有对公网开放
+# （TCP 可能被网关伪应答，HTTP 实为空），因此在服务器内部验证。
+if [[ "$REMOTE_CHANNEL" == "public" ]]; then
+  echo "    公网通道：在服务器本地验证 6088"
+  remote "
+    for i in 1 2 3 4 5 6 7 8 9 10; do
+      code=\$(curl -s -o /dev/null -w '%{http_code}' -m 5 http://127.0.0.1:6088/api/health || true)
+      [ \"\$code\" = \"200\" ] && break
+      sleep 3
+    done
+    echo \"    /api/health => \$code\"
+    for p in / /api/site/pool /feed.xml /llms.txt /robots.txt; do
+      printf '    %-20s => ' \"\$p\"
+      curl -s -o /dev/null -w '%{http_code}\n' -m 10 http://127.0.0.1:6088\$p
+    done
+    [ \"\$code\" = \"200\" ] || exit 1
+  "
 else
   node scripts/smoke.ts --base "http://${SITE_HOST}:6088"
 fi
