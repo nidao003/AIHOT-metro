@@ -305,6 +305,78 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-hzmetro-bids",
+      "name": "杭州地铁招采 · 采购公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "hzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://zhaocai.hzmetro.com/cmsfwcggg/index.html",
+        "itemSelector": "li:has(span.Right)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Right",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-hzmetro-review",
+      "name": "杭州地铁招采 · 结果公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "hzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://zhaocai.hzmetro.com/cmsfwjggs/index.html",
+        "itemSelector": "li:has(span.Right)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Right",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-hzmetro-results",
+      "name": "杭州地铁招采 · 结果公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "hzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://zhaocai.hzmetro.com/cmsfwjggg/index.html",
+        "itemSelector": "li:has(span.Right)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Right",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-csmtr-ops",
       "name": "长沙轨道 · 运营动态",
       "kind": "web_list",
