@@ -136,7 +136,7 @@ export const ENTITY_TAGS = [
   "武汉地铁", "南京地铁", "重庆轨道交通", "杭州地铁", "青岛地铁",
   "苏州轨道交通", "西安地铁", "郑州地铁", "长沙轨道交通", "天津轨道交通",
   "沈阳地铁", "合肥轨道交通", "宁波轨道交通", "无锡地铁", "佛山地铁", "东莞轨道交通",
-  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营",
+  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营", "洛阳轨道",
   "港铁公司", "中国中车", "京投公司"
 ] as const;
 
@@ -205,6 +205,7 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   "mtr-bj": { name: "京港地铁", displayTag: "京港地铁", aliases: ["京港地铁", "北京京港地铁有限公司"], orgNames: ["京港地铁"] },
   "mtrsz": { name: "港铁深圳", displayTag: "港铁深圳", aliases: ["港铁深圳", "港铁轨道交通（深圳）有限公司", "港铁轨道交通(深圳)有限公司"], orgNames: ["港铁轨道交通（深圳）有限公司", "港铁深圳"] },
   "mtr-hz": { name: "杭港地铁", displayTag: "杭港地铁", aliases: ["杭港地铁", "杭州杭港地铁有限公司"], orgNames: ["杭港地铁"] },
+  lysubway: { name: "洛阳轨道", displayTag: "洛阳轨道", aliases: ["洛阳市轨道交通集团", "洛阳地铁", "洛阳轨道"], orgNames: ["洛阳市轨道交通集团有限责任公司"] },
 };
 
 /**
@@ -249,6 +250,7 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "mtr-bj", name: "京港地铁", patterns: [/京港地铁/i] },
   { id: "mtrsz", name: "港铁深圳", patterns: [/港铁深圳|港铁轨道交通（深圳）|港铁轨道交通\(深圳\)/i] },
   { id: "mtr-hz", name: "杭港地铁", patterns: [/杭港地铁/i] },
+  { id: "lysubway", name: "洛阳轨道", patterns: [/洛阳轨道|洛阳地铁|洛阳市轨道交通/i] },
 ];
 
 /** 这些域名上的文章，发布方就是对应的公司（托管平台如 GitHub、arXiv 不算）。 */
@@ -286,6 +288,7 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "mtr-bj", domains: ["mtr.bj.cn"] },
   { entityId: "mtrsz", domains: ["mtrsz.com.cn"] },
   { entityId: "mtr-hz", domains: ["mtrhz.com.cn"] },
+  { entityId: "lysubway", domains: ["lysubway.com.cn"] },
 ];
 
 /** 原文里的这些写法也算提到了对应公司。 */
