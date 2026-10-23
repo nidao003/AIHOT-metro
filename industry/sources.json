@@ -615,6 +615,29 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-hrbggzy-news",
+      "name": "哈尔滨公共资源 · 招标公告（含地铁）",
+      "kind": "web_list",
+      "tier": "T2",
+      "owner_entity_id": "hrbdt",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://hrbggzy.harbin.gov.cn/",
+        "itemSelector": "li.wb-data-list",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.wb-data-date",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",

@@ -74,6 +74,7 @@
 | `web-xmgdjt-leasing` | 厦门轨道 · 招商信息 | TOD开发 / 车站商业 | `web_list` | `https://www.xmgdjt.com.cn/list-77tl1l0i/zhaoshangxingxin/1/10` | ✅ 活跃 |
 | `web-fzmetro-bids` | 福州地铁 · 招标与中标公示 | 招标采购 / 中标公示 | `web_list` | `http://www.fzmtr.com` | ✅ 活跃 |
 | `web-lzgdjt-news` | 兰州轨道 · 轨道动态 | 运营调度 / 客流运能 | `web_list` | `http://www.lzgdjt.com/lzgd/new_list.jsp?cId=11070` | ✅ 活跃 |
+| `web-hrbggzy-news` | 哈尔滨公共资源 · 招标公告 | 招标采购（全行业，靠预筛） | `web_list` | `https://hrbggzy.harbin.gov.cn/` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 
