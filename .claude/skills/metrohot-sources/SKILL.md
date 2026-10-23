@@ -296,6 +296,48 @@ for (const s of all.filter((x:any) => x.kind === "web_list" && x.enabled !== fal
 
 **注意**：验证时要用项目的 `guardedFetch`，裸 `fetch` 不走项目 Agent，不会应用该配置。
 
+### 坑 6b：`UNABLE_TO_VERIFY_LEAF_SIGNATURE`（证书链缺根）
+
+现象：本地 Mac 能抓，容器里失败；或多个源里只有某一个站失败。
+
+**先分清是「服务器发链不全」还是「我们缺根」**：
+
+```bash
+echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev/null \
+  | grep -E "^ *[0-9]+ s:|^ *i:|Verify return code"
+```
+
+- `Verify return code: 0 (ok)` 且证书数 ≥2 → **服务器没问题，是我们缺根**
+- `Verify return code` 非 0，或只有 1 张证书 → 服务器配置问题，我们无能为力
+
+**这次的实例**（南京 `www.njmetro.com.cn`）：
+
+```
+叶子 (CN=njmetro.com.cn)
+  → SHECA OV Server CA G5
+    → UCA Global G2 Root
+      → Certum Trusted Network CA   ← 服务器没发，Node 内置列表里也没有
+```
+
+容器是 `node:24-trixie-slim`，**不带系统 CA 存储**（`/etc/ssl/certs/ca-certificates.crt` 不存在），Node 用内置的 118 个 Mozilla 根证书——里面没有 Certum。
+
+**修复**：把缺失的根证书放进仓库，用 `NODE_EXTRA_CA_CERTS` 追加（不改默认列表，不影响其他站）：
+
+```dockerfile
+ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-root.pem
+```
+
+证书文件从本机钥匙串导出即可：
+
+```bash
+security find-certificate -c "Certum Trusted Network CA" -p \
+  /System/Library/Keychains/SystemRootCertificates.keychain > docker/certs/certum-root.pem
+```
+
+**为什么不 `apt-get install ca-certificates`**：133 的构建网络访问 Debian 源会超时（这也是之前删掉该步骤的原因）。打包证书文件不依赖任何网络。
+
+**判断这一站要不要为它加根**：看数据价值。南京是招标 20 条 + 车站商铺招商 15 条，值。如果只是零星几条，记为「不可用」即可。
+
 ### 坑 7：加速乐（`__jsl_clearance`）双层 JS 挑战
 
 现象：返回 521 + 一段混淆 JS。
