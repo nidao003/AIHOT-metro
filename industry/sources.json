@@ -247,6 +247,279 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-bjsubway-news",
+      "name": "北京地铁 · 地铁新闻与运营信息",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "bjsubway",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.bjsubway.com/news/qyxw/yyzd/",
+        "itemSelector": ".topic_list ul li",
+        "linkSelector": "a",
+        "titleSelector": ".to_titie",
+        "publishedAtSelector": ".to_time",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".line_content"
+        }
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "安全应急"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-shmetro-news",
+      "name": "申通地铁 · 新闻中心",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "shmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.shmetro.com/p1/xwzx.html",
+        "itemSelector": "ul.news-img > li",
+        "linkSelector": "a",
+        "titleSelector": ".p1",
+        "publishedAtSelector": ".p0",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".detail-content"
+        }
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "新线开通"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-gzmtr-news",
+      "name": "广州地铁 · 公司新闻",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.gzmtr.com/ygwm/xwzx/gsxw/",
+        "itemSelector": "ul.ag_h_w > li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.fr",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".right_slide_bar_content"
+        }
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-gzmtr-bids",
+      "name": "广州地铁招标平台 · 招标公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "https://bid.gzmtr.com/bizzbgg/",
+        "itemSelector": ".section_main ul.list > li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.pub_date",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".arc_body"
+        }
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-gzmtr-awards",
+      "name": "广州地铁招标平台 · 中标公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "https://bid.gzmtr.com/bizzbgs/",
+        "itemSelector": ".section_main ul.list > li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.pub_date",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".arc_body"
+        }
+      },
+      "tags": [
+        "官方",
+        "中标公示",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-announce",
+      "name": "深铁集团 · 公司公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.szmc.net/home/xinwenzhongxin/gongsigonggao/",
+        "itemSelector": "div.tabcon_news div.list > a",
+        "titleSelector": "p.text-1",
+        "publishedAtSelector": "span",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".newsdeteil .con"
+        }
+      },
+      "tags": [
+        "官方",
+        "规划批复",
+        "经营动态"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-szmc-cg-bids",
+      "name": "深铁采购平台 · 招标公告",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "szmc",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "https://cg.shenzhenmc.com/zzbgg/index.jhtml",
+        "itemSelector": "li:has(span.Gray)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.Gray",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 12,
+          "summarySelector": ".Content"
+        }
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-mtrsz-news",
+      "name": "港铁深圳 · 公司资讯",
+      "kind": "json_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtrsz",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.mtrsz.com.cn/server-front/front/content/page?channelIdStr=7599&pageSize=20&orderBy=0",
+        "itemsPath": "data.records",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.mtrsz.com.cn/frontend/default/src/detail/index.html?id={id}",
+        "publishedAtPath": "publishTimeStr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "智慧城轨"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-mtrsz-bids",
+      "name": "港铁深圳 · 采购公告",
+      "kind": "json_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtrsz",
+      "participation_mode": "editorial",
+      "interval_minutes": 120,
+      "config": {
+        "url": "https://www.mtrsz.com.cn/server-front/front/content/page?channelIdStr=7620&pageSize=20&orderBy=0",
+        "itemsPath": "data.records",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.mtrsz.com.cn/frontend/default/src/detail/index.html?id={id}",
+        "publishedAtPath": "publishTimeStr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-mtrsz-ads",
+      "name": "港铁深圳 · 招商与媒体广告公告",
+      "kind": "json_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtrsz",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.mtrsz.com.cn/server-front/front/content/page?channelIdStr=8368&pageSize=20&orderBy=0",
+        "itemsPath": "data.records",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.mtrsz.com.cn/frontend/default/src/detail/index.html?id={id}",
+        "publishedAtPath": "publishTimeStr",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "地铁广告"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "mp-camet",
       "name": "中国城市轨道交通协会",
       "kind": "mp_account",

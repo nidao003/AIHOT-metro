@@ -56,6 +56,15 @@ function navigationLink(url: string, listing: string): boolean {
   return /\/(label|labels|tag|tags|category|categories|author|authors|page)(\/|$)/i.test(u.pathname) || /\/(19|20)\d{2}(\/\d{1,2})?\/?$/.test(u.pathname);
 }
 
+/**
+ * The address a link element carries: a list that navigates by script names its post in the handler
+ * ("javascript:navigateTo('/p1/xwzx/20261016/37360.html')"), which is the href's only URL.
+ */
+function hrefTarget(href: string | undefined): string | undefined {
+  if (!href || /^(?:https?:)?\/\//i.test(href) || /^[./?#]/.test(href)) return href;
+  return /['"]((?:https?:\/\/|\/)[^'"]+)['"]/.exec(href)?.[1];
+}
+
 /** Absolute http(s) URL; a link to the listing's own https site keeps https. */
 function absolute(href: string | undefined, base: string): string | null {
   if (!href) return null;
@@ -156,7 +165,7 @@ export function fromHtml(html: string, base: string, source: SourceRow): Candida
   for (const node of nodes) {
     const el = $(node);
     const linkEl = c.linkSelector ? (el.is(c.linkSelector) ? el : el.find(c.linkSelector).first()) : el.is("a") ? el : el.find("a[href]").first();
-    const url = absolute(linkEl.attr("href"), base);
+    const url = absolute(hrefTarget(linkEl.attr("href")), base);
     if (!url || seen.has(url) || !allowed(url, source)) continue;
     // A card or a nav link to the site's sign-in form is no post.
     if (isSignInUrl(url)) continue;
