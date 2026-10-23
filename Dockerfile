@@ -20,6 +20,11 @@ RUN npm run build -w @aihot/web && npm prune --omit=dev --no-audit --no-fund
 
 FROM base
 ENV NODE_ENV=production
+# The slim image ships no system CA store, so Node verifies against its bundled Mozilla list only.
+# Chinese sites chained to Certum (e.g. www.njmetro.com.cn: leaf → SHECA OV G5 → UCA Global G2 →
+# Certum Trusted Network CA) fail there with UNABLE_TO_VERIFY_LEAF_SIGNATURE. This adds that root;
+# NODE_EXTRA_CA_CERTS appends to the defaults rather than replacing them.
+ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-root.pem
 COPY --from=build --chown=node:node /app /app
 RUN mkdir -p /data && chown node:node /data
 USER node
