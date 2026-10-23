@@ -42,6 +42,22 @@ node scripts/probe-source.ts "https://www.nbmetro.com/tender_report.php"
 - 工具说「SPA 壳」或「空响应体」→ 跳过选择器环节，直接去抓 XHR 接口（第 4 步）
 - 工具说「全部候选都失败」→ 看它打印的首条文本，多半是选择器抓到了导航项，手工收窄
 
+**批量探测 `scripts/probe-cities.ts`** —— 一次跑几十个城市，输出可直接粘贴的 Markdown 表：
+
+```bash
+cat > /tmp/cities.json <<'EOF'
+[{"name":"无锡","official":"http://www.wxmetro.net"},
+ {"name":"常州","official":"http://www.czmetro.net.cn","trading":"http://ggzy.changzhou.gov.cn"}]
+EOF
+node scripts/probe-cities.ts /tmp/cities.json          # 表格
+node scripts/probe-cities.ts /tmp/cities.json --json   # 结构化结果 → /tmp/probe-cities-result.json
+```
+
+每条输出：渠道（官网/交易平台）、形态、条数、**推断出的选择器**、日期解析率。
+`--json` 的结果可以直接喂给后续的自动写配置流程。
+
+**这是扩展到几十个城市的关键工具**：不要逐个手跑 `probe-source.ts`，也不要手工填表。
+
 **工具的已知盲区**（遇到就手工补，并回来升级工具）：
 - 日期顺序反写（成都 `08-26` + `2026` 分两个节点）识别不到
 - 纯表格 `<tbody><tr>` 结构
@@ -466,7 +482,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 宁波 | 宁波轨道 | `nbmetro.com` | ✅ `tender_report.php` 系列，招标/中标/非招标三栏结构一致 | ✅ 已接入 3 源 |
 | 合肥 | 合肥轨道 | `hfgdjt.com` | **瑞数（Riverse）防护**，详见下方专节 | ⏸ 暂缓（需浏览器容器） |
 | 佛山 | 佛山铁投 | `fmtr.cn` | 4.3KB，正文 0 字，疑似 SPA | 🟡 需抓接口 |
-| 昆明 | 昆明轨道 | `kmgdjt.com` | DNS 不通 | ❌ 不可用 |
+| 昆明 | 昆明轨道集团 / 云南京建（4 号线 PPP） | `kmgdgs.com` / `yjrt.com.cn` | 官网 503；京建站 200 但招商信息仅 1 条（2020 介绍页）；云南省级平台 `ggzy.yn.gov.cn` 是 Vue SPA，只找到「开标场地占用」接口；行业媒体暂未收录昆明内容 | ❌ 暂缺（四条路都不通） |
 
 **图例**：🟡 已探测未接入 / ✅ 已接入 / ❌ 不可用（DNS 或 TLS 层面）
 
