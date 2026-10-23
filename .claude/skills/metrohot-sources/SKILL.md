@@ -451,7 +451,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 重庆 | 重庆轨道集团 | `cqmetro.cn` | 首页是 `<article class="news-card" data-id>` 卡片，**无 `a[href]`**，靠 JS 跳转；日期只在图片路径里 | 🟡 需找列表页/接口 |
 | 杭州 | 杭州地铁 | `hzmetro.com`（SPA） | ✅ 招采平台独立域名 `zhaocai.hzmetro.com`（服务端渲染），采购/澄清/结果公示/结果公告/流标五栏结构统一：`li:has(span.Right)` + `span.Right` 日期 | ✅ 已接入 3 源 |
 | 武汉 | 武汉地铁 | `whrt.com` | 302 跳到 `ww16.whrt.com/?sub1=…`（泛域名轮换） | 🟡 需跟跳转 |
-| 西安 | 西安轨道 | `xianrail.com` | hash 路由 SPA；接口在 `/pas-gateway-api/api-news/news-findByHome` 等，POST 空 body 返回「非法请求，请求内容不存在」，有签名/参数校验 | 🟡 待逆向参数 |
+| 西安 | 西安轨道 | `xianrail.com` | hash 路由 SPA；网关 `/pas-gateway-api/...`。空 body 返回 404「非法请求，请求内容不存在」，带常规分页参数返回空响应体，`OPTIONS` 预检也失败——**请求体经过签名/加密**，需要逆向前端 JS 的加密逻辑 | 🟡 需逆向签名算法 |
 | 南京 | 南京地铁 | `njmetro.com.cn` | ✅ 仅 https 可用；`li.tender_tli` 招标 20 条、`li.buil_mli1li` 资源招商 15 条（日期嵌在标题里，用 `publishedAtRegex` 提） | ✅ 已接入 2 源 |
 | 天津 | 天津轨道 | `tjgdjt.com` | ✅ `channels/17.html`（运营动态）、`channels/28.html`（招商公告）；招采平台 `xmzc.tjgdjt.com:8084` 接口可用但详情路由未破 | ✅ 已接入 2 源 |
 | 长沙 | 长沙轨道 | `hncsmtr.com`（不是 hnsgzjt.com） | ✅ `905/918` 运营动态、`906/923` 建设进展；`908/944` 招标栏目停更在 2023 年 | ✅ 已接入 2 源 |
@@ -459,7 +459,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 青岛 | 青岛地铁 | `qd-metro.com` | DNS 不通 | ❌ 不可用 |
 | 东莞 | 东莞轨道 | `dggdjt.com` | 70KB 可访问，`node/112.htmx` 招标、`node/123.htmx` 招商；**TLS 握手超时**（curl 与 Node 均超时） | 🟡 待解决 TLS |
 | 宁波 | 宁波轨道 | `nbmetro.com` | ✅ `tender_report.php` 系列，招标/中标/非招标三栏结构一致 | ✅ 已接入 3 源 |
-| 合肥 | 合肥轨道 | `hfgdjt.com` | 1.2KB SPA 壳（正文 0 字） | 🟡 需抓接口 |
+| 合肥 | 合肥轨道 | `hfgdjt.com` | 1.2KB 壳只引一个 1.2MB 的 `app.js`，其中含 SockJS 路径（`/api/v1/sessions`、`/websocket`、`/xhr_streaming`）与浏览器指纹检测；**curl 与 headless 浏览器均被判为攻击拦截**（`attackBlocking.png`） | 🟡 需过指纹检测 |
 | 佛山 | 佛山铁投 | `fmtr.cn` | 4.3KB，正文 0 字，疑似 SPA | 🟡 需抓接口 |
 | 昆明 | 昆明轨道 | `kmgdjt.com` | DNS 不通 | ❌ 不可用 |
 
