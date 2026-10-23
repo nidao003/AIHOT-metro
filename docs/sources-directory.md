@@ -72,6 +72,7 @@
 | `web-ncmtr-news` | 南昌轨道 · 集团新闻 | 运营调度 / 客流运能 | `web_list` | `http://www.ncmtr.com` | ✅ 活跃 |
 | `web-xmgdjt-news` | 厦门轨道 · 公司新闻 | 运营调度 / 新线开通 | `web_list` | `https://www.xmgdjt.com.cn/list-48385ou5/gongsixingweng/1/10` | ✅ 活跃 |
 | `web-xmgdjt-leasing` | 厦门轨道 · 招商信息 | TOD开发 / 车站商业 | `web_list` | `https://www.xmgdjt.com.cn/list-77tl1l0i/zhaoshangxingxin/1/10` | ✅ 活跃 |
+| `web-fzmetro-bids` | 福州地铁 · 招标与中标公示 | 招标采购 / 中标公示 | `web_list` | `http://www.fzmtr.com` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

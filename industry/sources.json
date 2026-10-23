@@ -567,6 +567,30 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-fzmetro-bids",
+      "name": "福州地铁 · 招标与中标公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "fzmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "http://www.fzmtr.com",
+        "itemSelector": "article.text-center",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "p",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "中标公示"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",
