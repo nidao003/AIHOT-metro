@@ -2,336 +2,179 @@
   "groups": [
     {
       "key": "company",
-      "name": "公司与模型",
-      "blurb": "按厂商追踪模型、产品与公司动态"
+      "name": "城轨集团与机构",
+      "blurb": "按业主集团与主管机构追踪最新动向"
     },
     {
       "key": "field",
-      "name": "技术方向",
-      "blurb": "按技术领域深挖：Agent、多模态、具身智能……"
+      "name": "专业业务方向",
+      "blurb": "深挖客流监测、TOD开发、运营安全与智慧城轨"
     },
     {
       "key": "genre",
-      "name": "内容类型",
-      "blurb": "按体裁浏览：论文、教程、观点、政策……"
+      "name": "内容形态",
+      "blurb": "按体裁浏览：新线开通、规划批复、客流月报、企业财报……"
     }
   ],
   "topics": [
     {
-      "slug": "openai",
-      "name": "OpenAI / ChatGPT",
+      "slug": "shmetro",
+      "name": "申通地铁 (上海地铁)",
       "group": "company",
-      "entityId": "openai",
-      "definition": "OpenAI 的 GPT 系列模型、ChatGPT 与 Sora 产品更新，以及公司战略与人事变化。"
+      "entityId": "shmetro",
+      "definition": "上海申通地铁集团的线网建设、客流运营调整、智慧车站与经营动态。"
     },
     {
-      "slug": "anthropic",
-      "name": "Anthropic / Claude",
+      "slug": "bjsubway",
+      "name": "北京地铁",
       "group": "company",
-      "entityId": "anthropic",
-      "definition": "Anthropic 的 Claude 系列模型、Claude Code 更新，以及安全研究与公司动向。"
+      "entityId": "bjsubway",
+      "definition": "北京市地铁运营有限公司及京投管辖线路的运行调度、信号改造与出行服务。"
     },
     {
-      "slug": "google",
-      "name": "Google / Gemini",
+      "slug": "gzmtr",
+      "name": "广州地铁",
       "group": "company",
-      "entityId": "google",
-      "aliases": [
-        "DeepMind"
-      ],
-      "definition": "Google 与 DeepMind 的 Gemini 模型、Veo 视频生成、前沿研究与各条产品线的 AI 更新。"
+      "entityId": "gzmtr",
+      "definition": "广州地铁集团的线网开通、大湾区城际铁路直联贯通运营与商用物业动态。"
     },
     {
-      "slug": "deepseek",
-      "name": "DeepSeek",
+      "slug": "szmc",
+      "name": "深圳地铁",
       "group": "company",
-      "entityId": "deepseek",
-      "definition": "DeepSeek（深度求索）的模型发布、开源权重、技术报告与 API 价格变化。"
+      "entityId": "szmc",
+      "definition": "深圳地铁集团的线网扩建、TOD站城一体化开发、商业运营与企业经营。"
     },
     {
-      "slug": "qwen",
-      "name": "千问 Qwen",
+      "slug": "cdmetro",
+      "name": "成都轨道交通",
       "group": "company",
-      "entityId": "qwen",
-      "definition": "阿里千问 Qwen 系列的模型发布与开源更新，从旗舰大模型到能装进手机的小模型。"
+      "entityId": "cdmetro",
+      "definition": "成都轨道集团的超大线网运营、全自动无人驾驶与TOD示范项目推进。"
     },
     {
-      "slug": "kimi",
-      "name": "Kimi / 月之暗面",
+      "slug": "mtr",
+      "name": "港铁公司 (MTR)",
       "group": "company",
-      "entityId": "kimi",
-      "definition": "月之暗面的 Kimi 产品更新、K 系列开源模型与长文本技术进展。"
+      "entityId": "mtr",
+      "definition": "香港铁路有限公司的铁路+物业(R+P)商业模式、海内外营运及服务创新。"
     },
     {
-      "slug": "minimax",
-      "name": "MiniMax",
+      "slug": "camet",
+      "name": "中国城市轨道交通协会",
       "group": "company",
-      "entityId": "minimax",
-      "definition": "MiniMax 的 M 系列大模型、语音与多模态能力，以及开源与商业化进展。"
+      "entityId": "camet",
+      "definition": "中城轨协的行业统计年度快报、团体技术标准、行业论坛与智慧城轨指引。"
     },
     {
-      "slug": "zhipu",
-      "name": "智谱 GLM",
+      "slug": "mot",
+      "name": "交通运输部",
       "group": "company",
-      "entityId": "zhipu",
-      "definition": "智谱 GLM 系列模型的发布与开源更新，以及编程、推理能力和商业化进展。"
+      "entityId": "mot",
+      "definition": "交通运输部城市轨道交通月度客运量统计公报、全国安全指导意见与行业规范。"
     },
     {
-      "slug": "xai",
-      "name": "xAI / Grok",
-      "group": "company",
-      "entityId": "xai",
-      "definition": "马斯克旗下 xAI 的 Grok 模型更新、算力集群建设与 X 平台整合。"
-    },
-    {
-      "slug": "meta",
-      "name": "Meta / Llama",
-      "group": "company",
-      "entityId": "meta",
-      "definition": "Meta 的 Llama 与 Muse 系列模型、超级智能实验室与 Meta AI 产品。"
-    },
-    {
-      "slug": "microsoft",
-      "name": "Microsoft / Copilot",
-      "group": "company",
-      "entityId": "microsoft",
-      "definition": "微软的 Copilot 系列产品、Azure AI 云服务，以及与 OpenAI 的合作动向。"
-    },
-    {
-      "slug": "nvidia",
-      "name": "NVIDIA 英伟达",
-      "group": "company",
-      "entityId": "nvidia",
-      "definition": "英伟达的 GPU 新品、CUDA 软件生态、机器人平台与 AI 算力供需。"
-    },
-    {
-      "slug": "hugging-face",
-      "name": "Hugging Face",
-      "group": "company",
-      "entityId": "hugging-face",
-      "definition": "Hugging Face 社区的热门开源模型、数据集、工具与榜单变化。"
-    },
-    {
-      "slug": "cursor",
-      "name": "Cursor",
-      "group": "company",
-      "entityId": "cursor",
-      "definition": "Cursor（Anysphere）的编辑器与编码 Agent 更新、自研模型与定价变化。"
-    },
-    {
-      "slug": "openrouter",
-      "name": "OpenRouter",
-      "group": "company",
-      "entityId": "openrouter",
-      "definition": "OpenRouter 平台的新模型上架、价格变化与开发者调用量排行。"
-    },
-    {
-      "slug": "agent",
-      "name": "Agent 智能体",
+      "slug": "passenger-flow",
+      "name": "客运流量监测",
       "group": "field",
       "tags": [
-        "Agent"
+        "客流运能",
+        "客流纪录",
+        "客运强度"
       ],
-      "definition": "能自己拆解任务、调用工具、一步步把事办完的 AI 智能体：Claude Code、Manus 等应用，各家 Agent 框架与评测。"
+      "definition": "全国及各城市轨道交通日客运量、客流强度排行、节假日运力保障与大客流应对。"
     },
     {
-      "slug": "coding",
-      "name": "AI 编码",
+      "slug": "tod-commerce",
+      "name": "车站商业与TOD开发",
       "group": "field",
       "tags": [
-        "编码"
+        "TOD开发",
+        "车站商业",
+        "广告传媒",
+        "站城一体"
       ],
-      "definition": "用 AI 写代码：编程助手、Vibe Coding、代码模型评测，以及开发方式的变化。"
+      "definition": "车站地下商业、便利零售招商、站内广告媒体资源经营与车辆段/车站上盖综合开发。"
     },
     {
-      "slug": "reasoning",
-      "name": "推理能力",
+      "slug": "operations-safety",
+      "name": "运营调度与安全应急",
       "group": "field",
       "tags": [
-        "推理"
+        "运营调度",
+        "安全应急",
+        "防汛应急"
       ],
-      "definition": "让大模型先想再答的能力：思维链、推理模型，数学与逻辑评测上的突破和争议。"
+      "definition": "运行图优化、首末班延时、防汛防台演练、客运限流措施与行车设备应急处置。"
     },
     {
-      "slug": "multimodal",
-      "name": "多模态",
+      "slug": "smart-metro",
+      "name": "智慧城轨与自动化",
       "group": "field",
       "tags": [
-        "多模态"
+        "智慧城轨",
+        "全自动运行",
+        "CBTC"
       ],
-      "definition": "文字之外的能力：看懂图片、图文混合理解、音视频输入输出的模型与产品进展。"
+      "definition": "无人驾驶(GoA4)、智慧车站、数字孪生、全自动信号系统与智能运维检修。"
     },
     {
-      "slug": "image-gen",
-      "name": "图像生成",
+      "slug": "construction-tech",
+      "name": "线路规划与工程建设",
       "group": "field",
       "tags": [
-        "图像生成"
+        "规划批复",
+        "工程建设",
+        "市域铁路"
       ],
-      "definition": "AI 画图与修图：文生图模型更新、图像编辑能力与创作工具。"
+      "definition": "国家发改委批复规划、新线路可行性研究、盾构区间洞通、轨通、电通及空载试运行。"
     },
     {
-      "slug": "video",
-      "name": "AI 视频",
-      "group": "field",
-      "tags": [
-        "视频"
-      ],
-      "definition": "AI 生成和理解视频：文生视频模型、视频编辑工具，以及影视创作的新做法。"
-    },
-    {
-      "slug": "voice",
-      "name": "语音与音频",
-      "group": "field",
-      "tags": [
-        "语音"
-      ],
-      "definition": "AI 语音与音频：语音合成、实时语音对话、音乐生成与音频理解的模型与产品。"
-    },
-    {
-      "slug": "embodied",
-      "name": "具身智能",
-      "group": "field",
-      "tags": [
-        "具身智能"
-      ],
-      "definition": "装进机器人身体里的 AI：人形机器人、具身基础模型，以及在真实环境里动手干活的能力。"
-    },
-    {
-      "slug": "on-device",
-      "name": "端侧 AI",
-      "group": "field",
-      "tags": [
-        "端侧"
-      ],
-      "definition": "直接跑在手机、电脑等设备上的 AI：小模型、在本机运行模型的工具与端侧芯片。"
-    },
-    {
-      "slug": "open-source",
-      "name": "开源生态",
-      "group": "field",
-      "tags": [
-        "开源生态",
-        "开源/仓库"
-      ],
-      "definition": "开放权重、能下载下来自己部署的模型，开源框架与 GitHub 上爆火的 AI 项目。"
-    },
-    {
-      "slug": "engineering",
-      "name": "部署工程",
-      "group": "field",
-      "tags": [
-        "部署/工程"
-      ],
-      "definition": "怎么把模型跑得更快更省钱：推理加速、显存与成本、服务部署与基础设施选型。"
-    },
-    {
-      "slug": "data-training",
-      "name": "数据与训练",
-      "group": "field",
-      "tags": [
-        "数据/训练"
-      ],
-      "definition": "大模型是怎么练出来的：数据集构建、合成数据、预训练与后训练方法、算力与训练成本。"
-    },
-    {
-      "slug": "safety",
-      "name": "安全对齐",
-      "group": "field",
-      "tags": [
-        "安全/对齐"
-      ],
-      "definition": "让 AI 可控、可信、不被滥用：越狱与防御、模型行为研究、安全评测与治理框架。"
-    },
-    {
-      "slug": "mcp",
-      "name": "MCP 与工具调用",
-      "group": "field",
-      "tags": [
-        "MCP/工具调用"
-      ],
-      "definition": "让 AI 连上外部软件和数据：MCP 协议、function calling 工具调用与各类工具集成。"
-    },
-    {
-      "slug": "model-releases",
-      "name": "模型发布",
+      "slug": "line-milestones",
+      "name": "新线通车与重大节点",
       "group": "genre",
       "tags": [
-        "模型发布"
+        "新线开通"
       ],
-      "definition": "各家新模型的发布、开源与迭代：旗舰更新、开源权重放出、能力与价格变化。"
+      "definition": "全国各城市新开通运营的地铁新线、延伸段与初期运营通车活动。"
     },
     {
-      "slug": "product-updates",
-      "name": "产品更新",
+      "slug": "planning-approvals",
+      "name": "建设规划与批复",
       "group": "genre",
       "tags": [
-        "产品更新"
+        "规划批复"
       ],
-      "definition": "AI 产品与应用的功能上新、改版与商业化——谁家的产品变强了、变贵了、能用了。"
+      "definition": "国家发改委、省级住建与自然资源部门的城市轨道交通建设规划批复与调整。"
     },
     {
-      "slug": "papers",
-      "name": "论文研究",
+      "slug": "traffic-bulletins",
+      "name": "客运公报与数据月报",
       "group": "genre",
       "tags": [
-        "论文/研究"
+        "客流运能"
       ],
-      "definition": "值得读的 AI 论文与研究成果：架构创新、训练方法、能力测量与理论进展。"
+      "definition": "交通运输部与中城轨协定期发布的全国城市轨道交通运营数据月度速报。"
     },
     {
-      "slug": "benchmarks",
-      "name": "评测基准",
+      "slug": "financial-reports",
+      "name": "集团财报与经营业绩",
       "group": "genre",
       "tags": [
-        "评测/基准"
+        "集团财报",
+        "经营动态"
       ],
-      "definition": "模型到底谁更强：Benchmark 评测成绩、评测方法的争议与排行榜变化。"
+      "definition": "各地铁集团审计财报、票款营收、财政补贴、债券融资及重大投资项目。"
     },
     {
-      "slug": "tutorials",
-      "name": "教程实践",
+      "slug": "standards-policies",
+      "name": "行业标准与政策规章",
       "group": "genre",
       "tags": [
-        "教程/实践"
+        "行业政策",
+        "技术规范"
       ],
-      "definition": "拿来就能用的实操内容：提示词技巧、工作流搭建、工具用法与踩坑经验。"
-    },
-    {
-      "slug": "opinions",
-      "name": "大佬观点",
-      "group": "genre",
-      "tags": [
-        "大佬观点"
-      ],
-      "definition": "行业关键人物在想什么：创始人访谈、研究者论战与投资人判断。"
-    },
-    {
-      "slug": "trends",
-      "name": "现象与趋势",
-      "group": "genre",
-      "tags": [
-        "现象/趋势"
-      ],
-      "definition": "AI 正在改变什么：大家怎么用 AI、新能力的出现、对社会与市场格局的影响。"
-    },
-    {
-      "slug": "industry",
-      "name": "行业动态",
-      "group": "genre",
-      "tags": [
-        "行业动态"
-      ],
-      "definition": "AI 圈的商业大事：融资并购、人事变动、合作与竞争、政策与市场变化。"
-    },
-    {
-      "slug": "policy",
-      "name": "政策监管",
-      "group": "genre",
-      "tags": [
-        "政策/监管"
-      ],
-      "definition": "AI 相关的政策法规与政府监管：立法进展、出口管制与全球治理。"
+      "definition": "部委规范性文件、城市轨道交通安全防范技术标准与行业指导意见。"
     }
   ]
 }

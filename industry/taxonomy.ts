@@ -12,57 +12,126 @@
  * feedLabel 是分类 RSS 标题里的名字（不写就用 label）。公开接口、RSS 和 MCP 里要把一类并进另一类发布，写在站点设置里（site/site.ts 的 PUBLIC_CATEGORIES）。
  */
 export const CATEGORIES = [
-  { key: "ai-models", tagColor: "indigo", label: "模型", feedLabel: "AI 模型", section: "模型发布/更新", guide: "模型本身的发布、版本、权重开放、能力或价格变化，以及既有榜单上的模型成绩。公布一次跑分不是发布新基准，也不是教程。" },
-  { key: "ai-products", tagColor: "turquoise", label: "产品", feedLabel: "AI 产品", section: "产品发布/更新", guide: "可使用的 AI 产品、功能、应用、工具、API、平台和工程组件的发布更新。模型厂商发布的推理框架、算子库、硬件适配组件仍是产品，不能因为厂商名归成模型。" },
-  { key: "industry", tagColor: "orange", label: "行业", feedLabel: "行业动态", section: "行业动态", guide: "已发生的公司经营、融资并购、人事、合作、诉讼、政策、真实安全事故及调查进展。新闻由当事人发帖、带有态度，也不因此变成观点。" },
-  { key: "paper", tagColor: "violet", label: "论文", feedLabel: "论文", section: "论文研究", guide: "以新研究方法、实验设计与发现为核心的论文、技术报告、新基准或研究数据集。系统性红队实验属于研究；既有榜单成绩归模型，真实事故的新闻调查归行业。" },
-  { key: "tip", tagColor: "green", label: "教程", section: "技巧与观点", guide: "读者可以照着使用的方法、提示词、工具用法、工程实践复盘与技术讲解。重点是可复用的做法；单纯发布工具归产品，只有态度和预测而无做法归观点。", commentary: true },
-  { key: "opinion", tagColor: "purple", label: "观点", section: "技巧与观点", guide: "重点是作者的解释、判断、主张、预测、评论或访谈观点。讨论市场不自动归行业，作者是名人不自动归观点。", commentary: true },
+  {
+    key: "planning-construction",
+    tagColor: "indigo",
+    label: "规划建设",
+    feedLabel: "规划与建设",
+    section: "线路规划与建设批复",
+    guide: "国家发改委或地方发改委线网规划批复、工可批复、初步设计批复；新线开工、贯通、轨通、电通、空载试运行及初期运营通车等全周期工程节点。"
+  },
+  {
+    key: "operations-safety",
+    tagColor: "turquoise",
+    label: "运营安全",
+    feedLabel: "运营与安全",
+    section: "运营调度与安全",
+    guide: "列车运行图调整、行车调度、信号系统CBTC/无人驾驶升级、列车延误、客流限流、防汛防灾应急演练及突发故障处置。"
+  },
+  {
+    key: "passenger-flow",
+    tagColor: "violet",
+    label: "客流运力",
+    feedLabel: "客流与运力",
+    section: "客运流量与运力监测",
+    guide: "交通运输部全国城市客运月报、重点城市及全网历史单日客流创新高、重点车站客运强度、运力投放与大客流应对保障。"
+  },
+  {
+    key: "tod-commerce",
+    tagColor: "green",
+    label: "TOD商业",
+    feedLabel: "TOD与商业",
+    section: "车站商业与TOD开发",
+    guide: "车辆段及车站上盖物业开发、TOD综合体土地出让与规划、站内便利商业招商、地铁广告传媒经营、文创衍生品开发。"
+  },
+  {
+    key: "industry",
+    tagColor: "orange",
+    label: "经营财报",
+    feedLabel: "经营与财报",
+    section: "集团经营与财报",
+    guide: "城轨集团年度报告、财务报表、票务收入与政府补贴收支、债务融资与绿色债券发行、高管人事任命与企业重组。"
+  },
+  {
+    key: "policy-standard",
+    tagColor: "purple",
+    label: "政策标准",
+    feedLabel: "政策与标准",
+    section: "行业政策与标准",
+    guide: "交通运输部、国家铁路局、中国城市轨道交通协会发布的产业指导意见、安全管理规定、智慧城轨技术规范及团体标准。",
+    commentary: true
+  },
 ] as const satisfies ReadonlyArray<{ key: string; tagColor: string; label: string; feedLabel?: string; section: string; guide: string; commentary?: true }>;
 
 /**
- * 这个行业最受关注的一类发布（AI 行业是新模型）：日报报头的“N 个新模型”、改分类后修订已出的报告都按它数。
+ * 这个行业最受关注的一类发布（地铁行业是新线开通）：日报报头的“N 条新开通线路”、改分类后修订已出的报告都按它数。
  * category 是类别，tag 是标签，两者都对上才算；unit 接在数字后面。
  * 没有这样一类的行业设成 null，报头就不显示这个数。
  */
-export const RELEASE: { category: string; tag: string; unit: string } | null = { category: "ai-models", tag: "模型发布", unit: "个新模型" };
+export const RELEASE: { category: string; tag: string; unit: string } | null = {
+  category: "planning-construction",
+  tag: "新线开通",
+  unit: "条新开通线路"
+};
 
 /** 周报月报的总述可以直接写、不必在报道里找到出处的行业通用词（小写）。站名会自动算进去。 */
-export const PLAIN_TERMS: readonly string[] = ["ai", "api", "llm", "gpu", "agi", "ceo", "ipo"];
+export const PLAIN_TERMS: readonly string[] = [
+  "metro", "subway", "tod", "cbtc", "ato", "atp", "atc", "camet", "mot", "ndrc",
+  "客运量", "客运强度", "运营里程", "准点率", "工可", "初期运营", "试运行", "换乘站"
+];
 
 /**
  * 内容理解一步给每篇资料判的“内容类型”（写在 prompts/content-understanding.md 里，改了类型要同步改那份提示词）。
  * 评分提示词（prompts/selection-score.md）按类型给五个维度不同的权重。
  */
-export const ITEM_TYPES = ["model_release", "product_launch", "tool_or_prompt", "research_paper", "industry_event", "opinion_analysis", "tutorial_explainer"] as const;
+export const ITEM_TYPES = [
+  "line_milestone",
+  "planning_approval",
+  "operation_event",
+  "flow_capacity_data",
+  "tod_commercial",
+  "corporate_finance",
+  "policy_standard",
+] as const;
 
 // ── 标签词表 ────────────────────────────────────────────────────────────────────────────
 
 /** 每篇资料的第一个标签必须是这些“分类标签”之一。 */
 export const CATEGORY_TAGS = [
-  "产品更新", "模型发布", "论文/研究", "开源/仓库", "教程/实践", "现象/趋势", "大佬观点", "评测/基准", "安全/对齐", "行业动态", "政策/监管",
-  "非AI/通用工具", "其他",
+  "新线开通", "规划批复", "工程建设", "运营调度", "安全应急",
+  "客流运能", "TOD开发", "车站商业", "广告传媒", "集团财报",
+  "经营动态", "行业政策", "技术规范", "其他"
 ] as const;
 
 /** 可选的主题标签。 */
 export const TOPIC_TAGS = [
-  "Agent", "编码", "推理", "多模态", "语音", "视频", "图像生成", "RAG", "端侧", "数据/训练", "搜索", "部署/工程", "开源生态", "具身智能", "MCP/工具调用",
+  "全自动运行", "CBTC", "智慧城轨", "客运强度", "早晚高峰", "防汛应急",
+  "站城一体", "物业上盖", "市域铁路", "有轨电车", "低碳节能", "票制票价",
+  "设备维保", "资产盘活", "既有线改造", "客流纪录"
 ] as const;
 
 /** 可选的实体标签（公司、机构、平台）。 */
-export const ENTITY_TAGS = ["OpenAI", "Anthropic", "DeepSeek", "DeepMind", "Google", "Meta", "Microsoft", "xAI", "Hugging Face", "GitHub", "arXiv"] as const;
+export const ENTITY_TAGS = [
+  "交通运输部", "中国城市轨道交通协会", "国家发改委",
+  "申通地铁", "北京地铁", "广州地铁", "深圳地铁", "成都轨道集团",
+  "武汉地铁", "南京地铁", "重庆轨道交通", "杭州地铁", "青岛地铁",
+  "港铁公司", "中国中车", "京投公司"
+] as const;
 
 /** 模型常写的近义词，统一成词表里的写法。 */
 export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
-  "教程/玩法": "教程/实践", "技巧/最佳实践": "教程/实践", "合作/生态": "行业动态", "融资/收购": "行业动态", "公司动态": "行业动态",
-  合作: "行业动态", 生态: "行业动态", 融资: "行业动态", 收购: "行业动态", 投资: "行业动态", 并购: "行业动态",
-  政策: "政策/监管", 监管: "政策/监管", 法规: "政策/监管", 安全: "安全/对齐", 对齐: "安全/对齐",
-  论文: "论文/研究", 研究: "论文/研究", paper: "论文/研究", papers: "论文/研究",
-  "open-source": "开源/仓库", 开源: "开源/仓库", 仓库: "开源/仓库", repo: "开源/仓库",
-  教程: "教程/实践", 玩法: "教程/实践", 指南: "教程/实践", 技巧: "教程/实践", 最佳实践: "教程/实践", 实践: "教程/实践",
-  产品: "产品更新", 更新: "产品更新", 发布: "模型发布", 模型: "模型发布", 趋势: "现象/趋势", 现象: "现象/趋势", 观点: "大佬观点",
-  视频生成: "视频", 非ai: "非AI/通用工具", "non-ai": "非AI/通用工具", 通用工具: "非AI/通用工具", 工程工具: "非AI/通用工具",
-  安全扫描: "非AI/通用工具", devops: "非AI/通用工具", 行业: "行业动态", 动态: "行业动态",
+  "客流": "客流运能", "客流量": "客流运能", "客运量": "客流运能", "运力": "客流运能",
+  "开通": "新线开通", "通车": "新线开通", "试运营": "新线开通", "初期运营": "新线开通",
+  "批复": "规划批复", "工可": "规划批复", "可行性研究": "规划批复", "建设规划": "规划批复",
+  "施工": "工程建设", "贯通": "工程建设", "轨通": "工程建设", "电通": "工程建设", "封顶": "工程建设",
+  "财报": "集团财报", "年报": "集团财报", "半年报": "集团财报", "业绩": "集团财报", "营收": "集团财报",
+  "商业": "车站商业", "招商": "车站商业", "商铺": "车站商业", "广告": "广告传媒",
+  "TOD": "TOD开发", "上盖开发": "TOD开发", "站城融合": "TOD开发",
+  "调度": "运营调度", "运行图": "运营调度", "延误": "运营调度", "列车故障": "运营调度",
+  "安全": "安全应急", "事故": "安全应急", "消防": "安全应急", "演练": "安全应急", "防汛": "安全应急",
+  "标准": "技术规范", "规范": "技术规范", "技术标准": "技术规范",
+  "政策": "行业政策", "规章": "行业政策", "法规": "行业政策",
+  "智慧地铁": "智慧城轨", "无人驾驶": "全自动运行", "自动化": "全自动运行"
 };
 
 // ── 公司与主体 ──────────────────────────────────────────────────────────────────────────
@@ -74,24 +143,18 @@ export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
  * 所有这些名字都用来认出说的是哪家公司，比如把事实的主体对到发布方。
  */
 export const ENTITIES: Record<string, { name: string; displayTag: string | null; aliases: string[]; orgNames?: string[]; otherNames?: string[] }> = {
-  "world-labs": { name: "World Labs", displayTag: null, aliases: ["World Labs"] },
-  "thinking-machines": { name: "Thinking Machines Lab", displayTag: null, aliases: ["Thinking Machines"] },
-  amd: { name: "AMD", displayTag: null, aliases: ["AMD", "Advanced Micro Devices"] },
-  openai: { name: "OpenAI", displayTag: "OpenAI", aliases: ["OpenAI", "ChatGPT", "Sora", "Codex", "GPT"], orgNames: ["OpenAI"], otherNames: ["OpenAI Developers"] },
-  anthropic: { name: "Anthropic", displayTag: "Anthropic", aliases: ["Anthropic", "Claude"], orgNames: ["Anthropic"], otherNames: ["Claude Code"] },
-  google: { name: "Google", displayTag: "Google", aliases: ["Google", "DeepMind", "Gemini", "谷歌"], orgNames: ["Google DeepMind", "Google Research", "Google", "DeepMind", "谷歌"], otherNames: ["Google AI", "Google Labs", "Google Cloud"] },
-  deepseek: { name: "DeepSeek", displayTag: "DeepSeek", aliases: ["DeepSeek", "深度求索"], orgNames: ["DeepSeek", "深度求索"] },
-  qwen: { name: "千问 Qwen", displayTag: null, aliases: ["Qwen", "通义", "阿里"], orgNames: ["通义千问", "通义实验室", "阿里巴巴", "阿里云", "阿里", "Qwen Team", "Qwen", "Alibaba"], otherNames: ["千问", "千问APP", "Alibaba Cloud"] },
-  kimi: { name: "Kimi / 月之暗面", displayTag: null, aliases: ["Kimi", "月之暗面", "Moonshot"], orgNames: ["Moonshot AI", "月之暗面", "Kimi"] },
-  minimax: { name: "MiniMax", displayTag: null, aliases: ["MiniMax", "海螺"], orgNames: ["MiniMax", "稀宇科技"] },
-  zhipu: { name: "智谱 GLM", displayTag: null, aliases: ["智谱", "GLM", "Z.ai"], orgNames: ["智谱AI", "智谱", "Zhipu AI", "Z.ai"], otherNames: ["Zhipu"] },
-  xai: { name: "xAI", displayTag: "xAI", aliases: ["xAI", "Grok"], orgNames: ["SpaceX Super Intelligence", "SpaceXAI", "SpaceXSI", "xAI"], otherNames: ["Grok Bot"] },
-  meta: { name: "Meta", displayTag: "Meta", aliases: ["Meta", "Llama"], orgNames: ["Meta Superintelligence Labs", "Meta AI", "Meta"], otherNames: ["AI at Meta", "Muse"] },
-  microsoft: { name: "Microsoft", displayTag: "Microsoft", aliases: ["Microsoft", "微软", "Copilot"], orgNames: ["Microsoft Research", "Microsoft AI", "Microsoft", "微软"] },
-  nvidia: { name: "NVIDIA", displayTag: null, aliases: ["NVIDIA", "英伟达"], orgNames: ["NVIDIA", "英伟达"] },
-  "hugging-face": { name: "Hugging Face", displayTag: "Hugging Face", aliases: ["Hugging Face"], orgNames: ["Hugging Face", "HuggingFace"] },
-  cursor: { name: "Cursor", displayTag: null, aliases: ["Cursor", "Anysphere"], orgNames: ["Cursor"] },
-  openrouter: { name: "OpenRouter", displayTag: null, aliases: ["OpenRouter"], orgNames: ["OpenRouter"] },
+  mot: { name: "交通运输部", displayTag: "交通运输部", aliases: ["交通运输部", "交通部", "部运输服务司"], orgNames: ["交通运输部"] },
+  camet: { name: "中国城市轨道交通协会", displayTag: "中城轨协", aliases: ["中国城市轨道交通协会", "中城轨协", "CAMET"], orgNames: ["中国城市轨道交通协会"] },
+  ndrc: { name: "国家发改委", displayTag: "国家发改委", aliases: ["国家发改委", "发改委基础司", "国家发展改革委"], orgNames: ["国家发展改革委"] },
+  shmetro: { name: "申通地铁", displayTag: "申通地铁", aliases: ["申通地铁", "上海地铁", "上海申通地铁集团"], orgNames: ["申通地铁集团", "上海地铁"], otherNames: ["上海地铁shmetro"] },
+  bjsubway: { name: "北京地铁", displayTag: "北京地铁", aliases: ["北京地铁", "北京市地铁运营有限公司", "北京地铁运营"], orgNames: ["北京地铁"], otherNames: ["北京地铁公司"] },
+  gzmtr: { name: "广州地铁", displayTag: "广州地铁", aliases: ["广州地铁", "广州地铁集团", "广州地铁建设"], orgNames: ["广州地铁集团", "广州地铁"], otherNames: ["广州地铁微讯"] },
+  szmc: { name: "深圳地铁", displayTag: "深圳地铁", aliases: ["深圳地铁", "深铁集团", "深圳市地铁集团", "深铁商业"], orgNames: ["深圳地铁集团", "深铁集团"] },
+  cdmetro: { name: "成都轨道集团", displayTag: "成都轨道", aliases: ["成都轨道集团", "成都地铁", "成都轨道交通集团"], orgNames: ["成都轨道交通集团", "成都地铁"] },
+  whrt: { name: "武汉地铁", displayTag: "武汉地铁", aliases: ["武汉地铁", "武汉地铁集团"], orgNames: ["武汉地铁集团"] },
+  mtr: { name: "港铁公司", displayTag: "港铁", aliases: ["港铁", "港铁公司", "香港铁路有限公司", "MTR"], orgNames: ["香港铁路有限公司", "港铁公司"] },
+  crrc: { name: "中国中车", displayTag: "中国中车", aliases: ["中国中车", "中车", "CRRC"], orgNames: ["中国中车股份有限公司", "中车长客", "中车四方", "中车株机"] },
+  bii: { name: "京投公司", displayTag: "京投公司", aliases: ["京投公司", "北京市基础设施投资有限公司"], orgNames: ["京投公司"] },
 };
 
 /**
@@ -99,57 +162,37 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
  * 行业没有这个问题时可以留空数组。
  */
 export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; patterns: RegExp[] }> = [
-  { id: "openai", name: "OpenAI", patterns: [/openai|chatgpt|\bgpt-?[o\d]|\bsora\b|\bcodex\b/i] },
-  { id: "anthropic", name: "Anthropic", patterns: [/anthropic|\bclaude\b/i, /\b(?:opus|sonnet|haiku)\s*\d+(?:[.\-]\d+)*\b/i, /\bfable\s*\d+(?:[.\-]\d+)*\b|\bmythos\b/i] },
-  { id: "google", name: "Google / Gemini", patterns: [/google|deepmind|\bgemini\b|notebooklm|\bveo\s?\d|\bAlphaFold\b|\bAMIE\b/i] },
-  { id: "deepseek", name: "DeepSeek", patterns: [/deepseek|深度求索/i] },
-  { id: "xai", name: "xAI / Grok", patterns: [/\bxai\b|\bgrok\b/i] },
-  { id: "meta", name: "Meta / Llama", patterns: [/\bMeta\b/, /\bmeta\s?ai\b|\bllama\b/i] },
-  { id: "microsoft", name: "Microsoft / Copilot", patterns: [/microsoft|copilot|微软/i] },
-  { id: "nvidia", name: "NVIDIA", patterns: [/nvidia|英伟达|\bnemotron\b|\bnemo\b|\bblackwell\b|\brubin(?:\s+ultra)?\b|\bcuda\b/i] },
-  { id: "qwen", name: "千问 Qwen", patterns: [/\bqwen|通义|千问/i] },
-  { id: "hugging-face", name: "Hugging Face", patterns: [/hugging\s?face/i] },
-  { id: "cursor", name: "Cursor", patterns: [/\bCursor\b/] },
-  { id: "kimi", name: "Kimi / 月之暗面", patterns: [/\bkimi\b|月之暗面|\bmoonshot\s?ai\b/i] },
-  { id: "openrouter", name: "OpenRouter", patterns: [/openrouter/i] },
-  { id: "minimax", name: "MiniMax", patterns: [/minimax/i] },
-  { id: "zhipu", name: "智谱 GLM", patterns: [/智谱|\bglm-?[4-9]/i] },
-  { id: "hunyuan", name: "腾讯混元", patterns: [/混元|hunyuan/i] },
-  { id: "doubao", name: "字节豆包", patterns: [/豆包|doubao|字节跳动|bytedance/i] },
-  { id: "mistral", name: "Mistral", patterns: [/mistral/i] },
-  { id: "perplexity", name: "Perplexity", patterns: [/\bPerplexity\b/] },
-  { id: "runway", name: "Runway", patterns: [/\brunway\b/i] },
-  { id: "suno", name: "Suno", patterns: [/\bsuno\b/i] },
-  { id: "midjourney", name: "Midjourney", patterns: [/midjourney/i] },
-  { id: "stability-ai", name: "Stability AI", patterns: [/stability\s?ai/i] },
-  { id: "elevenlabs", name: "ElevenLabs", patterns: [/eleven\s?labs/i] },
-  { id: "vllm", name: "vLLM", patterns: [/\bvllm\b/i] },
-  { id: "ollama", name: "Ollama", patterns: [/\bollama\b/i] },
-  { id: "windsurf", name: "Windsurf", patterns: [/windsurf/i] },
-  { id: "devin", name: "Devin", patterns: [/\bdevin\b/i] },
-  { id: "manus", name: "Manus", patterns: [/\bmanus\b/i] },
-  { id: "apple", name: "Apple AI", patterns: [/\bapple\s?(intelligence|silicon|ai)\b|苹果(智能|\s?AI)/i] },
-  { id: "amazon", name: "Amazon / AWS", patterns: [/amazon|\baws\b|亚马逊/i] },
-  { id: "baidu", name: "百度文心", patterns: [/百度|baidu|文心|\bernie\s?bot\b/i] },
+  { id: "mot", name: "交通运输部", patterns: [/交通运输部|交通部/i] },
+  { id: "camet", name: "中国城市轨道交通协会", patterns: [/中国城市轨道交通协会|中城轨协|\bcamet\b/i] },
+  { id: "ndrc", name: "国家发改委", patterns: [/国家发改委|国家发展改革委/i] },
+  { id: "shmetro", name: "申通地铁", patterns: [/申通地铁|上海地铁/i] },
+  { id: "bjsubway", name: "北京地铁", patterns: [/北京地铁/i] },
+  { id: "gzmtr", name: "广州地铁", patterns: [/广州地铁/i] },
+  { id: "szmc", name: "深圳地铁", patterns: [/深圳地铁|深铁/i] },
+  { id: "cdmetro", name: "成都轨道集团", patterns: [/成都轨道|成都地铁/i] },
+  { id: "whrt", name: "武汉地铁", patterns: [/武汉地铁/i] },
+  { id: "mtr", name: "港铁公司", patterns: [/港铁|香港铁路|\bmtr\b/i] },
+  { id: "crrc", name: "中国中车", patterns: [/中国中车|\bcrrc\b/i] },
+  { id: "bii", name: "京投公司", patterns: [/京投公司|北京市基础设施投资/i] },
 ];
 
 /** 这些域名上的文章，发布方就是对应的公司（托管平台如 GitHub、arXiv 不算）。 */
 export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: readonly string[] }> = [
-  { entityId: "openai", domains: ["openai.com"] },
-  { entityId: "anthropic", domains: ["anthropic.com", "claude.com"] },
-  { entityId: "google", domains: ["deepmind.google", "ai.google", "blog.google"] },
-  { entityId: "deepseek", domains: ["deepseek.com"] },
-  { entityId: "xai", domains: ["x.ai"] },
-  { entityId: "meta", domains: ["ai.meta.com"] },
-  { entityId: "microsoft", domains: ["microsoft.com"] },
-  { entityId: "nvidia", domains: ["nvidia.com"] },
-  { entityId: "qwen", domains: ["qwen.ai"] },
-  { entityId: "cursor", domains: ["cursor.com"] },
-  { entityId: "openrouter", domains: ["openrouter.ai"] },
+  { entityId: "mot", domains: ["mot.gov.cn"] },
+  { entityId: "camet", domains: ["camet.org.cn"] },
+  { entityId: "ndrc", domains: ["ndrc.gov.cn"] },
+  { entityId: "shmetro", domains: ["shmetro.com"] },
+  { entityId: "bjsubway", domains: ["bjsubway.com"] },
+  { entityId: "gzmtr", domains: ["gzmtr.com"] },
+  { entityId: "szmc", domains: ["szmc.net"] },
+  { entityId: "cdmetro", domains: ["chengdurail.com"] },
+  { entityId: "whrt", domains: ["whrt.com"] },
+  { entityId: "mtr", domains: ["mtr.com.hk"] },
+  { entityId: "crrc", domains: ["crrcgc.cc"] },
 ];
 
 /** 原文里的这些写法也算提到了对应公司。 */
 export const IDENTITY_CONTEXT_ALIASES: ReadonlyArray<{ entityId: string; pattern: RegExp }> = [
-  { entityId: "meta", pattern: /@AIatMeta\b/i },
-  { entityId: "zhipu", pattern: /\bZhipu(?:\s+AI\b|['’]s\b)/i },
+  { entityId: "shmetro", pattern: /上海地铁shmetro/i },
+  { entityId: "gzmtr", pattern: /广州地铁微讯/i },
 ];
