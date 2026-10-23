@@ -542,9 +542,9 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 呼和浩特 | `hhhtmetro.com` | 域名不存在（试过 hhhtmetro.cn 也不通） |
 | 哈尔滨 | `hrbdt.com`（非 .com.cn） | 首页 200 但仅 6.9KB，无列表；后续重试超时 |
 | 昆明 | `kmgdgs.com` / `yjrt.com.cn` | 503 / 内容仅 1 条 2020 介绍页 |
-| 温州 | `wzmtr.com` | **2600 字节空壳，0 个 `<a>` 标签** |
+| 温州 | `wzmtr.com` | SPA 壳（所有路径均返回同一 2600 字节 index）；XHR 里出现 `challenge_vcode` 与 `Ahxwd_bot…`，**有人机验证挑战** |
 | 绍兴 | `sxmtr.com` | 空响应 |
-| 芜湖 | `wuhurail.com` | 域名不存在 |
+| 芜湖 | `wuhurail.com` | 域名不存在；轨道交通已并入芜湖市交通能源投资集团 `whsjttz.com`（1658 字节，疑似壳） |
 | 金华 | `jhrail.com` | **Cloudflare 403「you have been blocked」** |
 | 南通 | `ntmetro.com.cn` | **域名正在出售**（DNSPod 停放页） |
 
