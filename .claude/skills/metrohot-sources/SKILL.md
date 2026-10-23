@@ -370,7 +370,7 @@ for (const s of all.filter((x:any) => x.kind === "web_list" && x.enabled !== fal
 | 杭州 | 杭州地铁 | `hzmetro.com` | 2.1KB SPA 壳 | 🟡 需抓接口 |
 | 武汉 | 武汉地铁 | `whrt.com` | 302 跳到 `ww16.whrt.com/?sub1=…`（泛域名轮换） | 🟡 需跟跳转 |
 | 西安 | 西安轨道 | `xianrail.com` | 1.1KB SPA 壳 | 🟡 需抓接口 |
-| 南京 | 南京地铁 | `njmetro.com.cn` | 仅 https 可用；`go-tender-center.do` 返回框架，列表靠 AJAX | 🟡 需抓接口 |
+| 南京 | 南京地铁 | `njmetro.com.cn` | ✅ 仅 https 可用；`li.tender_tli` 招标 20 条、`li.buil_mli1li` 资源招商 15 条（日期嵌在标题里，用 `publishedAtRegex` 提） | ✅ 已接入 2 源 |
 | 天津 | 天津轨道 | `tjgdjt.com` | ✅ `channels/17.html`（运营动态）、`channels/28.html`（招商公告）；招采平台 `xmzc.tjgdjt.com:8084` 接口可用但详情路由未破 | ✅ 已接入 2 源 |
 | 长沙 | 长沙轨道 | `hnsgzjt.com` | DNS 不通（http/https/www 全试过） | ❌ 不可用 |
 | 郑州 | 郑州地铁 | `zzmetro.cn` | ✅ `nav/list/33/{34,35,36}` 采购计划/公告/单一来源 | ✅ 已接入 3 源 |

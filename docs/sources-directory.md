@@ -54,6 +54,8 @@
 | `web-nbmetro-nonbid` | 宁波轨道 · 非招标采购公告 | 招标采购 / 车站商业 | `web_list` | `http://www.nbmetro.com/tender_report.php?10` | ✅ 活跃 |
 | `web-tjgdjt-bids` | 天津轨道 · 招商公告 | 车站商业 / TOD开发 | `web_list` | `http://www.tjgdjt.com/channels/28.html` | ✅ 活跃 |
 | `web-tjgdjt-news` | 天津轨道 · 运营动态 | 运营调度 / 安全应急 | `web_list` | `http://www.tjgdjt.com/channels/17.html` | ✅ 活跃 |
+| `web-njmetro-bids` | 南京地铁 · 招标投标 | 招标采购 / 中标公示 | `web_list` | `njmetro.com.cn/njdtweb/home/go-tender-center.do?...` | ✅ 活跃 |
+| `web-njmetro-resource` | 南京地铁 · 资源招商 | 车站商业 / TOD开发 | `web_list` | `njmetro.com.cn/njdtweb/home/go-resource-center.do?...` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 
