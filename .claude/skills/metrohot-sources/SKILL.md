@@ -321,20 +321,35 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 
 容器是 `node:24-trixie-slim`，**不带系统 CA 存储**（`/etc/ssl/certs/ca-certificates.crt` 不存在），Node 用内置的 118 个 Mozilla 根证书——里面没有 Certum。
 
-**修复**：把缺失的根证书放进仓库，用 `NODE_EXTRA_CA_CERTS` 追加（不改默认列表，不影响其他站）：
+**修复**：把证书放进仓库，用 `NODE_EXTRA_CA_CERTS` 追加（不改默认列表，不影响其他站）：
 
 ```dockerfile
-ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-root.pem
+ENV NODE_EXTRA_CA_CERTS=/app/docker/certs/certum-chain.pem
 ```
 
-证书文件从本机钥匙串导出即可：
+**关键细节：只给根证书不够。** 实测在容器里显式 `ca: certum-root.pem` 仍然报 `UNABLE_TO_VERIFY_LEAF_SIGNATURE`，尽管服务器在 handshake 时发了中间证书。必须把**根 + 中间证书**合并成一个 PEM：
+
+| 顺序 | 证书 | 有效期 |
+|---|---|---|
+| 1 | Certum Trusted Network CA（根） | 2029+ |
+| 2 | UCA Global G2 Root | 2029-01-06 |
+| 3 | SHECA OV Server CA G5 | 2036-03-16 |
+
+导出与合并：
 
 ```bash
+# 根（从本机钥匙串）
 security find-certificate -c "Certum Trusted Network CA" -p \
-  /System/Library/Keychains/SystemRootCertificates.keychain > docker/certs/certum-root.pem
+  /System/Library/Keychains/SystemRootCertificates.keychain > /tmp/root.pem
+
+# 中间证书（从服务器握手链里取）
+echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev/null > /tmp/chain.txt
+# 合并顺序：根 → UCA → SHECA（从深到浅）
 ```
 
-**为什么不 `apt-get install ca-certificates`**：133 的构建网络访问 Debian 源会超时（这也是之前删掉该步骤的原因）。打包证书文件不依赖任何网络。
+**备选方案：装系统 CA**。`docker run --rm node:24-trixie-slim sh -c 'apt-get update && apt-get install -y --no-install-recommends ca-certificates'` 实测**可以成功**，但耗时约 3–5 分钟（133 访问 Debian 源很慢）。如果未来缺的 CA 越来越多，把这一步加回 Dockerfile 比手工维护证书文件更省心；只是每次构建都会慢几分钟。**测 apt 时不要用 180 秒以内的超时，会误判为失败。**
+
+**为什么不直接 `NODE_TLS_REJECT_UNAUTHORIZED=0`**：全局关闭证书校验会让所有源的 MITM 风险归零，绝不能用。
 
 **判断这一站要不要为它加根**：看数据价值。南京是招标 20 条 + 车站商铺招商 15 条，值。如果只是零星几条，记为「不可用」即可。
 
