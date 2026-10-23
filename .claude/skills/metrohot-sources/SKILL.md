@@ -448,7 +448,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 城市 | 主体 | 官网 | 探测结论（2026-10） | 状态 |
 |---|---|---|---|---|
 | 成都 | 成都轨道集团 | `chengdurail.com` | 静态可解析，但日期拆成两个节点（`<span>08-26</span>2026`，textContent 变成 `08-262026`），现有解析器读不出 | 🟡 需扩展日期解析 |
-| 重庆 | 重庆轨道集团 | `cqmetro.cn` | 首页是 `<article class="news-card" data-id>` 卡片，**无 `a[href]`**，靠 JS 跳转；日期只在图片路径里 | 🟡 需找列表页/接口 |
+| 重庆 | 重庆轨道集团 | `cqmetro.cn`（卡片式 SPA） | ✅ 招标走公共资源交易平台 `cqggzy.com`：`/trade/014001?categoryNum=014001&keyword=轨道交通` 服务端渲染，12 条。首页卡片式仍不可用 | ✅ 已接入 1 源 |
 | 杭州 | 杭州地铁 | `hzmetro.com`（SPA） | ✅ 招采平台独立域名 `zhaocai.hzmetro.com`（服务端渲染），采购/澄清/结果公示/结果公告/流标五栏结构统一：`li:has(span.Right)` + `span.Right` 日期 | ✅ 已接入 3 源 |
 | 武汉 | 武汉地铁 | `whrt.com` | 302 跳到 `ww16.whrt.com/?sub1=…`（泛域名轮换） | 🟡 需跟跳转 |
 | 西安 | 西安轨道 | `xianrail.com` | hash 路由 SPA；网关 `/pas-gateway-api/...`。空 body 返回 404「非法请求，请求内容不存在」，带常规分页参数返回空响应体，`OPTIONS` 预检也失败——**请求体经过签名/加密**，需要逆向前端 JS 的加密逻辑 | 🟡 需逆向签名算法 |

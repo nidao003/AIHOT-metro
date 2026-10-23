@@ -377,6 +377,30 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-cqggzy-metro",
+      "name": "重庆公共资源交易 · 轨道交通招标",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "cqmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.cqggzy.com/trade/014001?categoryNum=014001&pageNum=1&keyword=%E8%BD%A8%E9%81%93%E4%BA%A4%E9%80%9A",
+        "itemSelector": "li:has(.list-item-type)",
+        "linkSelector": "a[href^=\"/trade/\"]",
+        "titleSelector": "a[href^=\"/trade/\"]",
+        "publishedAtRegex": "(20\\d{2}-\\d{2}-\\d{2})",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "中标公示"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-csmtr-ops",
       "name": "长沙轨道 · 运营动态",
       "kind": "web_list",
