@@ -37,6 +37,11 @@ export function parseLooseDate(value: string | null | undefined, utcOffset = "+0
   if (!v) return null;
   const compact = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/.exec(v);
   if (compact) return atOffset(compact[1]!, compact[2]!, compact[3]!, compact[4]!, compact[5]!, compact[6]!, utcOffset);
+  // A listing that prints only year and month ("2026-10"): the first of that month is the day the
+  // source actually claims, so no day is invented beyond it. Some sites split the day and the
+  // year-month into sibling nodes, leaving only this part available to the date selector.
+  const yearMonth = /^(\d{4})[-/.年](\d{1,2})月?$/.exec(v);
+  if (yearMonth && calendarDay(yearMonth[1]!, yearMonth[2]!, 1)) return atOffset(yearMonth[1]!, yearMonth[2]!, 1, 0, 0, 0, utcOffset);
   const yearFirst = /(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?(?:(?:T|\s*)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const monthFirst = /\b(\d{1,2})\/(\d{1,2})\/(\d{4})(?:(?:T|\s+)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const numeric = yearFirst ?? monthFirst?.map((part, i, match) => i === 1 ? match[3]! : i === 2 ? match[1]! : i === 3 ? match[2]! : part);

@@ -278,6 +278,31 @@ for (const s of all.filter((x:any) => x.kind === "web_list" && x.enabled !== fal
 
 **验证方法**：跑一次看第一条的标题——如果抓到的是「信息公开」「运营新闻」这类导航文字，就是选择器太宽。
 
+### 坑 3d：`.../index.htm` 是自跳转陷阱
+
+长沙 `hncsmtr.com/908/944/index.htm` 返回 113 字节：
+
+```html
+<script>window.location.href=''+'/'+'9'+'0'+'8'+'/'+'9'+'4'+'4'+'/'+'i'+'n'+'d'+'e'+'x'+'.'+'h'+'t'+'m';</script>
+```
+
+它跳回自己，任何跟随重定向的客户端都拿到空页面。**该站正确的地址是带尾斜杠的目录形式** `/908/944/`（20KB），`/908/944`（无斜杠）则 403。
+
+**对策**：看到「200 但只有一百多字节、内容是拼接字符串的 script」时，试「目录形式 + 尾斜杠」和「去掉 index 后缀」两种写法。
+
+### 坑 3e：日期拆成兄弟节点
+
+同一个日期被拆进两个元素，选择器只能拿到半截：
+
+| 站 | HTML | textContent |
+|---|---|---|
+| 长沙 | `<span class="listday">09</span><span class="listyear">2026-10</span>` | `09 2026-10` |
+| 成都 | `<span>08-26</span>2026` | `08-262026` |
+
+**长沙已解决**：`publishedAtSelector: ".listyear"` 取到 `2026-10`，并给 `parseLooseDate` 加了「只有年月」的分支，按该月 1 日解析（不虚构日）。代价是日期精度降到月，对新闻列表可接受。
+
+**成都仍未解决**：`08-262026` 没有分隔符，正则拆不开。要解只能改 `publishedAtRegex` 支持多捕获组拼接，尚未做。
+
 ### 坑 4：编码不是 UTF-8
 
 北京地铁、部分老政务站是 `gb2312` / `gb18030`。
@@ -349,7 +374,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 
 **备选方案：装系统 CA**。`docker run --rm node:24-trixie-slim sh -c 'apt-get update && apt-get install -y --no-install-recommends ca-certificates'` 实测**可以成功**，但耗时约 3–5 分钟（133 访问 Debian 源很慢）。如果未来缺的 CA 越来越多，把这一步加回 Dockerfile 比手工维护证书文件更省心；只是每次构建都会慢几分钟。**测 apt 时不要用 180 秒以内的超时，会误判为失败。**
 
-**为什么不直接 `NODE_TLS_REJECT_UNAUTHORIZED=0`**：全局关闭证书校验会让所有源的 MITM 风险归零，绝不能用。
+**为什么不能全局关闭证书校验**：那会让所有源的中间人攻击风险归零，绝不能用（仓库有测试专门拦截这类写法）。
 
 **判断这一站要不要为它加根**：看数据价值。南京是招标 20 条 + 车站商铺招商 15 条，值。如果只是零星几条，记为「不可用」即可。
 
@@ -429,7 +454,7 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 | 西安 | 西安轨道 | `xianrail.com` | 1.1KB SPA 壳 | 🟡 需抓接口 |
 | 南京 | 南京地铁 | `njmetro.com.cn` | ✅ 仅 https 可用；`li.tender_tli` 招标 20 条、`li.buil_mli1li` 资源招商 15 条（日期嵌在标题里，用 `publishedAtRegex` 提） | ✅ 已接入 2 源 |
 | 天津 | 天津轨道 | `tjgdjt.com` | ✅ `channels/17.html`（运营动态）、`channels/28.html`（招商公告）；招采平台 `xmzc.tjgdjt.com:8084` 接口可用但详情路由未破 | ✅ 已接入 2 源 |
-| 长沙 | 长沙轨道 | `hnsgzjt.com` | DNS 不通（http/https/www 全试过） | ❌ 不可用 |
+| 长沙 | 长沙轨道 | `hncsmtr.com`（不是 hnsgzjt.com） | ✅ `905/918` 运营动态、`906/923` 建设进展；`908/944` 招标栏目停更在 2023 年 | ✅ 已接入 2 源 |
 | 郑州 | 郑州地铁 | `zzmetro.cn` | ✅ `nav/list/33/{34,35,36}` 采购计划/公告/单一来源 | ✅ 已接入 3 源 |
 | 青岛 | 青岛地铁 | `qd-metro.com` | DNS 不通 | ❌ 不可用 |
 | 东莞 | 东莞轨道 | `dggdjt.com` | 70KB 可访问，`node/112.htmx` 招标、`node/123.htmx` 招商；**TLS 握手超时**（curl 与 Node 均超时） | 🟡 待解决 TLS |
