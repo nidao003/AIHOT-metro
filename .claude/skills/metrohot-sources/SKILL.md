@@ -555,6 +555,21 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 - 页面含 "DOMAIN IS FOR SALE" / "正在转让出售" → 域名已废弃
 - 含 "Cloudflare" + "blocked" → WAF
 
+### 暂缓城市（用户确认，2026-10-24）
+
+以下 6 个城市规模小、公开信息少，**用户确认暂不处理**，记录备查：
+
+| 城市 | 实测原因 |
+|---|---|
+| 呼和浩特 | `hhhtmetro.com` / `.cn` 域名不存在 |
+| 昆明 | 官网 503、京建站仅 1 条 2020 内容、省级平台 SPA |
+| 温州 | `wzmtr.com` 人机验证（`challenge_vcode` + `Ahxwd_bot`） |
+| 绍兴 | `sxmtr.com` 空响应 |
+| 芜湖 | `wuhurail.com` 不存在，并入集团 `whsjttz.com`（疑似壳） |
+| 金华 | `jhrail.com` Cloudflare 403 |
+
+**重启条件**：如果这些城市的招标量上升、或它们更换了官网域名、或有本地渠道提供，再重新探测。
+
 ### 待攻克清单
 
 | 目标 | 卡在哪 | 下一步 |
