@@ -420,6 +420,33 @@ echo | openssl s_client -connect <host>:443 -servername <host> -showcerts 2>/dev
 广州 `bid.gzmtr.com/bizzbgg/` 主列表里没有广告类，广告在子栏目 `bid_zbgg_yysy_9/`。
 **接一个栏目控制不了其他子栏目，专项内容要单独找子栏目。**
 
+### 坑 11：正文抽取只在首次采集时执行
+
+已入库的条目，手动将 `body_status` 设为 `pending` 并重置 `processing_state='new'`，**不会**重新去源站抓取正文——采集任务（`sources.fetch`）已经完成，worker 只会走分析步骤，分析时发现正文仍为空，就再次置为 `unconfirmed`。
+
+**结论**：`detail.summarySelector` 配置**只对后续新采集的条目生效**，无法追溯历史。
+
+**因此**：
+- 给源配 detail 必须在**首次部署该源前**就配好
+- 如果漏配了，历史存量只能接受无正文；等站点发新公告时自动就会带正文
+- **不要**试图用 UPDATE articles 重置去刷历史正文，只会徒增模型调用失败日志
+
+### 坑 12：`seed.ts` 不更新已存在的源
+
+`scripts/seed.ts` 对 sources 表的逻辑是：
+
+```sql
+INSERT INTO sources (...) ON CONFLICT (id) DO NOTHING
+```
+
+因此，在 `industry/sources.json` 里修改已有源的配置（加 detail、改 interval 等），**重新部署不会覆盖数据库里的旧配置**。
+
+**对策**：改了已有源的配置后，必须在数据库里直接 UPDATE：
+
+```sql
+UPDATE sources SET config = jsonb_set(config, '{detail}', '{"maxFetches": 20, "summarySelector": "..."}'::jsonb), updated_at=now() WHERE id='web-xxx';
+```
+
 ### 坑 10：验证脚本的 Node 版本
 
 项目要求 Node ≥ 24，本机默认可能是 22。
