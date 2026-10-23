@@ -75,6 +75,9 @@
 | `web-fzmetro-bids` | 福州地铁 · 招标与中标公示 | 招标采购 / 中标公示 | `web_list` | `http://www.fzmtr.com` | ✅ 活跃 |
 | `web-lzgdjt-news` | 兰州轨道 · 轨道动态 | 运营调度 / 客流运能 | `web_list` | `http://www.lzgdjt.com/lzgd/new_list.jsp?cId=11070` | ✅ 活跃 |
 | `web-hrbggzy-news` | 哈尔滨公共资源 · 招标公告 | 招标采购（全行业，靠预筛） | `web_list` | `https://hrbggzy.harbin.gov.cn/` | ✅ 活跃 |
+| `web-cdmetro-news` | 成都轨道 · 轨道动态 | 运营调度 / 客流运能 | `web_list` | `https://www.chengdurail.com/xwzx/gddt.htm` | ✅ 活跃 |
+| `web-cdmetro-announce` | 成都轨道 · 公告公示 | 规划批复 / 安全应急 | `web_list` | `https://www.chengdurail.com/xwzx/gggs.htm` | ✅ 活跃 |
+| `web-qdggzy-bids` | 青岛公共资源 · 地铁招标采购 | 招标采购 / 工程建设 | `json_list` | `https://ggzy.qingdao.gov.cn/ztbservice/web/web/getSearchList` (POST keyWord=地铁) | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

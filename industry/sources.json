@@ -648,6 +648,86 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-cdmetro-news",
+      "name": "成都轨道 · 轨道动态",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "cdmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.chengdurail.com/xwzx/gddt.htm",
+        "itemSelector": "li[id^=\"line_u13_\"]",
+        "linkSelector": "a.alin_r",
+        "titleSelector": "h4",
+        "publishedAtSelector": "time",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "客流运能"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-cdmetro-announce",
+      "name": "成都轨道 · 公告公示",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "cdmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.chengdurail.com/xwzx/gggs.htm",
+        "itemSelector": "li[id^=\"line_u13_\"]",
+        "linkSelector": "a.alin_r",
+        "titleSelector": "h4",
+        "publishedAtSelector": "time",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "规划批复",
+        "安全应急"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-qdggzy-bids",
+      "name": "青岛公共资源 · 地铁招标采购",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "qdmetro",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://ggzy.qingdao.gov.cn/ztbservice/web/web/getSearchList",
+        "method": "POST",
+        "bodyJson": {
+          "current": 1,
+          "size": 20,
+          "keyWord": "地铁"
+        },
+        "itemsPath": "data.records",
+        "titlePaths": [
+          "fullhead"
+        ],
+        "urlTemplate": "https://ggzy.qingdao.gov.cn/webTransaction{raw:detailUrl}",
+        "publishedAtPath": "createdate",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",
