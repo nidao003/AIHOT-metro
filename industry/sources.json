@@ -145,6 +145,108 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-sz-mtr-news",
+      "name": "苏州轨道交通 · 头条新闻与业务动态",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "szmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.sz-mtr.com/news/hot/",
+        "itemSelector": "ul.mn-box-ul > li",
+        "linkSelector": "a",
+        "titleSelector": ".news-title",
+        "publishedAtSelector": ".news-meta span:first-child",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-bii-news",
+      "name": "京投公司 · 企业新闻与债券投融资",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "bii",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.bii.com.cn/newsList_29_page1.html",
+        "itemSelector": ".jh-gsxw-item",
+        "linkSelector": "a.news-title",
+        "titleSelector": "a.news-title",
+        "publishedAtSelector": ".jh-gsxw-item-date",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "summarySelector": ".jh-gsxw-item-sum"
+        }
+      },
+      "tags": [
+        "官方",
+        "集团财报",
+        "规划批复"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-mtr-bj-news",
+      "name": "京港地铁 · 公司新闻与智慧城轨",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtr-bj",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.mtr.bj.cn/news/company-news",
+        "itemSelector": "a.article-item",
+        "linkSelector": "a",
+        "titleSelector": "h3",
+        "publishedAtSelector": ".publish-date",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "summarySelector": ".summary"
+        }
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "智慧城轨"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-mtr-bj-bids",
+      "name": "京港地铁 · 采购与招标公告",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtr-bj",
+      "participation_mode": "editorial",
+      "interval_minutes": 180,
+      "config": {
+        "url": "https://www.mtr.bj.cn/category/business/tender-and-supplier-guidelines/tender-invitations",
+        "itemSelector": "li:has(div.title a)",
+        "linkSelector": "div.title a",
+        "titleSelector": "div.title a",
+        "publishedAtSelector": "div.date",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "mp-camet",
       "name": "中国城市轨道交通协会",
       "kind": "mp_account",
