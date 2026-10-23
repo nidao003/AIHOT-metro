@@ -525,6 +525,34 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-gzmtr-resource",
+      "name": "广州地铁 · 资源经营招商与采购",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "gzmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://bid.gzmtr.com/bizzbgg/bid_zbgg_yysy_9/",
+        "itemSelector": ".section_main ul.list > li",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span.pub_date",
+        "publishedAtUtcOffset": "+08:00",
+        "detail": {
+          "maxFetches": 8,
+          "summarySelector": ".arc_body"
+        }
+      },
+      "tags": [
+        "官方",
+        "车站商业",
+        "地铁广告"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-gemas-metro",
       "name": "广州产权交易所 · 地铁车站商铺招商",
       "kind": "json_list",
