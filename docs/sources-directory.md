@@ -6,24 +6,46 @@
 
 ## 一、 当前系统已接入运行的自动化信源对照表
 
-| 信源 ID | 信源名称 | 覆盖板块 | 类型 | 采集地址 / 配置特征 | 状态 |
+### 1.1 一线城市官方直连（北京 / 上海 / 广州 / 深圳）
+
+| 城市 | 主体 | 信源 ID | 覆盖板块 | 采集地址 | 状态 |
 |---|---|---|---|---|---|
-| **`web-rail-transit-news`** | 中国城市轨道交通网 · 行业要闻 | 全网动态 / 规划建设 | `web_list` | `http://www.rail-transit.com/xinwen/`<br>(选择器: `li.news_show_cons_ul_li`) | ✅ 活跃 |
-| **`web-rail-transit-bids`** | 中国城市轨道交通网 · 招标采购 | 招标采购 / 设备工程 | `web_list` | `http://www.rail-transit.com/zhaobiao/`<br>(选择器: `li.main2_tender_contents_li`) | ✅ 活跃 |
-| **`web-rail-transit-awards`** | 中国城市轨道交通网 · 中标公示 | 中标结果 / 候选人公示 | `web_list` | `http://www.rail-transit.com/zhongbiao/`<br>(选择器: `li.main2_tender_contents_li`) | ✅ 活跃 |
-| **`web-szmc-bids`** | 深圳地铁 · 商业招商与广告租售 | 车站商业 / TOD / 广告 | `web_list` | `https://www.szmc.net/szmc_m/zhaobiaozhaoshang/zhaoshanggonggao/zhaoshangxinxi1/` | ✅ 活跃 |
+| 北京 | 京投公司 | `web-bii-news` | 集团财报 / 债券投融资 / 规划 | `https://www.bii.com.cn/newsList_29_page1.html` | ✅ 活跃 |
+| 北京 | 北京地铁 | `web-bjsubway-news` | 运营调度 / 安全应急 | `https://www.bjsubway.com/news/qyxw/yyzd/` | ✅ 活跃 |
+| 北京 | 京港地铁 | `web-mtr-bj-news` | 运营调度 / 智慧城轨 | `https://www.mtr.bj.cn/news/company-news` | ✅ 活跃 |
+| 北京 | 京港地铁 | `web-mtr-bj-bids` | 招标采购 / 设备维保 | `https://www.mtr.bj.cn/category/business/tender-and-supplier-guidelines/tender-invitations` | ✅ 活跃 |
+| 上海 | 申通地铁 | `web-shmetro-news` | 新线开通 / 运营调度 | `https://www.shmetro.com/p1/xwzx.html` | ✅ 活跃 |
+| 广州 | 广州地铁 | `web-gzmtr-news` | 运营调度 / 车站商业 | `https://www.gzmtr.com/ygwm/xwzx/gsxw/` | ✅ 活跃 |
+| 广州 | 广州地铁招标平台 | `web-gzmtr-bids` | 招标采购 / 设备维保 | `https://bid.gzmtr.com/bizzbgg/` | ✅ 活跃 |
+| 广州 | 广州地铁招标平台 | `web-gzmtr-awards` | 中标公示 / 工程建设 | `https://bid.gzmtr.com/bizzbgs/` | ✅ 活跃 |
+| 深圳 | 深铁集团 | `web-szmc-bids` | 车站商业 / TOD / 广告 | `https://www.szmc.net/szmc_m/zhaobiaozhaoshang/zhaoshanggonggao/zhaoshangxinxi1/` | ✅ 活跃 |
+| 深圳 | 深铁集团 | `web-szmc-announce` | 规划批复 / 经营动态 | `https://www.szmc.net/home/xinwenzhongxin/gongsigonggao/` | ✅ 活跃 |
+| 深圳 | 深铁采购平台 | `web-szmc-cg-bids` | 招标采购 / 工程建设 | `https://cg.shenzhenmc.com/zzbgg/index.jhtml` | ✅ 活跃 |
+| 深圳 | 港铁深圳 | `web-mtrsz-news` | 运营调度 / 智慧城轨 | `https://www.mtrsz.com.cn`（`content/page` JSON 接口，栏目 7599） | ✅ 活跃 |
+| 深圳 | 港铁深圳 | `web-mtrsz-bids` | 招标采购 / 设备维保 | 同上（栏目 7620 采购公告） | ✅ 活跃 |
+| 深圳 | 港铁深圳 | `web-mtrsz-ads` | 车站商业 / 地铁广告 | 同上（栏目 8368 招商公告） | ✅ 活跃 |
+
+### 1.2 部委与全国行业站
+
+| 信源 ID | 信源名称 | 覆盖板块 | 类型 | 采集地址 | 状态 |
+|---|---|---|---|---|---|
 | **`web-mot-stats`** | 交通运输部 · 运力分析与城轨速报 | 客运流量 / 全国月报 | `web_list` | `https://www.mot.gov.cn/shuju/fenxigongbao/yunlifenxi/index.html` | ✅ 活跃 |
 | **`web-ndrc-notices`** | 国家发改委 · 建设规划批复 | 规划批文 / 工可批复 | `web_list` | `https://www.ndrc.gov.cn/xwdt/tzgg/index.html` | ✅ 活跃 |
+| **`web-rail-transit-news`** | 中国城市轨道交通网 · 行业要闻 | 全网动态 / 规划建设 | `web_list` | `http://www.rail-transit.com/xinwen/` | ✅ 活跃 |
+| **`web-rail-transit-bids`** | 中国城市轨道交通网 · 招标采购 | 招标采购 / 设备工程 | `web_list` | `http://www.rail-transit.com/zhaobiao/` | ✅ 活跃 |
+| **`web-rail-transit-awards`** | 中国城市轨道交通网 · 中标公示 | 中标结果 / 候选人公示 | `web_list` | `http://www.rail-transit.com/zhongbiao/` | ✅ 活跃 |
 | **`web-sz-mtr-news`** | 苏州轨道交通 · 头条新闻与动态 | 新线建设 / 运营 / 商业 | `web_list` | `https://www.sz-mtr.com/news/hot/` | ✅ 活跃 |
-| **`web-bii-news`** | 京投公司 · 企业新闻与债券投融资 | 集团财报 / 债券 / 规划 | `web_list` | `https://www.bii.com.cn/newsList_29_page1.html` | ✅ 活跃 |
-| **`web-mtr-bj-news`** | 京港地铁 · 公司新闻与智慧城轨 | 运营调度 / 智慧城轨 | `web_list` | `https://www.mtr.bj.cn/news/company-news` | ✅ 活跃 |
-| **`web-mtr-bj-bids`** | 京港地铁 · 采购与招标公告 | 招标采购 / 设备维保 | `web_list` | `https://www.mtr.bj.cn/category/business/tender-and-supplier-guidelines/tender-invitations` | ✅ 活跃 |
-| **`mp-camet`** | 中国城市轨道交通协会 | 行业统计 / 技术标准 | `mp_account` | `gh_91fe691c0773` (待充值恢复) | ⏸ 待充值 |
-| **`mp-shmetro`** | 上海地铁shmetro | 运营调度 / 新线通车 | `mp_account` | `gh_df0517199e46` (待充值恢复) | ⏸ 待充值 |
-| **`mp-gzmtr`** | 广州地铁 | 运营调度 / 海外项目 | `mp_account` | `gh_a86e29353afa` (待充值恢复) | ⏸ 待充值 |
-| **`mp-szmc`** | 深圳地铁 | 线网运营 / TOD综合体 | `mp_account` | `gh_44017a8822b0` (待充值恢复) | ⏸ 待充值 |
-| **`mp-bjsubway`** | 北京地铁 | 线网运行图 / 故障应急 | `mp_account` | `gh_cb33bb00aef3` (待充值恢复) | ⏸ 待充值 |
-| **`mp-cdmetro`** | 成都地铁 | 超大线网 / 全自动无人驾驶 | `mp_account` | `gh_ad6d6e1f4cb3` (待充值恢复) | ⏸ 待充值 |
+
+### 1.3 微信公众号（暂停，待充值恢复）
+
+| 信源 ID | 信源名称 | ghid | 状态 |
+|---|---|---|---|
+| **`mp-camet`** | 中国城市轨道交通协会 | `gh_91fe691c0773` | ⏸ 停用 |
+| **`mp-shmetro`** | 上海地铁shmetro | `gh_df0517199e46` | ⏸ 停用 |
+| **`mp-gzmtr`** | 广州地铁 | `gh_a86e29353afa` | ⏸ 停用 |
+| **`mp-szmc`** | 深圳地铁 | `gh_44017a8822b0` | ⏸ 停用 |
+| **`mp-bjsubway`** | 北京地铁 | `gh_cb33bb00aef3` | ⏸ 停用 |
+| **`mp-cdmetro`** | 成都地铁 | `gh_ad6d6e1f4cb3` | ⏸ 停用 |
 
 ---
 

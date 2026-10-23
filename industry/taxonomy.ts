@@ -136,7 +136,7 @@ export const ENTITY_TAGS = [
   "武汉地铁", "南京地铁", "重庆轨道交通", "杭州地铁", "青岛地铁",
   "苏州轨道交通", "西安地铁", "郑州地铁", "长沙轨道交通", "天津轨道交通",
   "沈阳地铁", "合肥轨道交通", "宁波轨道交通", "无锡地铁", "佛山地铁", "东莞轨道交通",
-  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁",
+  "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳",
   "港铁公司", "中国中车", "京投公司"
 ] as const;
 
@@ -202,6 +202,7 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   "cdmetro-tod": { name: "成都轨道城投 (TOD)", displayTag: "成都TOD", aliases: ["成都轨道城市投资", "成都轨道城投", "成都TOD"], orgNames: ["成都轨道城市投资集团"] },
   "bii-dev": { name: "京投发展", displayTag: "京投发展", aliases: ["京投发展", "京投发展股份有限公司"], orgNames: ["京投发展"] },
   "mtr-bj": { name: "京港地铁", displayTag: "京港地铁", aliases: ["京港地铁", "北京京港地铁有限公司"], orgNames: ["京港地铁"] },
+  "mtrsz": { name: "港铁深圳", displayTag: "港铁深圳", aliases: ["港铁深圳", "港铁轨道交通（深圳）有限公司", "港铁轨道交通(深圳)有限公司"], orgNames: ["港铁轨道交通（深圳）有限公司", "港铁深圳"] },
   "mtr-hz": { name: "杭港地铁", displayTag: "杭港地铁", aliases: ["杭港地铁", "杭州杭港地铁有限公司"], orgNames: ["杭港地铁"] },
 };
 
@@ -244,6 +245,7 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "cdmetro-tod", name: "成都轨道城投 (TOD)", patterns: [/成都轨道城市投资|成都TOD/i] },
   { id: "bii-dev", name: "京投发展", patterns: [/京投发展/i] },
   { id: "mtr-bj", name: "京港地铁", patterns: [/京港地铁/i] },
+  { id: "mtrsz", name: "港铁深圳", patterns: [/港铁深圳|港铁轨道交通（深圳）|港铁轨道交通\(深圳\)/i] },
   { id: "mtr-hz", name: "杭港地铁", patterns: [/杭港地铁/i] },
 ];
 
@@ -279,6 +281,7 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "xmgdjt", domains: ["xmgdjt.com.cn"] },
   { entityId: "fzmetro", domains: ["fz-metro.com.cn"] },
   { entityId: "mtr-bj", domains: ["mtr.bj.cn"] },
+  { entityId: "mtrsz", domains: ["mtrsz.com.cn"] },
   { entityId: "mtr-hz", domains: ["mtrhz.com.cn"] },
 ];
 
