@@ -56,6 +56,8 @@
 | `web-tjgdjt-news` | 天津轨道 · 运营动态 | 运营调度 / 安全应急 | `web_list` | `http://www.tjgdjt.com/channels/17.html` | ✅ 活跃 |
 | `web-njmetro-bids` | 南京地铁 · 招标投标 | 招标采购 / 中标公示 | `web_list` | `njmetro.com.cn/njdtweb/home/go-tender-center.do?...` | ✅ 活跃 |
 | `web-njmetro-resource` | 南京地铁 · 资源招商 | 车站商业 / TOD开发 | `web_list` | `njmetro.com.cn/njdtweb/home/go-resource-center.do?...` | ✅ 活跃 |
+| `web-csmtr-ops` | 长沙轨道 · 运营动态 | 运营调度 / 客流运能 | `web_list` | `https://www.hncsmtr.com/905/918/` | ✅ 活跃 |
+| `web-csmtr-build` | 长沙轨道 · 建设进展 | 新线开通 / 工程建设 | `web_list` | `https://www.hncsmtr.com/906/923/` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

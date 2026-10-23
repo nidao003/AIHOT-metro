@@ -305,6 +305,54 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-csmtr-ops",
+      "name": "长沙轨道 · 运营动态",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "csmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.hncsmtr.com/905/918/",
+        "itemSelector": ".datedesc",
+        "linkSelector": "a",
+        "titleSelector": "h2",
+        "publishedAtSelector": ".listyear",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "运营调度",
+        "客流运能"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-csmtr-build",
+      "name": "长沙轨道 · 建设进展",
+      "kind": "web_list",
+      "tier": "T1",
+      "owner_entity_id": "csmtr",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.hncsmtr.com/906/923/",
+        "itemSelector": ".datedesc",
+        "linkSelector": "a",
+        "titleSelector": "h2",
+        "publishedAtSelector": ".listyear",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "新线开通",
+        "工程建设"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-njmetro-bids",
       "name": "南京地铁 · 招标投标",
       "kind": "web_list",
