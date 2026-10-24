@@ -78,6 +78,9 @@
 | `web-cdmetro-news` | 成都轨道 · 轨道动态 | 运营调度 / 客流运能 | `web_list` | `https://www.chengdurail.com/xwzx/gddt.htm` | ✅ 活跃 |
 | `web-cdmetro-announce` | 成都轨道 · 公告公示 | 规划批复 / 安全应急 | `web_list` | `https://www.chengdurail.com/xwzx/gggs.htm` | ✅ 活跃 |
 | `web-qdggzy-bids` | 青岛公共资源 · 地铁招标采购 | 招标采购 / 工程建设 | `json_list` | `https://ggzy.qingdao.gov.cn/ztbservice/web/web/getSearchList` (POST keyWord=地铁) | ✅ 活跃 |
+| `web-mtrhz-bids` | 杭港地铁 · 采购信息 | 招标采购 / 设备维保 | `web_list` | `https://www.mtrhz.com.cn/about/cggs.htm` | ✅ 活跃 |
+| `web-tokyu-news` | 东急电铁 · 官方新闻与TOD开发 | TOD开发 / 车站商业 | `json_list` | `https://www.tokyu.co.jp/company/api/news.json` (3019条) | ✅ 活跃 |
+| `web-tetsudo-news` | 日本铁道新闻 · 东京与首都圈轨道 | 运营调度 / 智慧城轨 | `web_list` | `https://tetsudo-shimbun.com/` | ✅ 活跃 |
 
 ### 1.3 微信公众号（暂停，待充值恢复）
 

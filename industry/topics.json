@@ -54,10 +54,35 @@
     },
     {
       "slug": "mtr",
-      "name": "港铁公司 (MTR)",
+      "name": "港铁公司与港铁生态 (MTR Family)",
       "group": "company",
-      "entityId": "mtr",
-      "definition": "香港铁路有限公司的铁路+物业(R+P)商业模式、海内外营运及服务创新。"
+      "definition": "港铁公司（香港本部）及其在内地运营网络（京港地铁、港铁深圳、杭港地铁）的铁路+物业(R+P)商业模式、车站商业、广告招商与运营服务。",
+      "tags": [
+        "港铁公司",
+        "京港地铁",
+        "港铁深圳",
+        "杭港地铁",
+        "entity:mtr",
+        "entity:mtr-bj",
+        "entity:mtrsz",
+        "entity:mtr-hz"
+      ]
+    },
+    {
+      "slug": "tokyo-transit",
+      "name": "东京轨道交通 (Tokyo Rail Transit)",
+      "group": "company",
+      "tags": [
+        "东急电铁",
+        "东京地下铁",
+        "JR东日本",
+        "都营地下铁",
+        "entity:tokyu",
+        "entity:tokyometro",
+        "entity:jreast",
+        "entity:toei"
+      ],
+      "definition": "日本东京首都圈超大密集轨道网：东京地下铁、都营地铁、JR东日本山手线通勤网，以及东急电铁涩谷站再开发等全球标杆TOD商业综合开发。"
     },
     {
       "slug": "camet",
