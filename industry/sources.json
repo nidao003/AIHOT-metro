@@ -728,6 +728,79 @@
       "syndicate_fulltext": false
     },
     {
+      "id": "web-mtrhz-bids",
+      "name": "杭港地铁 · 采购信息",
+      "kind": "web_list",
+      "tier": "T1_5",
+      "owner_entity_id": "mtr-hz",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://www.mtrhz.com.cn/about/cggs.htm",
+        "itemSelector": "li:has(span):has(a)",
+        "linkSelector": "a",
+        "titleSelector": "a",
+        "publishedAtSelector": "span",
+        "publishedAtUtcOffset": "+08:00"
+      },
+      "tags": [
+        "官方",
+        "招标采购",
+        "设备维保"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-tokyu-news",
+      "name": "东急电铁 · 官方新闻与TOD开发",
+      "kind": "json_list",
+      "tier": "T1",
+      "owner_entity_id": "tokyu",
+      "participation_mode": "editorial",
+      "interval_minutes": 360,
+      "config": {
+        "url": "https://www.tokyu.co.jp/company/api/news.json",
+        "itemsPath": "items",
+        "titlePaths": [
+          "title"
+        ],
+        "urlTemplate": "https://www.tokyu.co.jp{raw:url}",
+        "publishedAtPath": "date_display",
+        "publishedAtUtcOffset": "+09:00"
+      },
+      "tags": [
+        "官方",
+        "TOD开发",
+        "车站商业"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
+      "id": "web-tetsudo-news",
+      "name": "日本铁道新闻 · 东京与首都圈轨道",
+      "kind": "web_list",
+      "tier": "T2",
+      "participation_mode": "editorial",
+      "interval_minutes": 240,
+      "config": {
+        "url": "https://tetsudo-shimbun.com/",
+        "itemSelector": "div.top-item",
+        "linkSelector": "a",
+        "titleSelector": "p.top-item_title",
+        "publishedAtSelector": "p.top-item_date",
+        "publishedAtUtcOffset": "+09:00"
+      },
+      "tags": [
+        "媒体",
+        "运营调度",
+        "智慧城轨"
+      ],
+      "site_fulltext": false,
+      "syndicate_fulltext": false
+    },
+    {
       "id": "web-chinaiut-bids",
       "name": "城市交通网 · 轨道交通招标",
       "kind": "web_list",
