@@ -112,8 +112,8 @@ function guessSelectors(html: string): { item: string; link: string; title: stri
   return { item, link: "a", title: "a" };
 }
 
-/** Section links a homepage offers: a listing normally lives one level down, not on the homepage. */
-const SECTION_HINT = /新闻|资讯|动态|公告|招标|采购|公示|招商|要闻|头条|建设|运营/;
+/** Section links a homepage offers: scanning both engineering operations and full-industry commercial sectors (retail, TOD, ads, leasing). */
+const SECTION_HINT = /新闻|资讯|动态|公告|招标|采购|公示|招商|要闻|头条|建设|运营|商铺|商业|广告|媒体|物业|TOD|上盖|租|资产|资源/;
 
 function sectionLinks(html: string, baseUrl: string): Array<{ label: string; url: string }> {
   const $ = cheerio.load(html);
