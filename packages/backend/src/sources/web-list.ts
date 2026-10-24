@@ -175,10 +175,10 @@ export function fromHtml(html: string, base: string, source: SourceRow): Candida
     if (!url || seen.has(url) || !allowed(url, source)) continue;
     // A card or a nav link to the site's sign-in form is no post.
     if (isSignInUrl(url)) continue;
-    if (!sectionsArePosts && listingItself(url, listing)) continue;
+    if (!sectionsArePosts && (listingItself(url, listing) || navigationLink(url, listing))) continue;
     const titleEl = c.titleSelector ? (el.is(c.titleSelector) ? el : el.find(c.titleSelector).first()) : linkEl;
     const title = collapseWhitespace(titleEl.text() || linkEl.attr("title") || "");
-    if (!title) continue;
+    if (title.length < 5 || /^\d+$/.test(title) || /^(首页|上一页|下一页|尾页|末页|查看更多|更多)$/i.test(title)) continue;
     let date: PublicationDate = { publishedAt: null, publicationTime: null };
     if (c.publishedAtSelector) {
       const dateEl = el.find(c.publishedAtSelector).first();
