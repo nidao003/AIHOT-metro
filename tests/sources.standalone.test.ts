@@ -14,6 +14,7 @@ import { extractFromUrl, pageRules } from "@aihot/backend/content/extract";
 import { sanitizeBody, trimTrailingChrome } from "@aihot/backend/content/sanitize";
 import { unsupportedConfig } from "@aihot/backend/sources/config-keys";
 import { fetchDetail, fetchWebList, fromHtml, fromMarkdown } from "@aihot/backend/sources/web-list";
+import { mpAlbumIdentity } from "@aihot/backend/sources/mp-album";
 import { fetchRss } from "@aihot/backend/sources/rss";
 import { fetchJsonList } from "@aihot/backend/sources/json-list";
 import { noiseFiltered } from "@aihot/backend/sources/filters";
@@ -59,6 +60,30 @@ const pages: Record<string, () => string> = {
 function article(title: string, text: string) {
   return `<html><head><title>${title}</title><meta property="article:published_time" content="2026-09-23T12:00:00Z"></head><body><article><h1>${title}</h1><p>${text}</p></article></body></html>`;
 }
+// A WeChat official-account album (合集): page one lists ten posts and continues, page two ends.
+// Article URLs name mp.weixin.qq.com but are never requested here — fetchWebList only reads the listing.
+const albumArticle = (msgid: number, title: string, epoch: number) => ({
+  msgid: String(msgid), itemidx: "1", title,
+  url: `http://mp.weixin.qq.com/s?__biz=BIZ123&mid=${msgid}&idx=1&sn=abc${msgid}`,
+  create_time: String(epoch),
+});
+const albumEpoch = Math.floor(Date.UTC(2026, 9, 22, 1, 0, 0) / 1000);
+const albumPage1 = {
+  base_resp: { ret: 0 },
+  getalbum_resp: {
+    continue_flag: "1",
+    article_list: Array.from({ length: 10 }, (_, i) => albumArticle(300 - i, `合集文章 ${i + 1}`, albumEpoch - i * 86400)),
+  },
+};
+const albumPage2 = {
+  base_resp: { ret: 0 },
+  getalbum_resp: {
+    continue_flag: "0",
+    article_list: Array.from({ length: 5 }, (_, i) => albumArticle(290 - i, `合集文章 ${11 + i}`, albumEpoch - (10 + i) * 86400)),
+  },
+};
+const albumRequests: string[] = [];
+let albumMode: "ok" | "html" | "struct" | "empty" = "ok";
 const languages: Array<{ path: string; language: string | undefined }> = [];
 const server = http.createServer((req, res) => {
   const path = req.url ?? "";
@@ -66,6 +91,19 @@ const server = http.createServer((req, res) => {
   if (path === "/en/post" && /^zh/.test(req.headers["accept-language"] ?? "")) {
     res.writeHead(307, { location: "/zh/post" });
     return res.end();
+  }
+  if (new URL(path, "http://localhost").pathname === "/mp/appmsgalbum") {
+    albumRequests.push(path);
+    if (albumMode === "html") {
+      res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+      return res.end(`<html><head><title>验证</title></head><body>环境异常</body></html>`);
+    }
+    const begin = new URL(path, "http://localhost").searchParams.get("begin_msgid");
+    const body = albumMode === "struct" ? { base_resp: { ret: 0 } }
+      : albumMode === "empty" ? { base_resp: { ret: 0 }, getalbum_resp: { continue_flag: "0", article_list: [] } }
+      : begin ? albumPage2 : albumPage1;
+    res.writeHead(200, { "content-type": "application/json" });
+    return res.end(JSON.stringify(body));
   }
   const found = Object.hasOwn(pages, path);
   res.writeHead(found ? 200 : 404, { "content-type": "text/html; charset=utf-8" });
@@ -225,6 +263,12 @@ test("noise words match whatever their case", () => {
   assert.equal(noiseFiltered(c("Manus：正组建团队开发面向国内市场的产品", "与笔记本厂商合作的 Agent 产品"), source), false);
   assert.equal(noiseFiltered(c("新款笔记本开售", "首发价 4999 元"), source), true);
   assert.equal(noiseFiltered(c("iPhone 18 开售", ""), source), true);
+
+  // requireMatches requires at least one keyword, otherwise drops
+  const sourceWithRequire = { config: { ingestNoiseFilter: { requireMatches: ["地铁", "轨道交通"] } } } as never;
+  assert.equal(noiseFiltered(c("抚州其他广告服务服务工程合同公告", "6500元"), sourceWithRequire), true);
+  assert.equal(noiseFiltered(c("南昌地铁站内广告灯箱招标公告", "车站广告"), sourceWithRequire), false);
+  assert.equal(noiseFiltered(c("综合招商公告", "涉及城市轨道交通车站商业"), sourceWithRequire), false);
 });
 
 test("a time without a zone is read in the source's offset, in JSON lists and in detail page metadata", async () => {
@@ -281,4 +325,59 @@ test("a source's language is an Accept-Language value, refused by kinds that rea
     }
   }
   for (const kind of ["x_search", "mp_account", "external"] as const) assert.deepEqual(unsupportedConfig(kind, { acceptLanguage: "en" }), ["acceptLanguage"], kind);
+});
+
+const albumSource = (extra: Record<string, unknown> = {}, cursor?: Record<string, unknown>) =>
+  ({ id: "album", cursor: cursor ?? null, config: { url: `${site}/mp/appmsgalbum?__biz=BIZ123&album_id=ALB1&scene=124#wechat_redirect`, adapter: "mp_album", ...extra } }) as never;
+
+test("mp_album 首次导入按 continue_flag 翻页并映射标题、链接和秒级时间", async () => {
+  albumRequests.length = 0;
+  const out = await fetchWebList(albumSource());
+  assert.equal(out.length, 15, "two pages merge without duplicates");
+  assert.equal(out[0]!.title, "合集文章 1");
+  assert.equal(out[0]!.publishedAt?.toISOString(), new Date(albumEpoch * 1000).toISOString());
+  assert.equal(out[0]!.publicationTime, new Date(albumEpoch * 1000).toISOString());
+  assert.match(out[0]!.url, /^http:\/\/mp\.weixin\.qq\.com\/s\?__biz=BIZ123&mid=300/);
+  assert.equal(out[14]!.title, "合集文章 15");
+  assert.ok(albumRequests.some((p) => p.includes("begin_msgid=291") && p.includes("begin_itemidx=1")), "page two follows the raw page's last msgid");
+  assert.ok(!albumRequests.some((p) => p.includes("scene=")), "tracking parameters are dropped from requests");
+  assert.ok(albumRequests.every((p) => new URL(p, site).searchParams.get("f") === "json" && new URL(p, site).searchParams.get("count") === "10"));
+});
+
+test("mp_album 已初始化的源后续只读第一页", async () => {
+  albumRequests.length = 0;
+  const out = await fetchWebList(albumSource({}, { initializedAt: "2026-10-24T00:00:00.000Z" }));
+  assert.equal(out.length, 10);
+  assert.equal(albumRequests.length, 1);
+});
+
+test("mp_album 验证页、错误结构和空合集都报可见错误而不是静默成功", async () => {
+  albumRequests.length = 0;
+  try {
+    albumMode = "html";
+    await assert.rejects(() => fetchWebList(albumSource()), /不是 JSON/);
+    albumMode = "struct";
+    await assert.rejects(() => fetchWebList(albumSource()), /getalbum_resp/);
+    albumMode = "empty";
+    await assert.rejects(() => fetchWebList(albumSource()), /no items matched \(mp_album\)/);
+  } finally {
+    albumMode = "ok";
+  }
+});
+
+test("mp_album 的分页配置只对这个适配器合法，选择器配置被显式拒绝", () => {
+  assert.deepEqual(unsupportedConfig("web_list", { url: `${site}/mp/appmsgalbum?__biz=b&album_id=1`, adapter: "mp_album", maxPages: 5, pageSize: 10 }), []);
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/blog`, maxPages: 5 }).includes("maxPages"), "plain web_list must not accept maxPages");
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/blog`, pageSize: 10 }).includes("pageSize"));
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/mp/appmsgalbum?__biz=b&album_id=1`, adapter: "mp_album", itemSelector: "li" }).includes("itemSelector"));
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/mp/appmsgalbum?__biz=b&album_id=1`, adapter: "mp_album", parseMode: "html" }).includes("parseMode"));
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/mp/appmsgalbum?__biz=b&album_id=1`, adapter: "mp_album", maxPages: 99 }).includes("maxPages=99"));
+  assert.ok(unsupportedConfig("web_list", { url: `${site}/mp/appmsgalbum?__biz=b&album_id=1`, adapter: "mp_album", pageSize: 0 }).includes("pageSize=0"));
+});
+
+test("mp_album 合集按 __biz 和 album_id 判重，与跟踪参数无关", () => {
+  assert.equal(mpAlbumIdentity({ adapter: "mp_album", url: "https://mp.weixin.qq.com/mp/appmsgalbum?__biz=BIZ&album_id=A1&scene=1" }), "mp-album:BIZ:A1");
+  assert.equal(mpAlbumIdentity({ adapter: "mp_album", url: "https://mp.weixin.qq.com/mp/appmsgalbum?__biz=BIZ&album_id=A2" }), "mp-album:BIZ:A2");
+  assert.equal(mpAlbumIdentity({ url: "https://mp.weixin.qq.com/mp/appmsgalbum?__biz=BIZ&album_id=A1" }), null, "without the adapter it is a plain web_list");
+  assert.equal(mpAlbumIdentity({ adapter: "mp_album", url: "https://mp.weixin.qq.com/mp/appmsgalbum?album_id=A1" }), null, "__biz is required");
 });

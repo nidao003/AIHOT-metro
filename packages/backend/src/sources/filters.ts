@@ -1,7 +1,17 @@
 // Source-list admission rules shared by collection and the administrator's preview.
 import { FUTURE_TOLERANCE_MS } from "../content/materials.ts";
 import type { Candidate, SourceRow } from "./types.ts";
-import { allowed } from "./web-list.ts";
+
+/** Prefix rules ignore the scheme: a Jina listing of an http:// address links its posts over http. */
+const overHttps = (url: string) => url.replace(/^http:\/\//i, "https://");
+
+export function allowed(url: string, source: SourceRow): boolean {
+  const allow: string[] = (source.config.allowUrlPrefixes ?? []).map(overHttps);
+  const deny: string[] = (source.config.denyUrlPrefixes ?? []).map(overHttps);
+  const target = overHttps(url);
+  if (deny.some((p) => target.startsWith(p))) return false;
+  return allow.length === 0 || allow.some((p) => target.startsWith(p));
+}
 
 /**
  * What a source keeps from its listing: links inside its URL prefix rules (matched as listed), then
@@ -22,6 +32,7 @@ export function noiseFiltered(c: Candidate, source: SourceRow): boolean {
   const has = (text: string, words: string[] | undefined) => (words ?? []).some((k) => text.includes(k.toLowerCase()));
   const title = c.title.toLowerCase();
   const hay = `${title}\n${(c.excerpt ?? "").toLowerCase()}`;
+  if (f.requireMatches?.length && !has(hay, f.requireMatches)) return true;
   if (has(hay, f.keepIfMatches)) return false;
   return has(title, f.dropMarkersTitleOnly) || has(hay, f.dropMarkers);
 }

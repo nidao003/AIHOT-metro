@@ -11,10 +11,11 @@ const KEYS: Record<SourceRow["kind"], string[]> = {
   rss: [...COLLECTED, "feedUrl", "summaryIsBody", "preserveUrlFragment", "allowCategories", "denyCategories", "publishedAtUtcOffset"],
   web_list: [
     ...COLLECTED, "url", "baseUrl", "parseMode", "adapter", "cacheToleranceSeconds", "linksStartLine", "preserveUrlFragment",
+    "method", "bodyForm", "sign",
     "itemSelector", "linkSelector", "titleSelector", "publishedAtSelector", "publishedAtRegex", "publishedAtUtcOffset",
   ],
   json_list: [
-    ...COLLECTED, "url", "mode", "method", "headers", "bodyJson", "jsonKey", "windowVar", "itemsPath", "itemsObjectValues",
+    ...COLLECTED, "url", "mode", "method", "headers", "bodyJson", "bodyForm", "sign", "jsonKey", "windowVar", "itemsPath", "itemsObjectValues",
     "titlePaths", "summaryPaths", "summaryIsBody", "authorPaths", "publishedAtPath", "publishedAtUnit", "publishedAtUtcOffset", "externalIdPath",
     "urlTemplate", "urlTemplateFallback", "rawDropKeys", "requireBoolean", "minNumeric",
   ],
@@ -24,10 +25,10 @@ const KEYS: Record<SourceRow["kind"], string[]> = {
   external: [...PUBLISHER],
 };
 
-// Objects with fixed keys (headers and bodyJson are request data, free-form).
+// Objects with fixed keys (headers, bodyJson and bodyForm are request data, free-form).
 const NESTED: Record<string, string[]> = {
   _aihot: ["initialBackfillLimit", "initialBackfillMonths"],
-  ingestNoiseFilter: ["dropMarkers", "dropMarkersTitleOnly", "keepIfMatches"],
+  ingestNoiseFilter: ["dropMarkers", "dropMarkersTitleOnly", "keepIfMatches", "requireMatches"],
   itemUrlPrefixRewrite: ["from", "to"],
   requireBoolean: ["path", "equals"],
   minNumeric: ["path", "min"],
@@ -47,7 +48,7 @@ const preserveRules = (value: unknown) => Array.isArray(value) && value.every((r
 
 const VALUES: Record<string, string[]> = {
   publisherRole: ["organization", "person"],
-  adapter: ["mimo_home"],
+  adapter: ["mimo_home", "mp_album"],
   parseMode: ["html", "markdown", "docusaurus_changelog", "intercom_changelog"],
 };
 
@@ -64,9 +65,16 @@ function utcInstant(value: unknown): boolean {
 /** The config entries a source of this kind would ignore or cannot run, e.g. ["adapter=site_cards", "detail.titleFoo"]. */
 export function unsupportedConfig(kind: SourceRow["kind"], config: Record<string, unknown>): string[] {
   const allowed = new Set(KEYS[kind] ?? []);
+  const mpAlbum = kind === "web_list" && config.adapter === "mp_album";
+  // Paging knobs belong to the mp_album adapter only; plain web_list parses would silently ignore them.
+  const mpAlbumOnly = (key: string) => mpAlbum && (key === "maxPages" || key === "pageSize");
+  // Selector and parser settings are meaningless for the mp_album JSON endpoint; refuse them visibly.
+  const mpAlbumExcluded = new Set(["parseMode", "itemSelector", "linkSelector", "titleSelector", "publishedAtSelector", "publishedAtRegex", "baseUrl", "linksStartLine", "cacheToleranceSeconds"]);
   const out: string[] = [];
   for (const [key, value] of Object.entries(config ?? {})) {
-    if (!allowed.has(key)) out.push(key);
+    if (mpAlbum && mpAlbumExcluded.has(key)) { out.push(key); continue; }
+    if (!allowed.has(key) && !mpAlbumOnly(key)) out.push(key);
+    else if (mpAlbumOnly(key) && (!Number.isInteger(value) || Number(value) < 1 || Number(value) > (key === "maxPages" ? 20 : 10))) out.push(`${key}=${String(value)}`);
     else if (key === "publisherRequiresDiscovery" && (typeof value !== "boolean"
       || value && (!Array.isArray(config.publisherUrlPrefixes) || config.publisherUrlPrefixes.length === 0))) out.push(key);
     else if (key === "publishedAfter" && !utcInstant(value)) out.push(key);

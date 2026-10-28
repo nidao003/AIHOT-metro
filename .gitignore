@@ -14,3 +14,19 @@ apps/web/.react-router/
 # Font package unpacked to regenerate the report nameplates (docs/customize.md)
 package/
 fontsource-noto-sans-sc-*.tgz
+
+# Local development, skills & specs
+.claude/
+.spec-workflow/
+
+# Local docs and accounts
+docs/commercial-sources.md
+docs/subway-weibo-accounts.json
+
+# Private server deployment scripts & compose overrides
+scripts/deploy-*.sh
+scripts/metrohot-remote.sh
+scripts/sync-*.sh
+scripts/cron-*.sh
+scripts/wechat-mp-history/
+deploy/
