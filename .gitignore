@@ -19,9 +19,8 @@ fontsource-noto-sans-sc-*.tgz
 .claude/
 .spec-workflow/
 
-# Local docs and accounts
-docs/commercial-sources.md
-docs/subway-weibo-accounts.json
+# Local docs & private directories
+docs/
 
 # Private server deployment scripts & compose overrides
 scripts/deploy-*.sh
