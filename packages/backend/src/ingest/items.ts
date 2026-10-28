@@ -22,6 +22,9 @@ interface ItemIn {
   url?: unknown;
   publishedAt?: unknown;
   author?: unknown;
+  excerpt?: unknown;
+  bodyText?: unknown;
+  bodyHtml?: unknown;
   raw?: { _aihot?: { backfill?: boolean; baseline?: boolean } } & Record<string, unknown>;
 }
 
@@ -31,11 +34,13 @@ export async function ingestItems(body: { sourceId?: unknown; sourceName?: unkno
   if (!sourceId || !items.length) throw new IngestError(400, "sourceId and items[] required");
   if (items.length > MAX_ITEMS) throw new IngestError(413, `items[] exceeds max ${MAX_ITEMS} per request`);
 
+  const allowFulltext = sourceId.startsWith('mc-');
+  const participationMode = sourceId.startsWith('mc-') ? 'editorial' : 'isolated';
   const [source] = await sql<{ id: string; participation_mode: string; enabled: boolean }[]>`
-    INSERT INTO sources (id, name, kind, config, tier, participation_mode, interval_minutes, enabled, health, tags)
+    INSERT INTO sources (id, name, kind, config, tier, participation_mode, interval_minutes, site_fulltext, enabled, health, tags)
     VALUES (${sourceId.slice(0, 120)}, ${typeof body.sourceName === "string" && body.sourceName.trim() ? body.sourceName.trim().slice(0, 200) : sourceId.slice(0, 120)},
-            'external', '{}'::jsonb, 'T2', 'isolated', 1440, true, 'ok', ${["ingest:auto-created"]})
-    ON CONFLICT (id) DO UPDATE SET last_ok_at = now() WHERE sources.enabled
+            'external', '{}'::jsonb, 'T2', ${participationMode}, 1440, ${allowFulltext}, true, 'ok', ${["ingest:auto-created"]})
+    ON CONFLICT (id) DO UPDATE SET last_ok_at = now(), participation_mode = 'editorial' WHERE sources.enabled
     RETURNING id, participation_mode, enabled`;
   if (!source) throw new IngestError(409, "source paused");
 
@@ -51,12 +56,20 @@ export async function ingestItems(body: { sourceId?: unknown; sourceName?: unkno
     seen.add(url);
     const publication = readPublicationDate(typeof it.publishedAt === "string" ? it.publishedAt : null, "+00:00");
     const flags = it.raw?._aihot ?? {};
+    const textFromRaw = typeof it.raw?.desc === "string" ? it.raw.desc : null;
+    const excerpt = typeof it.excerpt === "string" ? it.excerpt : textFromRaw;
+    const bodyText = typeof it.bodyText === "string" ? it.bodyText : textFromRaw;
+    const bodyHtml = typeof it.bodyHtml === "string" ? it.bodyHtml : (typeof it.raw?.bodyHtml === "string" ? it.raw.bodyHtml : null);
+
     const res = await upsertMaterial({
       sourceId: source!.id,
       // Normalize only for deduplication. Ownership needs the reported origin (including www and
       // scheme), and upsertMaterial already applies the common normalized identity rule.
       url: rawUrl,
       title,
+      excerpt,
+      bodyText,
+      bodyHtml,
       author: typeof it.author === "string" ? it.author.slice(0, 200) : null,
       ...publication,
       raw: it.raw ?? null,

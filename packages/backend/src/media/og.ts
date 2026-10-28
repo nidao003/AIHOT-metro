@@ -8,7 +8,7 @@ import sharp from "sharp";
 import { config, REPO_ROOT } from "../config.ts";
 import { SITE } from "@aihot/site";
 
-export const OG_TEMPLATE_VERSION = "og-2026-09-29.1";
+export const OG_TEMPLATE_VERSION = "og-2026-10-27.1";
 const WIDTH = 1200;
 const HEIGHT = 630;
 const CACHE_DIR = path.join(config.dataDir, "ogcache");
@@ -167,7 +167,13 @@ async function render(file: string, size: { width: number; height: number }, tre
 }
 
 export function ogEtag(card: OgCard): string {
-  return createHash("sha256").update(OG_TEMPLATE_VERSION).update(JSON.stringify(card)).digest("hex").slice(0, 24);
+  return createHash("sha256")
+    .update(OG_TEMPLATE_VERSION)
+    .update(SITE.name)
+    .update(SITE.tagline)
+    .update(JSON.stringify(card))
+    .digest("hex")
+    .slice(0, 24);
 }
 
 /** PNG bytes for a card, from the disk cache when this exact card was rendered before. */

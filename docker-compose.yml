@@ -52,6 +52,11 @@ services:
       <<: *backend-env
       API_HOST: 0.0.0.0
       API_PORT: "3001"
+    volumes:
+      - data:/data
+      - ./site:/app/site
+      - ./industry:/app/industry
+      - ./packages:/app/packages
     depends_on:
       setup:
         condition: service_completed_successfully
@@ -62,6 +67,11 @@ services:
     # Let the worker drain backups and paid calls (STOP_TIMEOUT_MS, 470 s), then close its database.
     # Docker sends SIGTERM to the worker first; after this window it kills the remaining processes.
     stop_grace_period: 515s
+    volumes:
+      - data:/data
+      - ./site:/app/site
+      - ./industry:/app/industry
+      - ./packages:/app/packages
     depends_on:
       setup:
         condition: service_completed_successfully
@@ -80,9 +90,39 @@ services:
       WEB_PORT: "3000"
     ports:
       - "${PORT:-3000}:3000"
+    volumes:
+      - ./apps/web/build:/app/apps/web/build
+      - ./site:/app/site
+      - ./industry:/app/industry
     depends_on:
       api:
         condition: service_started
+
+  # Optional WeChat official-account feeds (完整公众号增量). Off unless --profile wechat:
+  #   docker compose --profile wechat up -d we-mp-rss
+  # Third-party service (https://github.com/rachelos/we-mp-rss, MIT) that turns subscribed
+  # accounts into RSS feeds. Scan the QR code in its admin (SSH tunnel to port 8001) to authorize;
+  # add its feeds to this site as rss sources with PRIVATE_FEED_HOSTS=we-mp-rss in .env.
+  # It tracks new posts only — no history backfill — and never bypasses verification.
+  we-mp-rss:
+    image: ghcr.io/rachelos/we-mp-rss:latest
+    profiles: ["wechat"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      DB: sqlite:///data/we_mp_rss.db
+      SECRET_KEY: ${WE_MP_RSS_SECRET_KEY:-we-mp-rss-change-me}
+      USERNAME: ${WE_MP_RSS_USERNAME:-admin}
+      PASSWORD: ${WE_MP_RSS_PASSWORD:-}
+      # 公众号平台扫码对个人微信报"系统错误"，默认走微信读书 Cookie 模式（只取最新一篇）
+      GATHER.MODEL: ${GATHER_MODEL:-weread_mp}
+      WEREAD_COOKIE: ${WEREAD_COOKIE:-}
+      WEREAD_CONTENT_INTERVAL: ${WEREAD_CONTENT_INTERVAL:-2}
+      # RSS 单源输出条数：默认 30 只覆盖最新文章，历史回补（scripts/wechat-mp-history）会排不进 feed
+      RSS_PAGE_SIZE: ${RSS_PAGE_SIZE:-300}
+    volumes:
+      - we_mp_rss_data:/app/data
 
   caddy:
     image: caddy:2-alpine
@@ -103,3 +143,4 @@ volumes:
   db: {}
   data: {}
   caddy: {}
+  we_mp_rss_data: {}

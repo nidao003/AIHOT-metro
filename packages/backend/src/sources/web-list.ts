@@ -9,7 +9,9 @@ import { isSignInUrl, pagePublicationDate, pageRules, readableDocument, type Ext
 import { sanitizeBody } from "../content/sanitize.ts";
 import { JINA_PREFIX, jinaRead } from "../providers/jina.ts";
 import { articleUtcOffset, readPublicationDate, readRelativeDate, type PublicationDate } from "./dates.ts";
+import { allowed } from "./filters.ts";
 import { FetchError, type Candidate, type SourceRow } from "./types.ts";
+import { fromMpAlbum } from "./mp-album.ts";
 
 
 /** A date rule names one element; unrelated tooltips must not hide its visible publication date. */
@@ -23,14 +25,6 @@ function elementDate(el: ReturnType<cheerio.CheerioAPI>, utcOffset?: string): Pu
 
 /** Prefix rules ignore the scheme: a Jina listing of an http:// address links its posts over http. */
 const overHttps = (url: string) => url.replace(/^http:\/\//i, "https://");
-
-export function allowed(url: string, source: SourceRow): boolean {
-  const allow: string[] = (source.config.allowUrlPrefixes ?? []).map(overHttps);
-  const deny: string[] = (source.config.denyUrlPrefixes ?? []).map(overHttps);
-  const target = overHttps(url);
-  if (deny.some((p) => target.startsWith(p))) return false;
-  return allow.length === 0 || allow.some((p) => target.startsWith(p));
-}
 
 /** Query keys that page or filter a listing. Other keys name a post (WordPress /?p=123). */
 const LISTING_PARAMS = /^(page|paged|cat|category|categories|tag|tags|label|labels|author|authors)$/i;
@@ -96,7 +90,15 @@ async function fetchListingText(source: SourceRow): Promise<{ text: string; viaJ
     const page = await jinaRead(target, { purpose: "source_listing", subject: `source:${source.id}`, cacheToleranceSeconds: source.config.cacheToleranceSeconds, format, perRead: true });
     return { text: page.markdown, viaJina: true, base: source.config.baseUrl ?? target };
   }
-  const res = requireOk(await fetchListing(url, { headers: { accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8", ...languageHeaders(source.config.acceptLanguage) }, timeoutMs: 25_000 }));
+  const c = source.config;
+  // A listing behind a form POST (the Anhui ggzy search and similar) sends the encoded form as the listing request.
+  const form = c.bodyForm ? new URLSearchParams(c.bodyForm as Record<string, string>).toString() : undefined;
+  const res = requireOk(await fetchListing(url, {
+    method: c.method ?? (form ? "POST" : "GET"),
+    headers: { accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8", ...languageHeaders(c.acceptLanguage), ...(form ? { "content-type": "application/x-www-form-urlencoded" } : {}) },
+    body: form,
+    timeoutMs: 25_000,
+  }));
   const text = res.text();
   contentDocument(text);
   return { text, viaJina: false, base: source.config.baseUrl ?? res.url };
@@ -345,6 +347,9 @@ async function fromMimoHome(html: string, base: string, source: SourceRow): Prom
 }
 
 export async function fetchWebList(source: SourceRow): Promise<Candidate[]> {
+  // Adapters reading their own JSON endpoints分流 before fetchListingText so their responses
+  // are not handed to the HTML parser.
+  if (source.config.adapter === "mp_album") return fromMpAlbum(source);
   const { text, viaJina, base } = await fetchListingText(source);
   const mode = source.config.adapter === "mimo_home" ? "mimo_home" : source.config.parseMode ?? (viaJina ? "markdown" : "html");
   let out: Candidate[];

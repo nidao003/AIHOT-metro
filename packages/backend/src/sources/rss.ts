@@ -80,7 +80,7 @@ function atomLink(links: unknown, base: string): string {
   return new URL(href, linkBase).toString();
 }
 
-function imagesFrom(html: string, base: string): Array<{ kind: "image"; url: string }> {
+export function imagesFrom(html: string, base: string): Array<{ kind: "image"; url: string }> {
   const out: Array<{ kind: "image"; url: string }> = [];
   for (const m of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/gi)) {
     try {
@@ -123,7 +123,8 @@ function feedText(bodyHtml: string | null, summaryText: string | null, source: S
   const bodyText = bodyHtml ? collapseWhitespace(plainBody ?? stripTags(bodyHtml)) : null;
   const teaser = !!bodyText && source.participation_mode === "editorial" && isTeaser(bodyText);
   const excerpt = summaryText !== null ? collapseWhitespace(summaryText).slice(0, 2000) : teaser ? collapseWhitespace(bodyText!) : null;
-  return bodyText && (bodyText.length > 280 || source.config.summaryIsBody === true) && !teaser
+  const hasFullBody = !!bodyText && (bodyText.length > 280 || (source.config.summaryIsBody === true && bodyText.length >= 120)) && !teaser;
+  return hasFullBody
     ? { excerpt, bodyHtml, bodyText, bodyStatus: "ok" }
     : { excerpt, bodyHtml: null, bodyText: null, bodyStatus: hasPage ? "pending" : "none" };
 }

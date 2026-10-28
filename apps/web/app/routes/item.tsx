@@ -551,7 +551,7 @@ function ItemView({ item }: { item: SiteItemDetail }) {
             </section>
           )}
 
-          {isX && item.x!.media.length > 0 && <MediaGallery media={item.x!.media} postUrl={item.links.original} />}
+          {item.x?.media && item.x.media.length > 0 && <MediaGallery media={item.x.media} postUrl={item.links.original} />}
           {isX && item.x!.quoted?.text && <QuotedPost quoted={item.x!.quoted} original={lang === "original"} />}
 
           <p className="mt-8 text-[13px] text-ink-4">

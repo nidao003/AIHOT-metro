@@ -25,6 +25,14 @@ test("a bare date is midnight in the source's offset, including ISO date-only te
   assert.equal(iso("September 26th, 2026", "+00:00"), "2026-09-26T00:00:00.000Z");
 });
 
+test("split day-first dates keep their exact calendar day", () => {
+  for (const value of ["14 2026-10", "13 日2026年10月"]) {
+    assert.equal(iso(value), value.startsWith("14") ? "2026-10-13T16:00:00.000Z" : "2026-10-12T16:00:00.000Z", value);
+  }
+  assert.deepEqual(readPublicationDate("14 2026-10"), { publishedAt: new Date("2026-10-13T16:00:00Z"), publicationTime: "2026-10-14" });
+  assert.equal(iso("32 2026-10"), null);
+});
+
 test("a date that carries its zone keeps it", () => {
   assert.equal(iso("2026-09-26T10:00:00Z"), "2026-09-26T10:00:00.000Z");
   assert.equal(iso("2026-09-26T10:00:00.000+09:00"), "2026-09-26T01:00:00.000Z");

@@ -484,11 +484,25 @@
   padding: 0.1em 0 0.1em 1em;
   color: var(--ink-3);
 }
+.prose #js_content,
+.prose .rich_media_content,
+.prose [style*="visibility: hidden"],
+.prose [style*="opacity: 0"] {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 .prose img, .prose video {
   border-radius: var(--radius-tile);
   margin-inline: auto;
-  height: auto;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  box-sizing: border-box;
   background: var(--bg-sunk);
+}
+.prose section, .prose table, .prose div {
+  max-width: 100% !important;
+  box-sizing: border-box;
 }
 .prose figure { margin: 1.5em 0; }
 .prose figcaption { font-size: 13px; color: var(--ink-4); text-align: center; margin-top: 0.6em; }

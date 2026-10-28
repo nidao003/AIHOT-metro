@@ -45,14 +45,18 @@ export interface ItemRow {
   zh_text: string | null;
   /** Chinese translation of the post an X post quotes. */
   quoted_zh: string | null;
+  raw?: Record<string, any> | null;
+  body_html?: string | null;
+  source_id?: string;
+  media?: Array<Record<string, any>> | null;
 }
 
 /** Columns every item listing selects. Internal judgement details never leave this layer. */
 export const ITEM_COLUMNS = sql`
   p.article_id AS id, p.title, p.original_title, p.summary, p.reason, p.category, p.tags, p.score,
   p.selected, p.seat, p.channel, p.url, p.published_at, p.discovered_at, p.timeline_at, p.visibility,
-  p.body_mode, p.indexable, p.fact_id, s.name AS source_name, s.participation_mode AS source_mode,
-  a.x_post, a.author, a.language,
+  p.body_mode, p.indexable, p.fact_id, s.id AS source_id, s.name AS source_name, s.participation_mode AS source_mode,
+  a.x_post, a.author, a.language, a.raw, a.body_html, a.media,
   CASE WHEN s.kind = 'x_search' AND ${sourceOwnsPost(sql`s.config`, sql`a.x_post->>'handle'`)} THEN s.icon_url END AS author_avatar_url,
   st.public_id::text AS story_public_id, st.title AS story_title,
   CASE WHEN p.channel = 'x' THEN tr.body_text END AS zh_text, qt.text_zh AS quoted_zh`;
@@ -171,10 +175,84 @@ export function toItemSummary(row: ItemRow): ItemSummary {
   };
 }
 
+export function extractGeneralMedia(row: ItemRow, compact = false, responsive = compact): MediaView[] {
+  if (row.x_post?.media && Array.isArray(row.x_post.media) && row.x_post.media.length > 0) {
+    const list = row.x_post.media as Array<Record<string, any>>;
+    return list.map((raw) => mediaView(raw, compact ? "thumb" : "full", responsive)).filter((v): v is MediaView => v !== null);
+  }
+
+  if (row.media && Array.isArray(row.media) && row.media.length > 0) {
+    const list = row.media as Array<Record<string, any>>;
+    const mapped = list.map((raw) => mediaView(raw, compact ? "thumb" : "full", responsive)).filter((v): v is MediaView => v !== null);
+    if (mapped.length > 0) return mapped;
+  }
+
+  const mediaList: Array<Record<string, any>> = [];
+  const raw = row.raw || {};
+  const isVideoPlatform = row.source_id?.includes('dy') || row.source_id?.includes('bili') || raw.platform === 'douyin' || raw.platform === 'bili' || raw.platform === 'dy' || !!raw.videoUrl || !!raw.video_url;
+  const coverUrl = raw.videoCoverUrl || raw.video_cover_url || raw.cover_url || raw.cover;
+
+  if (isVideoPlatform) {
+    let finalCover = coverUrl;
+    if (!finalCover && row.body_html) {
+      const match = row.body_html.match(/<img[^>]+src="([^">]+)"/i);
+      if (match) finalCover = match[1];
+    }
+    if (finalCover) {
+      mediaList.push({
+        kind: 'video',
+        url: finalCover,
+        poster: finalCover,
+        width: 1280,
+        height: 720,
+        alt: row.title,
+      });
+    }
+  }
+
+  const rawImages = raw.imageList || raw.image_list || raw.images;
+  if (Array.isArray(rawImages)) {
+    for (const img of rawImages) {
+      if (typeof img === 'string' && img.trim() && !mediaList.some(m => m.url === img.trim())) {
+        mediaList.push({ kind: 'image', url: img.trim(), alt: row.title });
+      }
+    }
+  }
+
+  if (mediaList.length === 0 && row.body_html) {
+    const imgMatches = row.body_html.matchAll(/<img[^>]+src="([^">]+)"/gi);
+    for (const match of imgMatches) {
+      const src = match[1]?.trim();
+      if (src && !mediaList.some(m => m.url === src)) {
+        mediaList.push({ kind: 'image', url: src, alt: row.title });
+        if (mediaList.length >= 4) break;
+      }
+    }
+  }
+
+  return mediaList
+    .map((rawItem) => mediaView(rawItem, compact ? "thumb" : "full", responsive))
+    .filter((v): v is MediaView => v !== null);
+}
+
 /** Project the shared public article into the exact fields a site card renders. */
 export function toFeedItemSummary(row: ItemRow): FeedItemSummary {
   const item = toItemSummary(row);
-  const x = showsPost(row) ? xView(row, true) : null;
+  let x = showsPost(row) ? xView(row, true) : null;
+  if (!x) {
+    const generalMedia = extractGeneralMedia(row, true);
+    if (generalMedia.length > 0) {
+      x = {
+        authorName: row.author || item.source.name,
+        handle: '',
+        avatarUrl: null,
+        text: '',
+        translation: null,
+        media: generalMedia,
+        quoted: null,
+      };
+    }
+  }
   return {
     id: item.id, title: item.title, summary: item.summary ?? (x?.text || null), reason: item.reason,
     source: item.source, publishedAt: item.publishedAt, timelineAt: item.timelineAt,

@@ -5,7 +5,7 @@ import { renderSVG } from "uqr";
 import { SITE } from "@aihot/site";
 import { brandMark, clamp, h, nameMark, renderPng, SITE_HOST, type Node } from "./og.ts";
 
-export const POSTER_TEMPLATE_VERSION = "poster-2026-09-29.1";
+export const POSTER_TEMPLATE_VERSION = "poster-2026-10-27.1";
 const WIDTH = 1080;
 const HEIGHT = 1440;
 
@@ -76,7 +76,13 @@ async function tree(p: Poster): Promise<Node> {
 }
 
 export function posterEtag(p: Poster): string {
-  return createHash("sha256").update(POSTER_TEMPLATE_VERSION).update(JSON.stringify(p)).digest("hex").slice(0, 24);
+  return createHash("sha256")
+    .update(POSTER_TEMPLATE_VERSION)
+    .update(SITE.name)
+    .update(SITE.tagline)
+    .update(JSON.stringify(p))
+    .digest("hex")
+    .slice(0, 24);
 }
 
 /** PNG bytes for a poster, from the disk cache when this exact poster was rendered before. */

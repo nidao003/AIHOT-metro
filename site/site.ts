@@ -20,16 +20,16 @@ export const EDITION_WHEN = {
 
 export const SITE = {
   /** 站名：导航、页面标题、分享图、RSS、MCP、后台都用它。 */
-  name: "MetroHOT",
+  name: "MetroHot",
   /**
    * 行业词：拼进默认说法里，比如“AI 日报”“AI 动态”。
    * 改成“法律”“HR”“黄金”之类，页面上就会变成“法律日报”“法律动态”。
    */
-  subject: "地铁",
+  subject: "城轨",
   /** 首页的完整标题（浏览器标签、搜索结果）。 */
-  homeTitle: "MetroHOT — 地铁与城轨行业动态 · 每日精选与日报",
+  homeTitle: "MetroHot — 城轨行业动态 · 每日精选与日报",
   /** 主题目录页（/topics）的标题。 */
-  topicsTitle: "城轨与地铁主题：业主集团、运营业务与行业形态的最新动态",
+  topicsTitle: "城轨主题：车站商业、广告传媒、重点城市与经营业务",
   /** 反馈表单输入框里的示例。 */
   feedbackExample: "例如：我在搜索某个车站或线路时遇到……我原本想……",
   /** 反馈页标题下面的一句话。 */
@@ -37,19 +37,19 @@ export const SITE = {
   /** 反馈表单邮箱框里的提示。 */
   feedbackEmailHint: "留下邮箱，我们可以回信联系你",
   /** 一句话介绍：搜索引擎、分享卡片、RSS、llms.txt 会用。 */
-  description: `从全国城市轨道交通与地铁行业信源中精选值得关注的动态，将同一事件的多篇报道归并整理，${EDITION_WHEN.daily} 出一份日报。`,
-  /** llms.txt 里一句话介绍下面的一段详细介绍（选填）。 */
+  description: `从全国城市轨道交通行业信源中精选值得关注的动态，把同一件事的报道归并到一起，${EDITION_WHEN.daily} 出一份日报。`,
+  /** llmsIntro: null as string | null, */
   llmsIntro: null as string | null,
   /** 一行小字：分享图、海报下方。 */
-  tagline: "值得关注的城轨与地铁动态",
+  tagline: "值得关注的城轨行业动态",
   /** 搜索引擎读到的关键词（首页结构化数据）。 */
-  keywords: ["地铁资讯", "轨道交通", "城轨动态", "地铁客流", "TOD开发", "地铁运营", "城轨建设批复", "智慧城轨"] as string[],
+  keywords: ["地铁资讯", "轨道交通", "车站商业", "地铁商铺", "地铁广告", "TOD开发", "城轨财报", "港铁商业", "智慧城轨"] as string[],
   /** 网站开始收录的年份（结构化数据的时间范围，选填）。 */
   since: null as string | null,
   /** 界面语言（HTML lang、og:locale）。 */
   locale: "zh-CN",
   /** 默认域名，只在没设置 SITE_URL 时使用。 */
-  defaultUrl: "http://localhost:3000",
+  defaultUrl: "https://metrohot.oohforce.com",
   /** 标准图标（favicon.ico、icon.png、icon-192.png、apple-icon.png、logo.svg）以外也放在网站根目录的图标，site/brand/ 里的文件名（选填）；manifest.webmanifest 或外站引用了它们时用。 */
   rootIcons: [] as string[],
   /**
@@ -65,21 +65,21 @@ export const SITE = {
   /** 对外联系邮箱（选填）：llms.txt 和给 Agent 的使用说明里会写。 */
   contactEmail: null as string | null,
   /** 关于页底部的一行小字（选填）。 */
-  footerNote: "由 AIHOT 开源框架驱动",
+  footerNote: "OOHForce 开发",
   /** 中国大陆网站的 ICP 备案号（选填），填了就显示在侧栏底部和“我的”页底部，并链接到工信部备案系统。 */
-  icp: null as string | null,
+  icp: "蜀ICP备17004980号-1",
   /** 中国大陆网站的公安备案信息（选填），填了显示在侧栏底部和“我的”页底部。 */
   psb: null as string | null,
   /** 源码的 GitHub 仓库地址（选填），填了就在侧栏底部和“我的”页底部显示“GitHub 开源”。 */
   github: null as string | null,
   /** 结构化数据里的网站运营者（搜索引擎用）。 */
   organization: {
-    name: "MetroHOT",
+    name: "OOHForce",
     /** 创始人（选填）。 */
     founder: null as Founder | null,
   },
   /** 抓取信源时报上的名字和版本（User-Agent 里用），不要冒用别的站。 */
-  crawlerName: "MetroHOT/1.0",
+  crawlerName: "MetroHot/1.0",
 } as const;
 
 /** 使用规则和隐私说明两页（正文在 pages/ 里）。 */
@@ -147,13 +147,13 @@ export const ABOUT = {
   /** 页面描述（搜索结果、分享卡片）。 */
   description: `关于 ${SITE.name}：${SITE.description}`,
   /** 大标题：第一行正常颜色，第二行强调色。 */
-  headline: ["城轨与地铁行业每天都有新动静，", "值得看的，只有几条。"] as [string, string],
+  headline: ["城轨行业每天都有新动静，", "值得看的，只有几条。"] as [string, string],
   /** 标题下面的一段话。{sources} 会换成实时的信源数（两边自动加空格，所以 {sources} 两边不写空格）；统计没取到时换成 sourcesFallback。 */
-  lead: `${SITE.name} 替你盯着{sources}个信源：抓取、归并、打分、精选，${EDITION_WHEN.daily} 出一份日报。免费，不用注册。`,
-  sourcesFallback: "十几",
+  lead: `${SITE.name} 替你盯着{sources}个信源：自动盯住信源、精选、把同一件事归到一起，${EDITION_WHEN.daily} 出一份日报。免费，不用注册。`,
+  sourcesFallback: "数百",
   /** 信源河动画下面的四个环节。 */
   steps: {
-    collect: "官方政务网站、地铁集团、权威协会与智库媒体都在看；更新越勤的源看得越勤，最快 15 分钟看一次。",
+    collect: "官方政务网站、城轨公司、行业协会与媒体都在看；更新越勤的源看得越勤，最快 15 分钟看一次。",
     store: "抓到的都存下来，同一件事的报道归到一起，热点榜就是从这里算出来的。",
     select: `模型先看是不是这个行业的事、有没有实际信息，再写中文标题、摘要和${ITEM_COPY.reasonLabel}；营销稿和重复转发进不来。`,
     publish: `${EDITION_WHEN.daily} 出日报，${EDITION_WHEN.weekly} 出周报，${EDITION_WHEN.monthly} 出月报。`,
@@ -171,7 +171,7 @@ export const ABOUT = {
     feishu?: ContactCard;
   },
   /** 页面底部的版权与下架说明，中间接“反馈页”的链接。 */
-  copyright: [`${SITE.name} 是聚合摘要和阅读索引，原文版权归各来源所有。如果你是来源方，希望更正、下架或调整展示方式，可以通过`, "联系我们。"] as [string, string],
+  copyright: [`${SITE.name} 是城轨行业聚合摘要和阅读索引，由 OOHForce 开发，原文版权归各来源所有。如果你是来源方，希望更正、下架或调整展示方式，可以通过`, "联系我们。"] as [string, string],
   /** 页面底部“使用规则”链接的锚点 id（选填）：外部文档写死过这个锚点就填上，以后不要改。 */
   termsAnchor: null as string | null,
 } as const;
@@ -195,7 +195,7 @@ export const AGENT = {
 /** 日报、周报、月报版面上的说法。 */
 export const REPORTS = {
   /** 报头下面的出版者一行。 */
-  imprint: SITE.name.toUpperCase(),
+  imprint: SITE.name,
   /** 报头旁边的一个词。 */
   motto: SITE.subject as string,
   /** 每种报告页面的描述（搜索结果、分享卡片），不带句号；llms.txt 介绍周报、月报时也用它。 */

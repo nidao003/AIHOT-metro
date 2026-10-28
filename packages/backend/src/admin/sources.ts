@@ -18,6 +18,7 @@ import { enrichDetails, listingEntries, storedDetails } from "../sources/collect
 import { filterPublicationWindow } from "../sources/filters.ts";
 import { FetchError, type Candidate, type SourceRow } from "../sources/types.ts";
 import { fetchWebList } from "../sources/web-list.ts";
+import { mpAlbumIdentity } from "../sources/mp-album.ts";
 import { fetchXSearch } from "../sources/x.ts";
 import { xHandle } from "../sources/account.ts";
 
@@ -239,6 +240,12 @@ export function sourceIdentity(kind: string, config: Record<string, unknown>): s
   if (kind === "mp_account") {
     const id = String(config.ghid ?? config.wxid ?? "").trim().toLowerCase();
     return id ? `mp:${id}` : null;
+  }
+  // A WeChat album is one collection: normalize to __biz + album_id, or tracking parameters would
+  // register as different sources and distinct albums of one account would collide.
+  if (kind === "web_list") {
+    const album = mpAlbumIdentity(config);
+    if (album) return album;
   }
   if (!raw) return null;
   return normalizeUrl(String(raw).replace(/^https:\/\/r\.jina\.ai\//, "")) ?? String(raw);

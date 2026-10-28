@@ -109,10 +109,18 @@ export default function AllPage() {
         <FeedBar base="/all" category={f.category} channel={f.channel} />
       )}
       <ActiveFilters base="/all" category={f.category} channel={f.channel} tag={f.tag} />
+      {!f.category && (!f.channel || f.channel === "all") && !f.tag && !f.q && (
+        <div className="pt-1.5 pb-2 text-[12px] text-ink-4 lg:hidden">
+          AI 的城轨行业动态
+        </div>
+      )}
 
       {/* Desktop, as on 精选: the title, then one filter row with the search field aligned on the right. */}
       <div className="hidden lg:block">
-        <h1 className="text-[24px] font-semibold leading-[1.3] text-ink">{title ?? ALL_TITLE}</h1>
+        <div className="flex items-baseline gap-3">
+          <h1 className="text-[24px] font-semibold leading-[1.3] text-ink">{title ?? ALL_TITLE}</h1>
+          {!f.q && <span className="text-[13px] text-ink-4">AI 的城轨行业动态</span>}
+        </div>
         <div className="mb-5 mt-4 flex items-center justify-between gap-4">
           <CategoryTabs base="/all" category={f.category} channel={f.channel} layoutId="all-cat-desk" className="min-w-0" />
           <SearchField defaultValue={f.q ?? ""} keep={keep} />

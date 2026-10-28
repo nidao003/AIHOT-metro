@@ -13,38 +13,6 @@
  */
 export const CATEGORIES = [
   {
-    key: "planning-construction",
-    tagColor: "indigo",
-    label: "规划建设",
-    feedLabel: "规划与建设",
-    section: "线路规划与建设批复",
-    guide: "国家发改委或地方发改委线网规划批复、工可批复、初步设计批复；新线开工、贯通、轨通、电通、空载试运行及初期运营通车等全周期工程节点。"
-  },
-  {
-    key: "operations-safety",
-    tagColor: "turquoise",
-    label: "运营安全",
-    feedLabel: "运营与安全",
-    section: "运营调度与安全",
-    guide: "列车运行图调整、行车调度、信号系统CBTC/无人驾驶升级、列车延误、客流限流、防汛防灾应急演练及突发故障处置。"
-  },
-  {
-    key: "passenger-flow",
-    tagColor: "violet",
-    label: "客流运力",
-    feedLabel: "客流与运力",
-    section: "客运流量与运力监测",
-    guide: "交通运输部全国城市客运月报、重点城市及全网历史单日客流创新高、重点车站客运强度、运力投放与大客流应对保障。"
-  },
-  {
-    key: "tod-development",
-    tagColor: "green",
-    label: "TOD开发",
-    feedLabel: "TOD综合开发",
-    section: "TOD与上盖物业开发",
-    guide: "地铁沿线与车辆段上盖物业综合开发、站城一体化TOD项目、土地出让与规划、地铁附属商业地产投资与租售（参考港铁物业发展模式）。"
-  },
-  {
     key: "station-retail",
     tagColor: "yellow",
     label: "车站商业",
@@ -61,12 +29,44 @@ export const CATEGORIES = [
     guide: "地铁列车车厢内外包装广告、车站站台灯箱与立柱广告、数字大屏媒体、车站广播与车载电视广告招商与特许经营。"
   },
   {
+    key: "passenger-flow",
+    tagColor: "violet",
+    label: "客流运力",
+    feedLabel: "客流与运力",
+    section: "客运流量与运力监测",
+    guide: "交通运输部全国城市客运月报、重点城市及全网历史单日客流创新高、重点车站客运强度、运力投放与大客流应对保障。"
+  },
+  {
+    key: "operations-safety",
+    tagColor: "turquoise",
+    label: "运营安全",
+    feedLabel: "运营与安全",
+    section: "运营调度与安全",
+    guide: "列车运行图调整、行车调度、信号系统CBTC/无人驾驶升级、列车延误、客流限流、防汛防灾应急演练及突发故障处置。"
+  },
+  {
+    key: "tod-development",
+    tagColor: "green",
+    label: "TOD开发",
+    feedLabel: "TOD综合开发",
+    section: "TOD与上盖物业开发",
+    guide: "地铁沿线与车辆段上盖物业综合开发、站城一体化TOD项目、土地出让与规划、地铁附属商业地产投资与租售（参考港铁物业发展模式）。"
+  },
+  {
     key: "industry",
     tagColor: "orange",
     label: "经营财报",
     feedLabel: "经营与财报",
     section: "集团经营与财报",
     guide: "城轨集团年度报告、财务报表、票务收入与政府补贴收支、债务融资与绿色债券发行、高管人事任命与企业重组。"
+  },
+  {
+    key: "planning-construction",
+    tagColor: "indigo",
+    label: "规划建设",
+    feedLabel: "规划与建设",
+    section: "线路规划与建设批复",
+    guide: "国家发改委或地方发改委线网规划批复、工可批复、初步设计批复；新线开工、贯通、轨通、电通、空载试运行及初期运营通车等全周期工程节点。"
   },
   {
     key: "policy-standard",
@@ -126,7 +126,8 @@ export const TOPIC_TAGS = [
   "全自动运行", "CBTC", "智慧城轨", "客运强度", "早晚高峰", "防汛应急",
   "站城一体", "物业上盖", "市域铁路", "有轨电车", "低碳节能", "票制票价",
   "设备维保", "资产盘活", "既有线改造", "客流纪录", "站内商铺", "便民餐饮",
-  "车辆段上盖", "车厢广告", "站台灯箱", "特许经营", "招标采购", "中标公示"
+  "车辆段上盖", "车厢广告", "站台灯箱", "特许经营", "招标采购", "中标公示",
+  "地下商业街", "便利店", "自动售卖", "数字媒体", "商铺招商"
 ] as const;
 
 /** 可选的实体标签（公司、机构、平台）。 */
@@ -137,6 +138,7 @@ export const ENTITY_TAGS = [
   "苏州轨道交通", "西安地铁", "郑州地铁", "长沙轨道交通", "天津轨道交通",
   "沈阳地铁", "合肥轨道交通", "宁波轨道交通", "无锡地铁", "佛山地铁", "东莞轨道交通",
   "深铁商业", "深铁置业", "京投发展", "京港地铁", "杭港地铁", "港铁深圳", "京投轨道运营", "洛阳轨道", "乌鲁木齐轨道", "石家庄轨道", "南昌轨道", "兰州轨道", "哈尔滨地铁",
+  "徐州地铁", "南通轨道交通", "大连交通集团", "贵阳公共交通",
   "东急电铁", "东京地下铁", "JR东日本", "都营地下铁",
   "港铁公司", "中国中车", "京投公司"
 ] as const;
@@ -149,13 +151,16 @@ export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
   "施工": "工程建设", "贯通": "工程建设", "轨通": "工程建设", "电通": "工程建设", "封顶": "工程建设",
   "财报": "集团财报", "年报": "集团财报", "半年报": "集团财报", "业绩": "集团财报", "营收": "集团财报",
   "商业": "车站商业", "商铺": "车站商业", "站内商业": "车站商业", "便民商业": "车站商业",
+  "地下街": "地下商业街", "地下商街": "地下商业街", "地下商业街区": "地下商业街",
+  "便利店": "站内商铺", "自动售卖机": "自动售卖", "贩卖机": "自动售卖",
   "TOD": "TOD开发", "上盖开发": "TOD开发", "站城融合": "TOD开发", "物业开发": "TOD开发", "上盖综合体": "TOD开发",
   "广告": "地铁广告", "广告传媒": "地铁广告", "车厢广告": "地铁广告", "灯箱广告": "地铁广告", "数字媒体": "地铁广告",
+  "数字大屏": "数字媒体", "包车广告": "车厢广告", "站台灯箱": "站台灯箱", "梯牌": "地铁广告",
   "调度": "运营调度", "运行图": "运营调度", "延误": "运营调度", "列车故障": "运营调度",
   "安全": "安全应急", "事故": "安全应急", "消防": "安全应急", "演练": "安全应急", "防汛": "安全应急",
   "标准": "技术规范", "规范": "技术规范", "技术标准": "技术规范",
   "政策": "行业政策", "规章": "行业政策", "法规": "行业政策",
-  "招标": "招标采购", "采购": "招标采购", "招标公告": "招标采购",
+  "招标": "招标采购", "采购": "招标采购", "招标公告": "招标采购", "商铺招商": "招标采购", "商铺招租": "招标采购",
   "中标": "中标公示", "中选": "中标公示", "评标结果": "中标公示",
   "智慧地铁": "智慧城轨", "无人驾驶": "全自动运行", "自动化": "全自动运行"
 };
@@ -216,6 +221,10 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   ncmtr: { name: "南昌轨道", displayTag: "南昌轨道", aliases: ["南昌轨道交通", "南昌地铁"], orgNames: ["南昌轨道交通集团有限公司"] },
   urumqi: { name: "乌鲁木齐轨道", displayTag: "乌鲁木齐", aliases: ["乌鲁木齐轨道交通", "乌鲁木齐地铁", "乌鲁木齐城市轨道集团"], orgNames: ["乌鲁木齐城市轨道集团有限公司"] },
   lysubway: { name: "洛阳轨道", displayTag: "洛阳轨道", aliases: ["洛阳市轨道交通集团", "洛阳地铁", "洛阳轨道"], orgNames: ["洛阳市轨道交通集团有限责任公司"] },
+  xzmetro: { name: "徐州地铁", displayTag: "徐州地铁", aliases: ["徐州地铁", "徐州地铁集团", "徐州市轨道交通"], orgNames: ["徐州地铁集团有限公司"] },
+  ntmetro: { name: "南通轨道交通", displayTag: "南通轨道", aliases: ["南通轨道交通", "南通地铁", "南通轨道资源开发"], orgNames: ["南通城市轨道交通有限公司", "南通轨道资源开发有限公司"] },
+  dltransgrp: { name: "大连交通集团", displayTag: "大连交通", aliases: ["大连交通集团", "大连公共交通建设投资集团", "大连地铁", "大连公共交通资源经营开发"], orgNames: ["大连公共交通建设投资集团有限公司", "大连公共交通资源经营开发有限公司"] },
+  gyurt: { name: "贵阳公共交通", displayTag: "贵阳轨道", aliases: ["贵阳市公共交通投资运营集团", "贵阳地铁", "贵阳市轨道交通"], orgNames: ["贵阳市公共交通投资运营集团有限公司"] },
 };
 
 /**
@@ -270,6 +279,10 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "ncmtr", name: "南昌轨道", patterns: [/南昌.{0,4}(轨道|地铁)/i] },
   { id: "urumqi", name: "乌鲁木齐轨道", patterns: [/乌鲁木齐.{0,4}(轨道|地铁)/i] },
   { id: "lysubway", name: "洛阳轨道", patterns: [/洛阳轨道|洛阳地铁|洛阳市轨道交通/i] },
+  { id: "xzmetro", name: "徐州地铁", patterns: [/徐州地铁|徐州.{0,4}轨道交通/i] },
+  { id: "ntmetro", name: "南通轨道交通", patterns: [/南通.{0,4}轨道交通|南通地铁|南通轨道资源/i] },
+  { id: "dltransgrp", name: "大连交通集团", patterns: [/大连交通集团|大连公共交通建设投资集团|大连地铁|大连公共交通资源/i] },
+  { id: "gyurt", name: "贵阳公共交通", patterns: [/贵阳市公共交通投资运营集团|贵阳地铁|贵阳市轨道交通/i] },
 ];
 
 /** 这些域名上的文章，发布方就是对应的公司（托管平台如 GitHub、arXiv 不算）。 */
@@ -282,7 +295,7 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "gzmtr", domains: ["gzmtr.com"] },
   { entityId: "szmc", domains: ["szmc.net"] },
   { entityId: "cdmetro", domains: ["chengdurail.com"] },
-  { entityId: "whrt", domains: ["whrt.com"] },
+  { entityId: "whrt", domains: ["wuhanrt.com"] },
   { entityId: "mtr", domains: ["mtr.com.hk"] },
   { entityId: "crrc", domains: ["crrcgc.cc"] },
   { entityId: "bii", domains: ["bii.com.cn"] },
@@ -303,13 +316,13 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "fmtr", domains: ["fmtr.cn"] },
   { entityId: "dggdjt", domains: ["dggdjt.com"] },
   { entityId: "xmgdjt", domains: ["xmgdjt.com.cn"] },
-  { entityId: "fzmetro", domains: ["fz-metro.com.cn"] },
+  { entityId: "fzmetro", domains: ["fzmtr.com"] },
   { entityId: "mtr-bj", domains: ["mtr.bj.cn"] },
   { entityId: "mtrsz", domains: ["mtrsz.com.cn"] },
   { entityId: "mtr-hz", domains: ["mtrhz.com.cn"] },
   { entityId: "tokyu", domains: ["tokyu.co.jp"] },
   { entityId: "tokyometro", domains: ["tokyometro.jp"] },
-  { entityId: "jreast", domains: ["jreast.co.jp"] },
+  { entityId: "jreast", domains: ["jreast.co.jp", "jeki.co.jp"] },
   { entityId: "toei", domains: ["kotsu.metro.tokyo.jp"] },
   { entityId: "lysubway", domains: ["lysubway.com.cn"] },
   { entityId: "urumqi", domains: ["urumqimtr.com"] },
@@ -317,6 +330,9 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "lzgdjt", domains: ["lzgdjt.com"] },
   { entityId: "hrbdt", domains: ["hrbggzy.harbin.gov.cn"] },
   { entityId: "ncmtr", domains: ["ncmtr.com"] },
+  { entityId: "ntmetro", domains: ["ntrailway.com"] },
+  { entityId: "dltransgrp", domains: ["dltransgrp.com"] },
+  { entityId: "gyurt", domains: ["gyurt.com"] },
 ];
 
 /** 原文里的这些写法也算提到了对应公司。 */

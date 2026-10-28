@@ -6,7 +6,7 @@ import { sql } from "../db.ts";
 import { stripTagMarkup } from "../lib/text.ts";
 import { proxyBodyImages } from "../media/imgproxy.ts";
 import { textToHtml } from "../content/sanitize.ts";
-import { exportTranslation, isChineseBody, ITEM_COLUMNS, ITEM_FROM, seatHolders, showsPost, toItemSummary, xView, type ItemRow } from "./items.ts";
+import { exportTranslation, extractGeneralMedia, isChineseBody, ITEM_COLUMNS, ITEM_FROM, seatHolders, showsPost, toItemSummary, xView, type ItemRow } from "./items.ts";
 import { evidenceCondition, listedCondition } from "./scope.ts";
 import { itemUrl, siteUrl } from "./links.ts";
 import { hasItemPage, publicSourceName } from "./rules.ts";
@@ -124,10 +124,21 @@ export async function loadItemDetail(id: string, language: "zh" | "original" = "
       const { text: _text, translation: _translation, ...shown } = post;
       x = shown;
     }
-  } else if (row.body_mode === "full" && row.body_html) {
+  } else if (row.body_mode === "full" && (row.body_html || row.body_text)) {
+    const rawHtml = row.body_html || textToHtml(row.body_text || "");
     const chinese = isChineseBody(row);
-    const zh = chinese ? { html: row.body_html, kind: "original" as const } : row.tr_html ? { html: row.tr_html, kind: "translation" as const } : null;
-    reading = readingBody(language, zh, chinese ? null : row.body_html, chinese ? true : row.tr_complete ?? false, (html) => withOutline(proxyBodyImages(html)));
+    const zh = chinese ? { html: rawHtml, kind: "original" as const } : row.tr_html ? { html: row.tr_html, kind: "translation" as const } : null;
+    reading = readingBody(language, zh, chinese ? null : rawHtml, chinese ? true : row.tr_complete ?? false, (html) => withOutline(proxyBodyImages(html)));
+    const generalMedia = extractGeneralMedia(row, false, true);
+    if (generalMedia.length > 0) {
+      x = {
+        authorName: row.author || summary.source.name,
+        handle: "",
+        avatarUrl: null,
+        media: generalMedia,
+        quoted: null,
+      };
+    }
   }
 
   let group: SiteItemDetail["group"] = null;

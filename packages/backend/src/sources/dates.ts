@@ -48,6 +48,11 @@ export function parseLooseDate(value: string | null | undefined, utcOffset = "+0
   if (monthDayYear && calendarDay(monthDayYear[3]!, monthDayYear[1]!, monthDayYear[2]!)) {
     return atOffset(monthDayYear[3]!, monthDayYear[1]!, monthDayYear[2]!, 0, 0, 0, utcOffset);
   }
+  // Other listings put the day before the year-month in one container: "14 2026-10" or "13 日2026年10月".
+  const dayMonthYear = /^(\d{1,2})(?:\s+|\s*日\s*)(\d{4})[-/.年](\d{1,2})月?$/.exec(v);
+  if (dayMonthYear && calendarDay(dayMonthYear[2]!, dayMonthYear[3]!, dayMonthYear[1]!)) {
+    return atOffset(dayMonthYear[2]!, dayMonthYear[3]!, dayMonthYear[1]!, 0, 0, 0, utcOffset);
+  }
   const yearFirst = /(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?(?:(?:T|\s*)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const monthFirst = /\b(\d{1,2})\/(\d{1,2})\/(\d{4})(?:(?:T|\s+)(\d{1,2}):(\d{2})(?::(\d{2}))?)?/.exec(v);
   const numeric = yearFirst ?? monthFirst?.map((part, i, match) => i === 1 ? match[3]! : i === 2 ? match[1]! : i === 3 ? match[2]! : part);

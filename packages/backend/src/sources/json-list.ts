@@ -1,9 +1,12 @@
 // JSON sources: plain JSON APIs, JSON embedded in HTML (script tags, window variables).
+import { publicEncrypt, constants } from "node:crypto";
 import { credential } from "../config.ts";
 import { languageHeaders, requireOk } from "../lib/http-fetch.ts";
 import { JINA_PREFIX, jinaRead } from "../providers/jina.ts";
 import { fetchListing } from "./listing-fetch.ts";
 import { collapseWhitespace, stripTags } from "../lib/text.ts";
+import { sanitizeBody, textToHtml } from "../content/sanitize.ts";
+import { imagesFrom } from "./rss.ts";
 import { readPublicationDate, type PublicationDate } from "./dates.ts";
 import { FetchError, type Candidate, type SourceRow } from "./types.ts";
 
@@ -140,7 +143,14 @@ function embeddedJson(html: string, source: SourceRow): unknown {
 
 export async function fetchJsonList(source: SourceRow): Promise<Candidate[]> {
   const c = source.config;
-  const url = String(c.url ?? "");
+  let url = String(c.url ?? "");
+  // Enterprise portals that sign every request (CRRC's crrcgo.cc et al.): a fresh RSA-PKCS#1-v1.5
+  // encryption of the millisecond timestamp, sent as ep/p query pair; the server checks the pair, not its age.
+  if (c.sign?.type === "rsa-pkcs1-timestamp") {
+    const p = Date.now().toString();
+    const ep = publicEncrypt({ key: String(c.sign.publicKey), padding: constants.RSA_PKCS1_PADDING }, Buffer.from(p, "utf8")).toString("base64");
+    url += (url.includes("?") ? "&" : "?") + `ep=${encodeURIComponent(ep)}&p=${p}`;
+  }
   const headers: Record<string, string> = { accept: "application/json, text/html;q=0.9", ...languageHeaders(c.acceptLanguage), ...(c.headers ?? {}) };
   if (/^https:\/\/api\.github\.com\//.test(url)) {
     const token = credential("collectors", "GITHUB_TOKEN");
@@ -153,8 +163,12 @@ export async function fetchJsonList(source: SourceRow): Promise<Candidate[]> {
     : requireOk(await fetchListing(url, {
       redirectPolicy: "same-origin",
       method: c.method ?? "GET",
-      headers: c.bodyJson ? { ...headers, "content-type": "application/json" } : headers,
-      body: c.bodyJson ? JSON.stringify(c.bodyJson) : undefined,
+      headers: c.bodyJson
+        ? { ...headers, "content-type": "application/json" }
+        : c.bodyForm
+          ? { ...headers, "content-type": "application/x-www-form-urlencoded" }
+          : headers,
+      body: c.bodyJson ? JSON.stringify(c.bodyJson) : c.bodyForm ? new URLSearchParams(c.bodyForm as Record<string, string>).toString() : undefined,
       timeoutMs: 25_000,
     })).text();
   let data: unknown;
@@ -180,6 +194,12 @@ export async function fetchJsonList(source: SourceRow): Promise<Candidate[]> {
     const externalId = c.externalIdPath ? getPath(item, c.externalIdPath) : null;
     const summary = firstString(item, c.summaryPaths);
     const summaryIsBody = c.summaryIsBody === true && !!summary;
+    const rawSummary = summary ?? "";
+    const hasHtmlTags = /<[a-z][\s\S]*>/i.test(rawSummary);
+    const bodyHtml = summaryIsBody
+      ? (hasHtmlTags ? sanitizeBody(rawSummary, url) : textToHtml(rawSummary))
+      : null;
+    const bodyImages = summaryIsBody && hasHtmlTags ? imagesFrom(rawSummary, url) : [];
     out.push({
       url,
       title: collapseWhitespace(stripTags(title)),
@@ -187,7 +207,9 @@ export async function fetchJsonList(source: SourceRow): Promise<Candidate[]> {
       ...toDate(getPath(item, c.publishedAtPath), c.publishedAtUnit, c.publishedAtUtcOffset),
       excerpt: summary ? collapseWhitespace(stripTags(summary)).slice(0, 2000) : null,
       bodyText: summaryIsBody ? stripTags(summary!) : null,
+      bodyHtml,
       bodyStatus: summaryIsBody ? "ok" : "pending",
+      media: bodyImages.slice(0, 6),
       raw: { externalId: externalId ?? null },
     });
   }

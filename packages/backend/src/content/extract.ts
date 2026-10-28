@@ -395,6 +395,12 @@ export function readableDocument(document: Doc, url: string, rules: PageRules = 
   }
   settleStreamedContent(document);
   settleInlineVisibility(document);
+  // WeChat article body container (#js_content) defaults to visibility:hidden to prevent client flicker.
+  // Remove its style so Readability doesn't discard the whole article body.
+  const wxContent = document.getElementById("js_content") || document.querySelector(".rich_media_content");
+  if (wxContent) {
+    wxContent.removeAttribute("style");
+  }
   preserveWidgets(document, rules.preserve ?? []);
   describeFigureDrawings(document);
   const article = new Readability(document as unknown as ConstructorParameters<typeof Readability>[0], { charThreshold: MIN_BODY_CHARS, keepClasses: false }).parse();
@@ -420,7 +426,12 @@ export function readableDocument(document: Doc, url: string, rules: PageRules = 
 export async function extractFromUrl(url: string, subject: string, rules: PageRules = {}, opts: { paidFallback?: boolean } = {}): Promise<ExtractedBody | null> {
   if (isVideoPageUrl(url)) return null;
   try {
-    const res = await guardedFetch(url, { headers: languageHeaders(rules.acceptLanguage), timeoutMs: 20_000, maxBytes: 6 * 1024 * 1024 });
+    const isWechat = /(^|\.)mp\.weixin\.qq\.com$/i.test(new URL(url).hostname);
+    const headers = {
+      ...languageHeaders(rules.acceptLanguage),
+      ...(isWechat ? { "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" } : {}),
+    };
+    const res = await guardedFetch(url, { headers, timeoutMs: 20_000, maxBytes: 6 * 1024 * 1024 });
     if (isVideoPageUrl(res.url)) return null;
     if (isSignInRedirect(url, res.url)) return null;
     const type = res.headers.get("content-type") ?? "";
@@ -449,7 +460,7 @@ export function pageFetchable(url: string, sourceKind: string): boolean {
   if (sourceKind === "x_search" || sourceKind === "mp_account" || isVideoPageUrl(url)) return false;
   try {
     const u = new URL(url);
-    return /^https?:$/.test(u.protocol) && !/(^|\.)(x\.com|twitter\.com|mp\.weixin\.qq\.com)$/i.test(u.hostname);
+    return /^https?:$/.test(u.protocol) && !/(^|\.)(x\.com|twitter\.com)$/i.test(u.hostname);
   } catch {
     return false;
   }
