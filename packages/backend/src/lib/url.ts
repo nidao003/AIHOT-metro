@@ -19,6 +19,9 @@ export function normalizeUrl(input: string): string | null {
   if (u.port === "443" || u.port === "80") u.port = "";
   // WeChat articles are identified by __biz/mid/idx/sn only.
   if (u.hostname === "mp.weixin.qq.com") {
+    if (u.pathname.startsWith("/s/")) {
+      u.pathname = u.pathname.replace(/~/g, "_");
+    }
     const keep = ["__biz", "mid", "idx", "sn"];
     const params = new URLSearchParams();
     for (const k of keep) {

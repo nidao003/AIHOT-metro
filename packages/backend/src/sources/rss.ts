@@ -187,7 +187,10 @@ export async function fetchRss(source: SourceRow, opts: { force?: boolean } = {}
       // An episode with no page (no <link>, a guid that is no address) links to its audio or video file,
       // which a browser plays. Its identity stays the one its guid gives, and it has no page to read a body from.
       const mediaFile = !page && guid ? enclosures.find((e) => /^(audio|video)\//.test(e?.["@type"] ?? ""))?.["@url"] ?? "" : "";
-      const link = page || mediaFile || guid;
+      let link = page || mediaFile || guid;
+      if (link && /(^|\.)mp\.weixin\.qq\.com$/i.test(URL.parse(link)?.hostname ?? "")) {
+        link = link.replace(/~/g, "_");
+      }
       const title = collapseWhitespace(stripTags(text(it.title)));
       if (!link || !title) continue;
       const contentEncoded = text(it["content:encoded"]);

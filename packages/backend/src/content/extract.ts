@@ -406,6 +406,13 @@ export function readableDocument(document: Doc, url: string, rules: PageRules = 
   if (wxContent) {
     wxContent.removeAttribute("style");
   }
+  // WeChat article images use data-src for lazy loading; promote to src so Readability and extraction retain them.
+  for (const img of document.querySelectorAll("img")) {
+    const dataSrc = img.getAttribute("data-src") || img.getAttribute("data-actualsrc");
+    if (dataSrc && (!img.getAttribute("src") || img.getAttribute("src")?.startsWith("data:"))) {
+      img.setAttribute("src", dataSrc);
+    }
+  }
   preserveWidgets(document, rules.preserve ?? []);
   describeFigureDrawings(document);
   const article = new Readability(document as unknown as ConstructorParameters<typeof Readability>[0], { charThreshold: MIN_BODY_CHARS, keepClasses: false }).parse();
@@ -432,11 +439,13 @@ export async function extractFromUrl(url: string, subject: string, rules: PageRu
   if (isVideoPageUrl(url)) return null;
   try {
     const isWechat = /(^|\.)mp\.weixin\.qq\.com$/i.test(new URL(url).hostname);
+    // Normalize WeChat short link tokens: WeRead exports '~' for '_', which causes WeChat's gateway to return "参数错误".
+    const fetchUrl = isWechat ? url.replace(/~/g, "_") : url;
     const headers = {
       ...languageHeaders(rules.acceptLanguage),
       ...(isWechat ? { "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" } : {}),
     };
-    const res = await guardedFetch(url, { headers, timeoutMs: 20_000, maxBytes: 6 * 1024 * 1024 });
+    const res = await guardedFetch(fetchUrl, { headers, timeoutMs: 20_000, maxBytes: 6 * 1024 * 1024 });
     if (isVideoPageUrl(res.url)) return null;
     if (isSignInRedirect(url, res.url)) return null;
     const type = res.headers.get("content-type") ?? "";

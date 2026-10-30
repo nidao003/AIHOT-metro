@@ -124,7 +124,7 @@ export async function loadItemDetail(id: string, language: "zh" | "original" = "
       const { text: _text, translation: _translation, ...shown } = post;
       x = shown;
     }
-  } else if (row.body_mode === "full" && (row.body_html || row.body_text)) {
+  } else if (row.body_html || row.body_text) {
     const rawHtml = row.body_html || textToHtml(row.body_text || "");
     const chinese = isChineseBody(row);
     const zh = chinese ? { html: rawHtml, kind: "original" as const } : row.tr_html ? { html: row.tr_html, kind: "translation" as const } : null;
@@ -163,7 +163,7 @@ export async function loadItemDetail(id: string, language: "zh" | "original" = "
     ...summary,
     x,
     ...(sameEvent ? { reason: null, sameEvent } : {}),
-    readingMode: "full",
+    readingMode: reading.body ? "full" : "summary-only",
     author: row.author,
     body: reading.body,
     outline: reading.outline,
@@ -186,7 +186,7 @@ export function markdownAvailable(row: {
   visibility: string; source_mode: string; summary: string | null; body_mode: string; body_html?: string | null; channel: string; x_post: Record<string, any> | null;
 }): boolean {
   if (row.visibility !== "public" || !hasItemPage({ visibility: row.visibility, sourceMode: row.source_mode })) return false;
-  return !!row.summary || (showsPost(row) && (!!row.x_post?.text || !!row.x_post?.media?.length || !!row.x_post?.quoted?.text)) || (row.body_mode === "full" && !!row.body_html);
+  return !!row.summary || (showsPost(row) && (!!row.x_post?.text || !!row.x_post?.media?.length || !!row.x_post?.quoted?.text)) || !!row.body_html;
 }
 
 export async function exportMarkdown(id: string): Promise<{ filename: string; body: string } | null> {

@@ -79,15 +79,44 @@ function original(url: string): Promise<GuardedResponse> {
   return job;
 }
 
+/**
+ * Picture hosts of the Fanke site builder (thefastimg.com) are sharded: one object path is served by
+ * `omo-oss-image`, `omo-oss-image1` and `omo-oss-image2`. The digitless shard now answers every request
+ * with 567 (its own 403), including on the origin site's own pages, while the same path still loads from
+ * a sibling shard. When an upstream answers anything but 200, the path is retried on the siblings.
+ */
+const SHARDED_PICTURE_HOST = /^(https?:\/\/)([a-z0-9-]+?)(\d*)\.thefastimg\.com(\/.*)$/i;
+const PICTURE_SHARDS = ["", "1", "2"];
+
+export function pictureHostAlternates(url: string): string[] {
+  const m = SHARDED_PICTURE_HOST.exec(url);
+  if (!m) return [];
+  const scheme = m[1]!;
+  const base = m[2]!;
+  const current = m[3]!;
+  const rest = m[4]!;
+  return PICTURE_SHARDS.filter((n) => n !== current).map((n) => `${scheme}${base}${n}.thefastimg.com${rest}`);
+}
+
 async function fetchOriginal(url: string): Promise<GuardedResponse> {
   const allowed = upstreamAllowed();
   if (!allowed.ok) throw new ImageBudgetExceeded(allowed.reason);
-  const res = await guardedFetch(url, {
-    timeoutMs: 20_000, maxBytes: 15 * 1024 * 1024, headers: { accept: "image/avif,image/webp,image/*,*/*;q=0.8" },
-  });
-  recordUpstream(res.body.length);
-  if (res.status !== 200) throw new Error(`upstream ${res.status}`);
-  return res;
+  let status = 0;
+  let lastError: unknown;
+  for (const candidate of [url, ...pictureHostAlternates(url)]) {
+    try {
+      const res = await guardedFetch(candidate, {
+        timeoutMs: 20_000, maxBytes: 15 * 1024 * 1024, headers: { accept: "image/avif,image/webp,image/*,*/*;q=0.8" },
+      });
+      recordUpstream(res.body.length);
+      if (res.status === 200) return res;
+      status = res.status;
+    } catch (error) {
+      // A dead shard may also fail at connect time; the next one still gets a try.
+      lastError = error;
+    }
+  }
+  throw lastError ?? new Error(`upstream ${status}`);
 }
 
 /**

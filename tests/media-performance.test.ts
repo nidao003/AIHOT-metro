@@ -13,7 +13,7 @@ const dir = await mkdtemp(path.join(tmpdir(), "aihot-media-test-"));
 process.env.AIHOT_DATA_DIR = dir;
 process.env.ALLOW_PRIVATE_NETWORK_FETCH = "true";
 process.env.MODEL_CALLS_ENABLED = "false";
-const { produceImage } = await import("@aihot/backend/media/images");
+const { produceImage, pictureHostAlternates } = await import("@aihot/backend/media/images");
 const { renderOg } = await import("@aihot/backend/media/og");
 const { renderPoster } = await import("@aihot/backend/media/poster");
 const { xView } = await import("@aihot/backend/publication/items");
@@ -451,4 +451,17 @@ test("video pages mislabeled as images are excluded across ingestion and public 
     assert.match(decodeURIComponent(html), /i\.ytimg\.com\/vi\/example\/hqdefault\.jpg/);
   }
   assert.doesNotMatch(proxyBodyImages(`<video src="https://example.org/video.mp4" poster="${pages[1]}"></video>`), /poster=/);
+});
+
+test("a blocked picture shard is retried on the sibling shards of the same path", () => {
+  const objectPath = "/portal-saas/pg2025051417571432546/cms/image/4efcd197-22b4-4e4e-ab0f-98958079530d.jpg";
+  assert.deepEqual(pictureHostAlternates(`https://omo-oss-image.thefastimg.com${objectPath}`), [
+    `https://omo-oss-image1.thefastimg.com${objectPath}`,
+    `https://omo-oss-image2.thefastimg.com${objectPath}`,
+  ]);
+  assert.deepEqual(pictureHostAlternates(`https://omo-oss-image2.thefastimg.com${objectPath}`), [
+    `https://omo-oss-image.thefastimg.com${objectPath}`,
+    `https://omo-oss-image1.thefastimg.com${objectPath}`,
+  ]);
+  assert.deepEqual(pictureHostAlternates("https://example.org/picture.jpg"), []);
 });
