@@ -17,7 +17,8 @@ function PlayMark() {
 
 /**
  * The post's pictures as tiles, all of them (X allows up to nine; list cards show four). Images open in
- * a viewer that steps through them; videos are only a still in our data, so they open the original post.
+ * a viewer that steps through them. A video with a stream we can proxy plays inline; one we only have a
+ * still for opens the original post.
  */
 export function MediaGallery({ media, postUrl }: { media: MediaView[]; postUrl: string }) {
   const [open, setOpen] = useState<number | null>(null);
@@ -43,8 +44,23 @@ export function MediaGallery({ media, postUrl }: { media: MediaView[]; postUrl: 
               style={single && m.width && m.height ? { aspectRatio: `${m.width} / ${m.height}` } : undefined}
             />
           );
+          if (m.kind === "video" && m.url.includes("/api/video-proxy?")) {
+            return (
+              <div key={m.poster ?? m.url} className={tile}>
+                <video
+                  src={m.url}
+                  poster={m.poster ?? undefined}
+                  controls
+                  preload="none"
+                  playsInline
+                  className="block h-full w-full bg-black object-contain"
+                  style={single && m.width && m.height ? { aspectRatio: `${m.width} / ${m.height}` } : undefined}
+                />
+              </div>
+            );
+          }
           return m.kind === "video" ? (
-            <a key={m.url} href={postUrl} target="_blank" rel="noopener noreferrer" aria-label="打开原推播放视频" className={tile}>
+            <a key={m.poster ?? m.url} href={postUrl} target="_blank" rel="noopener noreferrer" aria-label="打开原帖播放视频" className={tile}>
               {img}
               <PlayMark />
             </a>

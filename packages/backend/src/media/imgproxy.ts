@@ -56,6 +56,15 @@ export function proxiedImageSet(url: string | null | undefined, kind: Responsive
 
 export type VerifyResult = { ok: true; url: string; mode: string } | { ok: false; reason: "missing" | "expired" | "bad-signature" | "bad-url" };
 
+/** A signed stream address for a video, forwarded through /api/video-proxy with the upstream
+ *  referer a CDN like douyinvod demands. Shorter lived than images: the platform play URL behind
+ *  it expires on its own schedule, so a stale page should re-render rather than replay a dead link. */
+export function proxiedVideo(url: string | null | undefined, nowMs = Date.now(), lifetimeSeconds = 6 * 3600): string | null {
+  if (!url || !/^https?:\/\//i.test(url)) return null;
+  const exp = proxyExpiry(nowMs, lifetimeSeconds, 3600);
+  return `/api/video-proxy?u=${encodeURIComponent(url)}&mode=video&exp=${exp}&sig=${signature(url, "video", exp).slice(0, SIG_HEX)}`;
+}
+
 export function verifyProxyRequest(params: { u?: string; mode?: string; exp?: string; sig?: string }, nowMs = Date.now()): VerifyResult {
   const { u, mode, exp, sig } = params;
   if (!u || mode === "" || !exp || !sig) return { ok: false, reason: "missing" };

@@ -6,7 +6,7 @@ import { POLICY } from "@aihot/site";
 import { sql, type Db } from "../db.ts";
 import { isChineseText } from "../lib/text.ts";
 import { isEmptyOrLinkOnly } from "../content/posts.ts";
-import { proxiedImage, proxiedImageSet } from "../media/imgproxy.ts";
+import { proxiedImage, proxiedImageSet, proxiedVideo } from "../media/imgproxy.ts";
 import { sourceOwnsPost } from "../sources/account.ts";
 import { displayTags, publicSourceName } from "./rules.ts";
 import { foldableSelectionCondition, seatedCondition } from "./scope.ts";
@@ -102,18 +102,22 @@ export function tagCondition(tag: string | null | undefined) {
 }
 
 function mediaView(m: Record<string, any>, mode: "card" | "thumb" | "full" = "thumb", responsive = false): MediaView | null {
-  const url = proxiedImage(m.url, mode);
+  // A video we can stream ourselves already carries a signed /api/video-proxy address; anything
+  // else is a picture and goes through the image proxy.
+  const streamed = m.kind === "video" && typeof m.url === "string" && m.url.startsWith("/api/video-proxy?");
+  const url = streamed ? m.url : proxiedImage(m.url, mode);
   if (!url) return null;
-  const srcSet = responsive ? proxiedImageSet(m.poster ?? m.url, mode === "full" ? "body" : "card") : null;
+  const posterSource = m.poster ?? (streamed ? null : m.url);
+  const srcSet = responsive && posterSource ? proxiedImageSet(posterSource, mode === "full" ? "body" : "card") : null;
   return {
     kind: m.kind === "video" ? "video" : "image",
     url,
-    ...(responsive && mode !== "full" ? { fullUrl: proxiedImage(m.url, "full")! } : {}),
+    ...(responsive && mode !== "full" && !streamed ? { fullUrl: proxiedImage(m.url, "full")! } : {}),
     ...(srcSet ? { srcSet } : {}),
     width: typeof m.width === "number" ? m.width : null,
     height: typeof m.height === "number" ? m.height : null,
     alt: m.alt ?? null,
-    poster: m.poster ? proxiedImage(m.poster, mode === "card" ? "card" : "thumb") : null,
+    poster: posterSource ? proxiedImage(posterSource, mode === "card" ? "card" : "thumb") : null,
   };
 }
 
@@ -198,10 +202,15 @@ export function extractGeneralMedia(row: ItemRow, compact = false, responsive = 
       const match = row.body_html.match(/<img[^>]+src="([^">]+)"/i);
       if (match) finalCover = match[1];
     }
+    // Only Douyin hands us a stream address; Bilibili, Xiaohongshu and Zhihu give page links, which
+    // stay a still that opens the original post.
+    const streamUrl = typeof raw.videoUrl === "string" && /douyin\.com\/aweme\/v1\/play\/|douyinvod\.com\//i.test(raw.videoUrl)
+      ? proxiedVideo(raw.videoUrl)
+      : null;
     if (finalCover) {
       mediaList.push({
         kind: 'video',
-        url: finalCover,
+        url: streamUrl ?? finalCover,
         poster: finalCover,
         width: 1280,
         height: 720,

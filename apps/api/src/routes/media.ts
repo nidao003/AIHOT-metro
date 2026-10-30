@@ -2,6 +2,7 @@
 // remaining lifetime on every request so the CDN never inherits an aged HTTP response's max-age.
 import type { FastifyInstance } from "fastify";
 import { createHash } from "node:crypto";
+import { Readable } from "node:stream";
 import { enqueue, QUEUES } from "@aihot/backend/jobs/queue";
 import { ImageBudgetExceeded, produceImage } from "@aihot/backend/media/images";
 import { LONGEST_CACHE_SECONDS, verifyProxyRequest } from "@aihot/backend/media/imgproxy";
@@ -56,5 +57,44 @@ export function registerMedia(app: FastifyInstance) {
       req.log.warn({ err: error, host: new URL(verdict.url).hostname, imageKey: createHash("sha256").update(verdict.url).digest("hex"), mode: verdict.mode }, "img-proxy upstream failed");
       return reply.code(502).header("Cache-Control", imageCacheControl(q.exp!, 60)).type("text/plain; charset=utf-8").send("Upstream image unavailable");
     }
+  });
+
+  // Video stream proxy. Platform CDNs refuse a bare request — douyinvod answers 403 without a
+  // douyin.com referer, and a browser cannot set one — so the API replays the range request with
+  // the upstream referer attached. The body is piped through, never buffered: these are tens of MB.
+  app.get("/api/video-proxy", async (req, reply) => {
+    const q = looseQuery(req);
+    const verdict = verifyProxyRequest({ u: q.u, mode: q.mode, exp: q.exp, sig: q.sig });
+    if (!verdict.ok) {
+      const malformed = verdict.reason === "missing" || verdict.reason === "bad-url";
+      return reply.code(malformed ? 400 : 403)
+        .header("Cache-Control", "no-store")
+        .type("text/plain; charset=utf-8")
+        .send(malformed ? "invalid query\n" : "forbidden\n");
+    }
+    let upstream: Response;
+    try {
+      upstream = await fetch(verdict.url, {
+        redirect: "follow",
+        headers: {
+          referer: `${new URL(verdict.url).origin}/`,
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+          ...(req.headers.range ? { range: req.headers.range } : {}),
+        },
+      });
+    } catch (error) {
+      req.log.warn({ err: error, host: new URL(verdict.url).hostname }, "video-proxy upstream failed");
+      return reply.code(502).header("Cache-Control", "no-store").type("text/plain; charset=utf-8").send("Upstream video unavailable");
+    }
+    if (!upstream.ok || !upstream.body) {
+      return reply.code(502).header("Cache-Control", "no-store").type("text/plain; charset=utf-8").send("Upstream video unavailable");
+    }
+    reply.code(upstream.status);
+    for (const name of ["content-type", "content-length", "content-range", "accept-ranges", "etag", "last-modified"]) {
+      const value = upstream.headers.get(name);
+      if (value) reply.header(name, value);
+    }
+    reply.header("Cache-Control", "public, max-age=3600").header("X-Content-Type-Options", "nosniff");
+    return reply.send(Readable.fromWeb(upstream.body as Parameters<typeof Readable.fromWeb>[0]));
   });
 }
