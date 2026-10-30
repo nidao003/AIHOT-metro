@@ -4,6 +4,10 @@
 
 Live site: <https://metrohot.oohforce.com> · [简体中文](README.md)
 
+<p align="center">
+  <img src="assets/screenshots/home.png" alt="MetroHot home: today's selection, current hot topics and category filters" width="100%">
+</p>
+
 ---
 
 ## What it does

@@ -12,6 +12,11 @@
 
 线上站点：<https://metrohot.oohforce.com>
 
+<p align="center">
+  <img src="assets/screenshots/home.png" alt="MetroHot 首页：今日精选、当前热点与分类筛选" width="100%">
+</p>
+
+
 ---
 
 ## 这是什么
@@ -46,7 +51,7 @@ MetroHot 把这些信源统一接进来，做四件事：
 
 ## 信源
 
-仓库里的 `industry/sources.json` 配置了 **326 个信源**：
+信源清单不随仓库发布（`industry/sources.json` 在 `.gitignore` 中，只留在部署环境）。当前线上站点配置了 **326 个信源**：
 
 | 类型 | 数量 | 说明 |
 |---|---|---|
@@ -100,6 +105,16 @@ MetroHot 把这些信源统一接进来，做四件事：
 
 公开内容匿名，管理员与访客看到的一致；站内默认只展示摘要和原文链接，全文展示由信源的 `site_fulltext` 决定。
 
+## 看一眼
+
+| 城轨日报 | 热点榜 |
+|---|---|
+| ![日报](assets/screenshots/daily.png) | ![热点榜](assets/screenshots/hot.png) |
+
+主题页按公司与城市、业务方向列出 24 个专题：
+
+![主题](assets/screenshots/topics.png)
+
 ## 技术栈
 
 Node.js 24（直接运行 TypeScript，后端无构建步骤）· React Router 服务端渲染 · Fastify · PostgreSQL 17 · pg-boss · Tailwind CSS · Docker Compose。
@@ -127,6 +142,8 @@ docker compose up -d --build
 ```
 
 打开 <http://localhost:3000>，后台在 `/admin`，管理员密码在 `.env` 的 `ADMIN_PASSWORD` 里。第一次导入的资料大约半小时处理完。
+
+新克隆的仓库不带信源清单（`industry/sources.json` 不随仓库发布），站点起来后是空的，在后台“信源”页逐个添加，或按 [`industry/README.md`](industry/README.md) 的格式自备一份再跑 `node scripts/seed.ts`。
 
 开发时请保持 `COLLECT_ENABLED`、`MODEL_CALLS_ENABLED` 与各推送开关关闭，测试只连本地假服务，不访问外部站点。
 

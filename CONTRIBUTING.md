@@ -4,7 +4,7 @@
 
 ## 这里收什么
 
-- 新的城轨行业信源、失效信源的修复与选择器更新（`industry/sources.json`）
+- 新的城轨行业信源、失效信源的修复与选择器更新（`industry/sources.json`，该文件只在部署环境，不入库）
 - 分类、标签、主题、主体名录的补充与修正（`industry/taxonomy.ts`、`industry/topics.json`）
 - 精选、写作、归组提示词与门槛的调整（`industry/prompts/`、`industry/selection.ts`）
 - 站点文案、条款页、更新日志（`site/`）
@@ -21,7 +21,7 @@
 ## 提交改动
 
 1. 从最新 `main` 拉分支，一次提交解决一个清楚的问题，不夹带无关重构和依赖锁文件的变动。
-2. 先读 [AGENTS.md](AGENTS.md)，尤其是“仓库边界”和“要守住的规则”两节。
+2. 先读本地仓库根目录的 `AGENTS.md`（不入库），尤其是“仓库边界”和“要守住的规则”两节。
 3. 本地验证：
 
    ```bash

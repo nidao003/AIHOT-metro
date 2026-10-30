@@ -18,14 +18,23 @@ fontsource-noto-sans-sc-*.tgz
 # Local development, skills & specs
 .claude/
 .spec-workflow/
+CLAUDE.md
+AGENTS.md
 
 # Local docs & private directories
 docs/
+
+# 数据源清单与行业数据：只发布代码，信源名单留在本地
+industry/sources.json
 
 # Private server deployment scripts & compose overrides
 scripts/deploy-*.sh
 scripts/metrohot-remote.sh
 scripts/sync-*.sh
 scripts/cron-*.sh
+scripts/update-prod.sh
+scripts/backup-local.sh
+scripts/wechat-mp-sync.sh
+scripts/batch-repair-wechat.py
 scripts/wechat-mp-history/
 deploy/
