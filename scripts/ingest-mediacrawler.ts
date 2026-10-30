@@ -5,6 +5,7 @@
 // Usage:
 //   node scripts/ingest-mediacrawler.ts [--data-dir=../MediaCrawler/data] [--dry-run] [--platform=xhs]
 //
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
@@ -197,6 +198,8 @@ export function isOfficialAccount(author: string | null, uidOrUrl?: string, offi
     for (const u of uids) {
       if (uidOrUrl.includes(u)) return true;
     }
+    // MediaCrawler 拿不到原始 uid，只给脱敏后的 creator_hash
+    if (/^[0-9a-f]{16}$/.test(uidOrUrl) && getWeiboHashMap().has(uidOrUrl)) return true;
   }
   // 2. 账号名称包含典型的地铁/城轨官方特征，且不是个人探店/代购/车迷
   if (author) {
@@ -283,6 +286,19 @@ export function getWeiboAccountMap(): Map<string, { city: string; name: string; 
   return cachedWeiboAccountMap;
 }
 
+let cachedWeiboHashMap: Map<string, { city: string; name: string; uid: string }> | null = null;
+
+// MediaCrawler 教学版只写脱敏后的 creator_hash（sha256(uid)[:16]），不落原始 user_id。
+// accounts.json 里都是机构号，哈希可逆推，用它在入库时还原官博归属。
+export function getWeiboHashMap(): Map<string, { city: string; name: string; uid: string }> {
+  if (cachedWeiboHashMap) return cachedWeiboHashMap;
+  cachedWeiboHashMap = new Map();
+  for (const [uid, acc] of getWeiboAccountMap()) {
+    cachedWeiboHashMap.set(crypto.createHash('sha256').update(uid).digest('hex').slice(0, 16), acc);
+  }
+  return cachedWeiboHashMap;
+}
+
 export function resolveSourceMeta(item: IngestItem, defaultMeta: { id: string; name: string }): { id: string; name: string } {
   if (defaultMeta.id.includes('wb')) {
     const author = (item.author || '').trim();
@@ -299,6 +315,12 @@ export function resolveSourceMeta(item: IngestItem, defaultMeta: { id: string; n
     if (rawUid && weiboMap.has(rawUid)) {
       const acc = weiboMap.get(rawUid)!;
       return { id: `mc-wb-${acc.uid}`, name: `${acc.name}（官方微博）` };
+    }
+
+    const creatorHash = String(item.raw?.creatorHash || item.raw?.creator_hash || '');
+    if (creatorHash) {
+      const acc = getWeiboHashMap().get(creatorHash);
+      if (acc) return { id: `mc-wb-${acc.uid}`, name: `${acc.name}（官方微博）` };
     }
 
     for (const [, acc] of weiboMap) {
@@ -596,8 +618,9 @@ export function normalizeItem(
       commentCount,
       shareCount,
       sourceKeyword: row.source_keyword || null,
-      videoUrl: row.video_url || null,
-      videoCoverUrl: row.video_cover_url || null,
+      creatorHash: (row.creator_hash as string) || null,
+      videoUrl: row.video_download_url || row.video_url || null,
+      videoCoverUrl: row.video_cover_url || row.cover_url || null,
       videoPlayCount: row.video_play_count || null,
       videoDanmaku: row.video_danmaku || null,
       socialImpact: impact,
