@@ -1,6 +1,7 @@
 import { redirect, useLoaderData } from "react-router";
 import type { Route } from "./+types/home";
 import type { TimelineResponse } from "@aihot/contracts/site";
+import { SITE } from "@aihot/site";
 import { cachedPage, loadOr404 } from "../lib/api.server";
 import { pageReuse } from "../lib/page-reuse";
 import { filterParams, hasFeedFilters, itemListLd, listPath, pageMeta, readFilters, siteLd } from "../lib/seo";
@@ -41,13 +42,13 @@ export default function Home() {
       <ActiveFilters base="/" category={filters.category} channel={filters.channel} tag={filters.tag} />
       {!filters.category && (!filters.channel || filters.channel === "all") && !filters.tag && (
         <div className="pt-1.5 pb-2 text-[12px] text-ink-4 lg:hidden">
-          AI 的城轨行业动态
+          {SITE.tagline}
         </div>
       )}
       <div className="hidden lg:block">
         <div className="flex items-baseline gap-3">
           <h1 className="text-[24px] font-semibold leading-[1.3] text-ink">{title}</h1>
-          {title === "精选" && <span className="text-[13px] text-ink-4">AI 的城轨行业动态</span>}
+          {title === "精选" && <span className="text-[13px] text-ink-4">{SITE.tagline}</span>}
         </div>
         <div className="mb-5 mt-4 flex items-center justify-between gap-4">
           <CategoryTabs base="/" category={filters.category} channel={filters.channel} layoutId="home-cat-desk" className="min-w-0" />

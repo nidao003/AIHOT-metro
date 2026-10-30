@@ -45,7 +45,7 @@ export function Sidebar({ changelogVersion }: { changelogVersion: string | null 
     <aside className="sticky top-0 hidden h-dvh w-[180px] shrink-0 flex-col border-r border-line bg-sidebar px-3 pb-3.5 pt-6 lg:flex">
       <Link to="/" className="mb-3 flex flex-col justify-center px-1 text-ink group" aria-label={`${SITE.name} 首页`}>
         <Wordmark size={24} />
-        <span className="mt-1 text-[11px] font-medium text-ink-4 tracking-tight group-hover:text-accent transition-colors">AI 的城轨行业动态</span>
+        <span className="mt-1 text-[11px] font-medium text-ink-4 tracking-tight group-hover:text-accent transition-colors">{SITE.tagline}</span>
       </Link>
       <nav className="scrollbar-thin -mx-1 flex-1 overflow-y-auto px-1" aria-label="主导航">
         {sidebar().map((section) => (
