@@ -13,6 +13,7 @@ import { registerIngest } from "./routes/ingest.ts";
 import { registerV1, registerV1Fallbacks } from "./routes/v1.ts";
 import { registerAgent } from "./routes/agent.ts";
 import { registerMedia } from "./routes/media.ts";
+import { registerAnalytics } from "./routes/analytics.ts";
 import { registerFeeds } from "./routes/feeds.ts";
 import { registerStatic } from "./routes/static.ts";
 import { registerMcp } from "./routes/mcp.ts";
@@ -97,6 +98,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   registerV1(app);
   registerAgent(app);
   registerMedia(app);
+  registerAnalytics(app);
   registerFeeds(app);
   registerStatic(app);
   registerMcp(app);

@@ -13,6 +13,7 @@ import { TabBar } from "./components/shell/TabBar";
 import { PullToRefresh } from "./components/shell/PullToRefresh";
 import { usePageTransition } from "./components/shell/transitions";
 import { SearchOverlay } from "./features/search/SearchOverlay";
+import { Tracker } from "./features/analytics/Tracker";
 import { BackToTop, NavigationProgress } from "./components/shell/Chrome";
 import { buttonClass } from "./components/ui/Controls";
 import { rememberPage, APPEARANCE_BOOT_SCRIPT, useAppearanceSync } from "./lib/local-state";
@@ -127,6 +128,7 @@ export default function App() {
       <SiteShell changelogVersion={meta.changelogVersion}>
         <Outlet />
       </SiteShell>
+      <Tracker />
       {webModules().map((m) => m.root?.Bottom && <m.root.Bottom key={m.name} />)}
     </>
   );

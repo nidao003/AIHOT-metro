@@ -27,6 +27,7 @@ import { takePreview } from "../features/item/preview";
 import { IconArrowLeft, IconCopy, IconDownload, IconExternal, IconImage, IconMenu, IconMore, IconShare } from "../components/icons";
 import { BarButton, PhoneBar } from "../components/shell/PhoneBar";
 import { isPhone, type Screen } from "../components/shell/screens";
+import { trackAction } from "../features/analytics/Tracker";
 
 export const handle: Screen = { home: "featured", toolbar: true };
 export { pageHeaders as headers } from "../lib/api.server";
@@ -158,9 +159,11 @@ async function shareOrCopy(item: Pick<SiteItemDetail, "id" | "title">): Promise<
   try {
     if (navigator.share && matchMedia("(pointer: coarse)").matches) {
       await navigator.share({ title: item.title, url });
+      trackAction("share", { articleId: item.id, shareTarget: "system" });
       return "shared";
     }
     await copyText(`${item.title}\n${url}`);
+    trackAction("share", { articleId: item.id, shareTarget: "copy" });
     return "copied";
   } catch {
     return null;
@@ -370,6 +373,7 @@ function ItemView({ item }: { item: SiteItemDetail }) {
         href={item.links.original}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackAction("outbound", { articleId: item.id })}
         className="inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-full border border-line-strong bg-surface px-3.5 text-[12.5px] font-medium text-ink-2 transition-colors hover:border-ink-4 hover:text-ink"
       >
         {originalLabel} <IconExternal size={13} />
